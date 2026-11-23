@@ -1,0 +1,921 @@
+(* Content-type: application/vnd.wolfram.cdf.text *)
+
+(*** Wolfram CDF File ***)
+(* http://www.wolfram.com/cdf *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*************************************************************************)
+(*                                                                       *)
+(*                                                                       *)
+(*  This file was created under the Wolfram Enterprise licensing terms.  *)
+(*                                                                       *)
+(*       For additional information concerning CDF licensing see:        *)
+(*                                                                       *)
+(*        www.wolfram.com/cdf/adopting-cdf/licensing-options.html        *)
+(*                                                                       *)
+(*                                                                       *)
+(*                                                                       *)
+(*************************************************************************)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[      1060,         20]
+NotebookDataLength[     35948,        899]
+NotebookOptionsPosition[     36578,        900]
+NotebookOutlinePosition[     36895,        914]
+CellTagsIndexPosition[     36852,        911]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"id", ":", " ", 
+    RowBox[{"e9569d45", "-", "3071", "-", "4079", "-", 
+     RowBox[{"81", "b3"}], "-", 
+     RowBox[{"8", 
+      RowBox[{"dcd7f83a1e2", " ", "\[CenterDot]", " ", "ff_tensornets"}], 
+      RowBox[{"_test", " ", "\[CenterDot]", " ", "cell"}], " ", "1", " ", 
+      "of", " ", 
+      RowBox[{"1", " ", "\[CenterDot]", " ", "updated"}], " ", "2026"}], "-", 
+     "11", "-", 
+     RowBox[{"23", " ", "03"}]}], ":", 
+    RowBox[{"15", " ", "UTC"}]}], " ", "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{"ff_tensornets", " ", "\[LongDash]", " ", 
+    RowBox[{"tests", " ", "for", " ", "ff_tensornets", 
+     RowBox[{"_new", ".", "nb", ".", " ", "Run"}], " ", "in", " ", "its", " ",
+      "own", " ", "wolframscript", " ", "process"}], ",", " ", 
+    RowBox[{"never", " ", "in", " ", "a", " ", "shared", " ", 
+     RowBox[{"kernel", ".", "\n", "   ", "It"}], " ", "evaluates", " ", "the",
+      " ", "release", " ", "cell", " ", "of", " ", 
+     RowBox[{"ff_tensornets", ".", "nb"}], " ", "itself", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"with", " ", "CloudSave", " ", "intercepted"}], ",", " ", 
+       RowBox[{"so", " ", "the", " ", 
+        RowBox[{"owner", "'"}], "s", "\n", "   ", "release", " ", "paths", " ",
+         "are", " ", "never", " ", "touched"}]}], ")"}]}], ",", " ", 
+    RowBox[{
+     RowBox[{"then", " ", "tests", " ", "everything"}], ";", " ", 
+     RowBox[{"cloud", " ", "tests", " ", "use", " ", "a", " ", "throwaway", " ", 
+      RowBox[{"Test", "/", " ", "folder"}]}]}], ",", "\n", "   ", 
+    RowBox[{
+     RowBox[{"deleted", " ", 
+      RowBox[{"afterwards", ".", "  ", "Results"}], " ", "go", " ", "to", " ",
+       "ff_tensornets", 
+      RowBox[{"_testlog", ".", "nb"}]}], ";", " ", 
+     RowBox[{
+      RowBox[{"nothing", " ", "is", " ", 
+       RowBox[{"printed", ".", "\n", "   ", "\[Copyright]"}], " ", 
+       "Computational", " ", 
+       RowBox[{"Classnotes", " ", "\[CenterDot]", " ", "CC"}], " ", "BY"}], "-",
+       "NC", "-", 
+      RowBox[{"SA", " ", "4.0"}]}]}]}], " ", "*)"}], "\n", "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Writes", " ", "nothing", " ", "to", " ", "the", " ", "Wolfram", " ", 
+    "Cloud", " ", "and", " ", "deletes", " ", 
+    RowBox[{"nothing", ".", "  ", "Results"}], " ", "go", " ", "to", " ", 
+    "ff_tensornets", "_new", 
+    RowBox[{"_testlog", ".", "nb", "."}]}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"SetDirectory", "[", "$TemporaryDirectory", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"research", " ", "=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+       "$HomeDirectory", ",", " ", "\"\<Desktop\>\"", ",", 
+        " ", "\"\<Research\>\"", ",", " ", "\"\<TensorNets\>\""}], "}"}], 
+      "]"}]}], ";"}], "   ", 
+   RowBox[{"(*", " ", 
+    RowBox[{"the", " ", "project", " ", "folder"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"nbFile", "   ", "=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{"research", ",", " ", "\"\<ff_tensornets_new.nb\>\""}], "}"}], 
+      "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"logFile", "  ", "=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{"research", ",", " ", "\"\<ff_tensornets_new_testlog.nb\>\""}],
+        "}"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"resFile", "  ", "=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{"$TemporaryDirectory", ",", " ", 
+        RowBox[{"\"\<ff_tensornets_new_results_\>\"", " ", "<>", " ", 
+         RowBox[{"DateString", "[", 
+          RowBox[{"{", 
+           
+           RowBox[{"\"\<Year\>\"", ",", " ", "\"\<Month\>\"", ",", 
+            " ", "\"\<Day\>\"", ",", " ", "\"\<Hour\>\"", ",", 
+            " ", "\"\<Minute\>\"", ",", " ", "\"\<Second\>\""}], "}"}], "]"}],
+          " ", "<>", " ", "\"\<.m\>\""}]}], "}"}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"T", " ", "=", " ", 
+     RowBox[{"<|", "|>"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"check", "[", 
+      RowBox[{"name_String", ",", " ", "expr_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"T", "[", "name", "]"}], " ", "=", " ", 
+       RowBox[{"TrueQ", "@", 
+        RowBox[{"Quiet", "@", 
+         RowBox[{"Check", "[", 
+          RowBox[{"expr", ",", " ", "False"}], "]"}]}]}]}], ")"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"SetAttributes", "[", 
+     RowBox[{"check", ",", " ", "HoldRest"}], "]"}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"1.", " ", "the", " ", 
+      RowBox[{"notebook", "'"}], "s", " ", "one", " ", "Input", " ", 
+      RowBox[{"cell", ":", " ", 
+       RowBox[{
+       "it", " ", "must", " ", "make", " ", "no", " ", "Cloud", " ", "call", " ",
+         "when", " ", "evaluated"}]}]}], ",", " ", 
+     RowBox[{"then", " ", "define", " ", "everything"}]}], " ", "*)"}], "\n", 
+   
+   RowBox[{
+    RowBox[{"boxes", " ", "=", " ", 
+     RowBox[{"First", "@", 
+      RowBox[{"Cases", "[", 
+       RowBox[{
+        RowBox[{"Get", "[", "nbFile", "]"}], ",", " ", 
+        RowBox[{
+         RowBox[{"Cell", "[", 
+          RowBox[{
+           RowBox[{"BoxData", "[", "b_", "]"}], ",", " ", "\"\<Input\>\"", ",",
+            " ", "___"}], "]"}], " ", ":>", " ", "b"}], ",", " ", 
+        "Infinity"}], "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"held", " ", "=", " ", 
+     RowBox[{"Quiet", "@", 
+      RowBox[{"ToExpression", "[", 
+       RowBox[{"boxes", ",", " ", "StandardForm", ",", " ", "Hold"}], 
+       "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Evaluating the cell makes no Cloud call (no top-level \
+release or CloudSave/CloudPut/CloudExport/CloudDeploy)\>\"", ",", "\n", "  ", 
+      
+      RowBox[{
+       RowBox[{"Cases", "[", 
+        RowBox[{"held", ",", " ", 
+         RowBox[{"HoldPattern", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+            "tensorNetsSave", " ", "|", " ", "tnSaveNets", " ", "|", " ", 
+             "CloudSave", " ", "|", " ", "CloudPut", " ", "|", " ", 
+             "CloudExport", " ", "|", " ", "CloudDeploy"}], ")"}], "[", "___",
+            "]"}], "]"}], ",", " ", 
+         RowBox[{"{", "2", "}"}]}], "]"}], " ", "===", " ", 
+       RowBox[{"{", "}"}]}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ReleaseHold", "[", "held", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tnLogClear", "[", "]"}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<The cell defines the public functions\>\"", ",", " ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{"tnPublic", ",", " ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"ToExpression", "[", 
+           RowBox[{"#", ",", " ", "InputForm", ",", " ", 
+            RowBox[{"Function", "[", 
+             RowBox[{"s", ",", " ", 
+              RowBox[{
+               RowBox[{"Length", "[", 
+                RowBox[{"DownValues", "[", "s", "]"}], "]"}], " ", "+", " ", 
+               RowBox[{"Length", "[", 
+                RowBox[{"OwnValues", "[", "s", "]"}], "]"}]}], ",", " ", 
+              "HoldAll"}], "]"}]}], "]"}], " ", ">", " ", "0"}], " ", "&"}]}],
+        "]"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<tnSaveNets refuses (writes nothing) while no nets are \
+trained\>\"", ",", " ", 
+      RowBox[{
+       RowBox[{"tnNetsReadyQ", "[", "]"}], " ", "===", " ", "False"}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Release targets AI/freeform/ff/tensornets by default\>\"", ",",
+       " ", 
+      RowBox[{
+      "tnBase", " ", "===", " ", "\"\<AI/freeform/ff/tensornets\>\""}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+      "the", " ", "release", " ", "blocks", " ", "every", " ", "non"}], "-", 
+      RowBox[{"project", " ", "Global", " ", 
+       RowBox[{"symbol", ":", " ", 
+        RowBox[{
+        "checked", " ", "with", " ", "the", " ", "Cloud", " ", "step", " ", 
+         "replaced"}]}]}]}], ",", " ", 
+     RowBox[{"so", " ", "nothing", " ", "is", " ", "written"}]}], " ", "*)"}],
+    "\n", 
+   RowBox[{
+    RowBox[{"zzStray", " ", "=", " ", "5"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"seen", " ", "=", " ", 
+     RowBox[{
+      RowBox[{"Reap", "[", 
+       RowBox[{"Block", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"tnCloudSaveAll", " ", "=", " ", 
+           RowBox[{"Function", "[", 
+            RowBox[{"b", ",", " ", 
+             RowBox[{"Sow", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"ValueQ", "[", "zzStray", "]"}], ",", " ", "b"}], 
+               "}"}], "]"}]}], "]"}]}], "}"}], ",", " ", 
+         RowBox[{"tensorNetsSave", "[", "\"\<NotWritten\>\"", "]"}]}], "]"}], 
+       "]"}], "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<tensorNetsSave hides non-project Global values while \
+saving, and restores them\>\"", ",", " ", 
+      RowBox[{
+       RowBox[{"seen", " ", "===", " ", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"False", ",", " ", "\"\<NotWritten\>\""}], "}"}], "}"}], 
+         "}"}]}], " ", "&&", " ", 
+       RowBox[{"zzStray", " ", "===", " ", "5"}]}]}], "]"}], ";"}], "\n", 
+   "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"2.", " ", "symbolic", " ", "core"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"SeedRandom", "[", "1", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Lexer + reference parser recover the tree from 2000 random \
+spellings\>\"", ",", "\n", "  ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"t", " ", "=", " ", 
+              RowBox[{"tnRandomTree", "[", 
+               RowBox[{
+                RowBox[{"RandomInteger", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "6"}], "}"}], "]"}], ",", " ", 
+                RowBox[{"RandomInteger", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "6"}], "}"}], "]"}]}], "]"}]}], 
+             "}"}], ",", " ", 
+            RowBox[{"With", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"nm", " ", "=", " ", 
+                RowBox[{"tnRandomNames", "[", 
+                 RowBox[{"tnAtomCount", "[", "t", "]"}], "]"}]}], "}"}], ",", 
+              "\n", "      ", 
+              RowBox[{"With", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"lx", " ", "=", " ", 
+                  RowBox[{"tnLex", "[", 
+                   RowBox[{"tnRender", "[", 
+                    RowBox[{"t", ",", " ", "nm"}], "]"}], "]"}]}], "}"}], ",",
+                 " ", 
+                RowBox[{
+                 RowBox[{"AssociationQ", "[", "lx", "]"}], " ", "&&", " ", 
+                 RowBox[{
+                  RowBox[{"tnRefParse", "[", 
+                   RowBox[{"lx", "[", "\"\<Tokens\>\"", "]"}], "]"}], " ", "===",
+                   " ", "t"}], " ", "&&", " ", 
+                 RowBox[{
+                  RowBox[{"lx", "[", "\"\<Atoms\>\"", "]"}], " ", "===", " ", 
+                  "nm"}]}]}], "]"}]}], "]"}]}], "]"}], ",", " ", 
+          RowBox[{"{", "2000", "}"}]}], "]"}], ",", " ", "TrueQ"}], "]"}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Prefix form and node positions round-trip\>\"", ",", "\n", 
+      "  ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"t", " ", "=", " ", 
+              RowBox[{"tnRandomTree", "[", 
+               RowBox[{
+                RowBox[{"RandomInteger", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "6"}], "}"}], "]"}], ",", " ", "5"}],
+                "]"}]}], "}"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"tnFromPrefix", "[", 
+               RowBox[{"tnToPrefix", "[", "t", "]"}], "]"}], " ", "===", " ", 
+              "t"}], " ", "&&", " ", 
+             RowBox[{
+              RowBox[{"Length", "[", 
+               RowBox[{"tnNodePositions", "[", "t", "]"}], "]"}], " ", "==", 
+              " ", 
+              RowBox[{"Length", "[", 
+               RowBox[{"tnToPrefix", "[", "t", "]"}], "]"}]}]}]}], "]"}], ",",
+           " ", 
+          RowBox[{"{", "2000", "}"}]}], "]"}], ",", " ", "TrueQ"}], "]"}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Malformed input gives a Failure\>\"", ",", "\n", "  ", 
+      RowBox[{
+       RowBox[{"FailureQ", "[", 
+        RowBox[{"tnParse", "[", "\"\<(a\:2a01b\>\"", "]"}], "]"}], " ", "&&", 
+       " ", 
+       RowBox[{"FailureQ", "[", 
+        RowBox[{"tnParse", "[", "\"\<a ? b\>\"", "]"}], "]"}], " ", "&&", " ", 
+       RowBox[{"FailureQ", "[", 
+        RowBox[{"tnParse", "[", "\"\<a\:2a02\>\"", "]"}], "]"}], " ", "&&", 
+       " ", 
+       RowBox[{"FailureQ", "[", 
+        RowBox[{"tnFromPrefix", "[", 
+         RowBox[{"{", 
+          RowBox[{"\"\<S\>\"", ",", " ", "\"\<x1\>\""}], "}"}], "]"}], 
+        "]"}]}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Expand reaches a normal form, keeps dimension and is \
+equivalent\>\"", ",", "\n", "  ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"t", " ", "=", " ", 
+               RowBox[{"Module", "[", 
+                RowBox[{
+                 RowBox[{"{", "u", "}"}], ",", " ", 
+                 RowBox[{
+                  RowBox[{"While", "[", 
+                   RowBox[{
+                    RowBox[{"tnTermCount", "[", 
+                    RowBox[{"u", " ", "=", " ", 
+                    RowBox[{"tnRandomTree", "[", 
+                    RowBox[{
+                    RowBox[{"RandomInteger", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", " ", "3"}], "}"}], "]"}], ",", " ", 
+                    "3"}], "]"}]}], "]"}], " ", ">", " ", "30"}], "]"}], ";", 
+                  " ", "u"}]}], "]"}]}], ",", " ", 
+              RowBox[{"d", " ", "=", " ", 
+               RowBox[{"RandomInteger", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "5"}], "}"}], ",", " ", "3"}], 
+                "]"}]}]}], "}"}], ",", "\n", "      ", 
+            RowBox[{"With", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"e", " ", "=", " ", 
+                RowBox[{"tnRunOracle", "[", 
+                 RowBox[{"t", ",", " ", "\"\<Expand\>\"", ",", " ", "5000"}], 
+                 "]"}]}], "}"}], ",", " ", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"tnLegalMoves", "[", 
+                 RowBox[{"e", ",", " ", "\"\<Expand\>\""}], "]"}], " ", "===",
+                 " ", 
+                RowBox[{"{", "}"}]}], " ", "&&", " ", 
+               RowBox[{
+                RowBox[{"tnDimension", "[", 
+                 RowBox[{"e", ",", " ", "d"}], "]"}], " ", "==", " ", 
+                RowBox[{"tnDimension", "[", 
+                 RowBox[{"t", ",", " ", "d"}], "]"}]}], " ", "&&", " ", 
+               RowBox[{"tnEquivalentQ", "[", 
+                RowBox[{"t", ",", " ", "e"}], "]"}]}]}], "]"}]}], "]"}], ",", 
+          " ", 
+          RowBox[{"{", "200", "}"}]}], "]"}], ",", " ", "TrueQ"}], "]"}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Factor is equivalent and never longer\>\"", ",", "\n", "  ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"e", " ", "=", " ", 
+              RowBox[{"tnRunOracle", "[", 
+               RowBox[{
+                RowBox[{"Module", "[", 
+                 RowBox[{
+                  RowBox[{"{", "u", "}"}], ",", " ", 
+                  RowBox[{
+                   RowBox[{"While", "[", 
+                    RowBox[{
+                    RowBox[{"tnTermCount", "[", 
+                    RowBox[{"u", " ", "=", " ", 
+                    RowBox[{"tnRandomTree", "[", 
+                    RowBox[{
+                    RowBox[{"RandomInteger", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", " ", "3"}], "}"}], "]"}], ",", " ", 
+                    "3"}], "]"}]}], "]"}], " ", ">", " ", "30"}], "]"}], ";", 
+                   " ", "u"}]}], "]"}], ",", " ", "\"\<Expand\>\"", ",", " ", 
+                "5000"}], "]"}]}], "}"}], ",", "\n", "      ", 
+            RowBox[{"With", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"f", " ", "=", " ", 
+                RowBox[{"tnRunOracle", "[", 
+                 RowBox[{"e", ",", " ", "\"\<Factor\>\"", ",", " ", "5000"}], 
+                 "]"}]}], "}"}], ",", " ", 
+              RowBox[{
+               RowBox[{"tnEquivalentQ", "[", 
+                RowBox[{"e", ",", " ", "f"}], "]"}], " ", "&&", " ", 
+               RowBox[{
+                RowBox[{"Length", "[", 
+                 RowBox[{"tnToPrefix", "[", "f", "]"}], "]"}], " ", "<=", " ", 
+                RowBox[{"Length", "[", 
+                 RowBox[{"tnToPrefix", "[", "e", "]"}], "]"}]}]}]}], "]"}]}], 
+           "]"}], ",", " ", 
+          RowBox[{"{", "200", "}"}]}], "]"}], ",", " ", "TrueQ"}], "]"}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<\:2a02 order is respected (a\:2a02b is not b\:2a02a)\>\"", ",",
+       " ", 
+      RowBox[{"!", " ", 
+       RowBox[{"tnEquivalentQ", "[", 
+        RowBox[{
+         RowBox[{"tnP", "[", 
+          RowBox[{
+           RowBox[{"tnX", "[", "1", "]"}], ",", " ", 
+           RowBox[{"tnX", "[", "2", "]"}]}], "]"}], ",", " ", 
+         RowBox[{"tnP", "[", 
+          RowBox[{
+           RowBox[{"tnX", "[", "2", "]"}], ",", " ", 
+           RowBox[{"tnX", "[", "1", "]"}]}], "]"}]}], "]"}]}]}], "]"}], ";"}],
+    "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Numeric value: Kronecker / block-diagonal, unchanged by \
+DistRight\>\"", ",", "\n", "  ", 
+      RowBox[{"With", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"t", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"tnParse", "[", "\"\<(a\:2a01b)\:2a02c\>\"", "]"}], 
+            "[", "\"\<Tree\>\"", "]"}]}], ",", " ", 
+          RowBox[{"A", " ", "=", " ", 
+           RowBox[{"RandomReal", "[", 
+            RowBox[{"1", ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", " ", "2"}], "}"}]}], "]"}]}], ",", " ", 
+          RowBox[{"B", " ", "=", " ", 
+           RowBox[{"RandomReal", "[", 
+            RowBox[{"1", ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"3", ",", " ", "3"}], "}"}]}], "]"}]}], ",", " ", 
+          RowBox[{"C", " ", "=", " ", 
+           RowBox[{"RandomReal", "[", 
+            RowBox[{"1", ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", " ", "2"}], "}"}]}], "]"}]}]}], "}"}], ",", 
+        "\n", "   ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Dimensions", "[", 
+           RowBox[{"tnNumeric", "[", 
+            RowBox[{"t", ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"A", ",", " ", "B", ",", " ", "C"}], "}"}]}], "]"}], 
+           "]"}], " ", "==", " ", 
+          RowBox[{"{", 
+           RowBox[{"10", ",", " ", "10"}], "}"}]}], " ", "&&", " ", 
+         RowBox[{
+          RowBox[{"Max", "@", 
+           RowBox[{"Abs", "[", 
+            RowBox[{
+             RowBox[{"tnNumeric", "[", 
+              RowBox[{"t", ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"A", ",", " ", "B", ",", " ", "C"}], "}"}]}], "]"}], 
+             " ", "-", " ", 
+             RowBox[{"tnNumeric", "[", 
+              RowBox[{
+               RowBox[{"tnApply", "[", 
+                RowBox[{"t", ",", " ", "\"\<DistRight\>\"", ",", " ", "1"}], 
+                "]"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"A", ",", " ", "B", ",", " ", "C"}], "}"}]}], "]"}]}],
+             "]"}]}], " ", "<", " ", 
+          RowBox[{"10", "^", 
+           RowBox[{"-", "12"}]}]}]}]}], "]"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Worked examples\>\"", ",", "\n", "  ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"tnSimplify", "[", 
+          RowBox[{"\"\<(a\:2a01b)\:2a02c\>\"", ",", " ", "\"\<Expand\>\""}], 
+          "]"}], "[", "\"\<Result\>\"", "]"}], " ", "===", 
+        " ", "\"\<a \:2a02 c \:2a01 b \:2a02 c\>\""}], " ", "&&", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"tnSimplify", "[", 
+          RowBox[{"\"\<(V\[CirclePlus]W)^2\>\"", ",", " ", "\"\<Expand\>\""}],
+           "]"}], "[", "\"\<Result\>\"", "]"}], " ", "===", 
+        " ", "\"\<V \:2a02 V \:2a01 V \:2a02 W \:2a01 W \:2a02 V \:2a01 W \
+\:2a02 W\>\""}], " ", "&&", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"tnSimplify", "[", 
+          
+          RowBox[{"\"\<a\:2a02b \:2a01 a\:2a02c\>\"", ",", 
+           " ", "\"\<Factor\>\""}], "]"}], "[", "\"\<Result\>\"", "]"}], " ", 
+        "===", " ", "\"\<a \:2a02 (b \:2a01 c)\>\""}], " ", "&&", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"tnSimplify", "[", 
+          
+          RowBox[{"\"\<(V\[CirclePlus]W)\:2a02(V\[CirclePlus]W) \:2a02 \
+\|01d7d9 \:2a01 0\>\"", ",", " ", "\"\<Simplify\>\""}], "]"}], 
+         "[", "\"\<Result\>\"", "]"}], " ", "===", 
+        " ", "\"\<(V \:2a01 W)^2\>\""}], " ", "&&", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"tnEvaluate", "[", 
+          RowBox[{"\"\<(V\:2a01W)^2\>\"", ",", " ", 
+           RowBox[{"<|", 
+            RowBox[{
+             RowBox[{"\"\<V\>\"", " ", "->", " ", "2"}], ",", " ", 
+             RowBox[{"\"\<W\>\"", " ", "->", " ", "3"}]}], "|>"}]}], "]"}], "[", 
+         RowBox[{"\"\<Exact\>\"", ",", " ", "\"\<Dimension\>\""}], "]"}], " ",
+         "===", " ", "25"}]}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Without nets everything falls back to the oracles\>\"", ",",
+       "\n", "  ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"tnParse", "[", "\"\<(a\:2a01b)\:2a02c\>\"", "]"}], 
+         "[", "\"\<Method\>\"", "]"}], " ", "===", " ", "\"\<Reference\>\""}],
+        " ", "&&", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"tnSimplify", "[", 
+          RowBox[{"\"\<(a\:2a01b)\:2a02c\>\"", ",", " ", "\"\<Expand\>\""}], 
+          "]"}], "[", "\"\<Method\>\"", "]"}], " ", "===", 
+        " ", "\"\<Oracle\>\""}]}]}], "]"}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"4.", " ", 
+      RowBox[{"nets", ":", " ", 
+       RowBox[{"small", " ", "sizes"}]}]}], ",", " ", 
+     RowBox[{
+      RowBox[{"only", " ", "to", " ", "prove", " ", "the", " ", "wiring"}], ";",
+       " ", 
+      RowBox[{"full", " ", "sizes", " ", "are", " ", 
+       RowBox[{"tnTrainAll", "[", "]"}], " ", "defaults"}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"SeedRandom", "[", "2", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"t0", " ", "=", " ", 
+     RowBox[{"AbsoluteTime", "[", "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tnTrainAll", "[", 
+     RowBox[{
+      RowBox[{"\"\<Examples\>\"", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{"3000", ",", " ", "2000", ",", " ", "1000"}], "}"}]}], ",", 
+      " ", 
+      RowBox[{"\"\<Rounds\>\"", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{"4", ",", " ", "3", ",", " ", "3"}], "}"}]}], ",", " ", 
+      RowBox[{"\"\<Size\>\"", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{"32", ",", " ", "2", ",", " ", "1"}], "}"}]}]}], "]"}], ";"}],
+    "\n", 
+   RowBox[{
+    RowBox[{"trainSeconds", " ", "=", " ", 
+     RowBox[{"Round", "[", 
+      RowBox[{
+       RowBox[{"AbsoluteTime", "[", "]"}], " ", "-", " ", "t0"}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Three nets trained, with inference ports only\>\"", ",", 
+      "\n", "  ", 
+      RowBox[{
+       RowBox[{"AllTrue", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "tnParserNet", ",", " ", "tnPolicyNet", ",", " ", "tnValueNet"}], 
+          "}"}], ",", " ", "tnNetQ"}], "]"}], " ", "&&", "\n", "   ", 
+       RowBox[{
+        RowBox[{"Information", "[", 
+         RowBox[{"tnParserNet", ",", " ", "\"\<InputPortNames\>\""}], "]"}], 
+        " ", "===", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Input\>\"", ",", " ", "\"\<Target\>\""}], "}"}]}], " ", 
+       "&&", " ", 
+       RowBox[{
+        RowBox[{"Information", "[", 
+         RowBox[{"tnParserNet", ",", " ", "\"\<OutputPortNames\>\""}], "]"}], 
+        " ", "===", " ", 
+        RowBox[{"{", "\"\<Probabilities\>\"", "}"}]}], " ", "&&", "\n", "   ", 
+       RowBox[{
+        RowBox[{"Information", "[", 
+         RowBox[{"tnPolicyNet", ",", " ", "\"\<InputPortNames\>\""}], "]"}], 
+        " ", "===", " ", 
+        RowBox[{"{", "\"\<Input\>\"", "}"}]}], " ", "&&", " ", 
+       RowBox[{
+        RowBox[{"Information", "[", 
+         RowBox[{"tnPolicyNet", ",", " ", "\"\<OutputPortNames\>\""}], "]"}], 
+        " ", "===", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<RuleProb\>\"", ",", " ", "\"\<NodeProb\>\""}], "}"}]}], 
+       " ", "&&", "\n", "   ", 
+       RowBox[{
+        RowBox[{"Information", "[", 
+         RowBox[{"tnValueNet", ",", " ", "\"\<InputPortNames\>\""}], "]"}], 
+        " ", "===", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Input\>\"", ",", " ", "\"\<Dims\>\""}], "}"}]}], " ", "&&",
+        " ", 
+       RowBox[{
+        RowBox[{"Information", "[", 
+         RowBox[{"tnValueNet", ",", " ", "\"\<OutputPortNames\>\""}], "]"}], 
+        " ", "===", " ", 
+        RowBox[{"{", "\"\<Estimate\>\"", "}"}]}]}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Net decoding always yields a well-formed tree\>\"", ",", 
+      "\n", "  ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"t", " ", "=", " ", 
+              RowBox[{"tnRandomTree", "[", 
+               RowBox[{
+                RowBox[{"RandomInteger", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "4"}], "}"}], "]"}], ",", " ", 
+                RowBox[{"RandomInteger", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "4"}], "}"}], "]"}]}], "]"}]}], 
+             "}"}], ",", " ", 
+            RowBox[{"!", " ", 
+             RowBox[{"FailureQ", "[", 
+              RowBox[{
+               RowBox[{"tnParse", "[", 
+                RowBox[{
+                 RowBox[{"tnRender", "[", 
+                  RowBox[{"t", ",", " ", 
+                   RowBox[{"tnRandomNames", "[", 
+                    RowBox[{"tnAtomCount", "[", "t", "]"}], "]"}]}], "]"}], ",",
+                  " ", 
+                 RowBox[{"Method", " ", "->", " ", "\"\<Net\>\""}]}], "]"}], 
+               "[", "\"\<Tree\>\"", "]"}], "]"}]}]}], "]"}], ",", " ", 
+          RowBox[{"{", "100", "}"}]}], "]"}], ",", " ", "TrueQ"}], "]"}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Automatic parsing always returns the correct tree (net \
+checked against the reference)\>\"", ",", "\n", "  ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"t", " ", "=", " ", 
+              RowBox[{"tnRandomTree", "[", 
+               RowBox[{
+                RowBox[{"RandomInteger", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "4"}], "}"}], "]"}], ",", " ", 
+                RowBox[{"RandomInteger", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "4"}], "}"}], "]"}]}], "]"}]}], 
+             "}"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"tnParse", "[", 
+               RowBox[{"tnRender", "[", 
+                RowBox[{"t", ",", " ", 
+                 RowBox[{"tnRandomNames", "[", 
+                  RowBox[{"tnAtomCount", "[", "t", "]"}], "]"}]}], "]"}], 
+               "]"}], "[", "\"\<Tree\>\"", "]"}], " ", "===", " ", "t"}]}], 
+           "]"}], ",", " ", 
+          RowBox[{"{", "100", "}"}]}], "]"}], ",", " ", "TrueQ"}], "]"}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Net-driven Expand is always complete and verified\>\"", ",",
+       "\n", "  ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"r", " ", "=", " ", 
+              RowBox[{"tnSimplify", "[", 
+               RowBox[{
+                RowBox[{"tnRandomTree", "[", 
+                 RowBox[{
+                  RowBox[{"RandomInteger", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"1", ",", " ", "3"}], "}"}], "]"}], ",", " ", 
+                  RowBox[{"RandomInteger", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"1", ",", " ", "3"}], "}"}], "]"}]}], "]"}], ",", 
+                " ", "\"\<Expand\>\"", ",", " ", 
+                RowBox[{"Method", " ", "->", " ", "\"\<Net\>\""}]}], "]"}]}], 
+             "}"}], ",", " ", 
+            RowBox[{
+             RowBox[{"r", "[", "\"\<Complete\>\"", "]"}], " ", "&&", " ", 
+             RowBox[{"r", "[", "\"\<Verified\>\"", "]"}]}]}], "]"}], ",", " ", 
+          RowBox[{"{", "100", "}"}]}], "]"}], ",", " ", "TrueQ"}], "]"}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Net-driven Factor and Simplify are always verified\>\"", ",",
+       "\n", "  ", 
+      RowBox[{"AllTrue", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"t", " ", "=", " ", 
+              RowBox[{"tnRandomTree", "[", 
+               RowBox[{
+                RowBox[{"RandomInteger", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "3"}], "}"}], "]"}], ",", " ", 
+                RowBox[{"RandomInteger", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", " ", "3"}], "}"}], "]"}]}], "]"}]}], 
+             "}"}], ",", "\n", "      ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"tnSimplify", "[", 
+               RowBox[{
+                RowBox[{"tnRunOracle", "[", 
+                 RowBox[{"t", ",", " ", "\"\<Expand\>\""}], "]"}], ",", 
+                " ", "\"\<Factor\>\"", ",", " ", 
+                RowBox[{"Method", " ", "->", " ", "\"\<Net\>\""}]}], "]"}], 
+              "[", "\"\<Verified\>\"", "]"}], " ", "&&", " ", 
+             RowBox[{
+              RowBox[{"tnSimplify", "[", 
+               RowBox[{"t", ",", " ", "\"\<Simplify\>\"", ",", " ", 
+                RowBox[{"Method", " ", "->", " ", "\"\<Net\>\""}]}], "]"}], 
+              "[", "\"\<Verified\>\"", "]"}]}]}], "]"}], ",", " ", 
+          RowBox[{"{", "100", "}"}]}], "]"}], ",", " ", "TrueQ"}], "]"}]}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<Value net gives an estimate beside the exact dimension\>\"",
+       ",", "\n", "  ", 
+      RowBox[{"With", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"e", " ", "=", " ", 
+          RowBox[{"tnEvaluate", "[", 
+           RowBox[{"\"\<(V\:2a01W)^2\:2a02U\>\"", ",", " ", 
+            RowBox[{"<|", 
+             RowBox[{
+              RowBox[{"\"\<V\>\"", " ", "->", " ", "2"}], ",", " ", 
+              RowBox[{"\"\<W\>\"", " ", "->", " ", "3"}], ",", " ", 
+              RowBox[{"\"\<U\>\"", " ", "->", " ", "4"}]}], "|>"}]}], "]"}]}],
+          "}"}], ",", " ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"e", "[", 
+           RowBox[{"\"\<Exact\>\"", ",", " ", "\"\<Dimension\>\""}], "]"}], 
+          " ", "===", " ", "100"}], " ", "&&", " ", 
+         RowBox[{"IntegerQ", "[", 
+          RowBox[{"e", "[", 
+           RowBox[{"\"\<NetEstimate\>\"", ",", " ", "\"\<Dimension\>\""}], 
+           "]"}], "]"}]}]}], "]"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<tnSolve exports to JSON\>\"", ",", " ", 
+      RowBox[{"StringQ", "[", 
+       RowBox[{"ExportString", "[", 
+        RowBox[{
+         RowBox[{"tnSolve", "[", 
+          
+          RowBox[{"\"\<(a\:2a01b)\:2a02c \:2a01 a\:2a02d\>\"", ",", 
+           " ", "\"\<Simplify\>\"", ",", " ", 
+           RowBox[{"<|", 
+            RowBox[{
+             RowBox[{"\"\<a\>\"", " ", "->", " ", "2"}], ",", " ", 
+             RowBox[{"\"\<b\>\"", " ", "->", " ", "3"}], ",", " ", 
+             RowBox[{"\"\<c\>\"", " ", "->", " ", "4"}], ",", " ", 
+             RowBox[{"\"\<d\>\"", " ", "->", " ", "5"}]}], "|>"}]}], "]"}], ",",
+          " ", "\"\<JSON\>\""}], "]"}], "]"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"check", "[", 
+     RowBox[{"\"\<tnAPI answers\>\"", ",", " ", 
+      RowBox[{"!", " ", 
+       RowBox[{"FailureQ", "[", 
+        RowBox[{"tnAPI", "[", 
+         RowBox[{"<|", 
+          RowBox[{
+           
+           RowBox[{"\"\<expr\>\"", " ", "->", 
+            " ", "\"\<(a\:2a01b)\:2a02c\>\""}], ",", " ", 
+           RowBox[{"\"\<goal\>\"", " ", "->", " ", "\"\<Expand\>\""}], ",", 
+           " ", 
+           RowBox[{"\"\<dims\>\"", " ", "->", " ", "\"\<a=2,b=3,c=4\>\""}]}], 
+          "|>"}], "]"}], "]"}]}]}], "]"}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"5.", " ", "log", " ", "notebook"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"tnLog", "[", 
+     RowBox[{"\"\<Tests\>\"", ",", " ", 
+      RowBox[{"Dataset", "[", "T", "]"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tnLog", "[", 
+     RowBox[{"\"\<Training time for the small test nets (s)\>\"", ",", " ", 
+      "trainSeconds"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tnLogSave", "[", "logFile", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Put", "[", 
+     RowBox[{
+      RowBox[{"<|", 
+       RowBox[{
+        RowBox[{"\"\<Tests\>\"", " ", "->", " ", "T"}], ",", " ", 
+        RowBox[{"\"\<TrainSeconds\>\"", " ", "->", " ", "trainSeconds"}], ",",
+         " ", 
+        RowBox[{"\"\<Cell\>\"", " ", "->", 
+         " ", "\"\<ff_tensornets_new.nb\>\""}]}], "|>"}], ",", " ", 
+      "resFile"}], "]"}], ";"}], "\n"}]}]], "Input",ExpressionUUID->"1f6e7771-\
+bea1-4482-8ae4-1afbf316bb2d"]
+},
+FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"736b6053-8960-4a62-9ef9-9d7afd9c6c1f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[1460, 33, 35114, 865, 70, "Input",ExpressionUUID->"1f6e7771-bea1-4482-8ae4-1afbf316bb2d"]
+}
+]
+*)
+
+(* End of internal cache information *)
