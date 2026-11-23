@@ -31,6 +31,7 @@ The nets decide and the exact engine executes, so every rewrite is sound. The fu
 | `ref2_symbolic_math_lample_charton2019.nb` | Reference [2]: Lample and Charton, *Deep Learning for Symbolic Mathematics* (2019). The paper's method (BWD data, prefix notation, verified beam search), with a small demo that learns integration |
 | `ref3_transformer_vaswani2017.nb` | Reference [3]: Vaswani et al., *Attention Is All You Need* (2017). The base Transformer, with a small demo |
 | `ref*_log.nb` | The demo results of each reference notebook |
+| `ref*_nets.nb` | **The trained demo nets** of each reference notebook: one cell, each net stored as `name = Uncompress["…"];` |
 
 **Demo results** (small nets, CPU, Wolfram 15.0, 23 November 2026; each in its own fresh process):
 
@@ -39,6 +40,14 @@ The nets decide and the exact engine executes, so every rewrite is sound. The fu
 | ref1 (deep LSTM seq2seq) | infix ⨁/⨂ → prefix form, 2 × 128 LSTM, 30 rounds | exact match 80.5 % (beam 3) with the source reversed, 76.5 % without: the paper's finding, on a small scale |
 | ref2 (Lample and Charton) | integration learnt from BWD pairs (f′ → f), Transformer 2 layers × 128 | 86.5 % (beam 1), 95.5 % (beam 5) of 200 held-out functions, each answer **verified by differentiation** |
 | ref3 (Transformer base) | infix ⨁/⨂ → prefix form, N = 2, d = 64, 20 rounds | exact match 84.5 % (greedy), 85.0 % (beam 4, α = 0.6) |
+
+To use a saved demo net without training again (ref3 shown; ref1 and ref2 use `s2sSkipDemo` and `lcSkipDemo`):
+```
+tfSkipDemo = True
+(* evaluate ref3_transformer_vaswani2017.nb, then ref3_transformer_vaswani2017_nets.nb *)
+tfBeam[tfNet, {"(", "a", "⨁", "b", ")", "⨂", "c"}, 4]      (* {"P", "S", "a", "b", "c"} *)
+```
+The nets saved are `s2sNetReversed` and `s2sNetForward` (ref1), `lcNet` (ref2) and `tfNet` (ref3). Each was checked by restoring it in a fresh process.
 
 The paper-sized models are defined and their sizes counted, but not trained: 384.1M parameters for ref1 (the paper reports 384M) and 63.3M for ref3 (the paper reports 65M).
 

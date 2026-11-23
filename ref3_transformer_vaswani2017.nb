@@ -23,10 +23,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[      1060,         20]
-NotebookDataLength[     73574,       1775]
-NotebookOptionsPosition[     74203,       1776]
-NotebookOutlinePosition[     74520,       1790]
-CellTagsIndexPosition[     74477,       1787]
+NotebookDataLength[     79484,       1900]
+NotebookOptionsPosition[     80113,       1901]
+NotebookOutlinePosition[     80430,       1915]
+CellTagsIndexPosition[     80387,       1912]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -43,8 +43,8 @@ Cell[BoxData[
        "of", " ", 
       RowBox[{"1", " ", "\[CenterDot]", " ", "updated"}], " ", "2026"}], "-", 
      "11", "-", 
-     RowBox[{"23", " ", "04"}]}], ":", 
-    RowBox[{"40", " ", "UTC"}]}], " ", "*)"}], "\n", 
+     RowBox[{"23", " ", "05"}]}], ":", 
+    RowBox[{"20", " ", "UTC"}]}], " ", "*)"}], "\n", 
   RowBox[{"(*", " ", 
    RowBox[{
     RowBox[{
@@ -337,8 +337,10 @@ Cell[BoxData[
        "the", " ", "Wolfram", " ", "Cloud"}]}], ";", " ", 
      RowBox[{
       RowBox[{
-      "the", " ", "results", " ", "go", " ", "to", "\n", "   ", 
+      "the", " ", "trained", " ", "nets", " ", "go", " ", "to", "\n", "   ", 
        "ref3_transformer", "_vaswani2017", 
+       RowBox[{"_nets", ".", "nb"}], " ", "and", " ", "the", " ", "results", " ",
+        "to", "\n", "   ", "ref3_transformer", "_vaswani2017", 
        RowBox[{"_log", ".", "nb"}], " ", "beside", " ", "this", " ", 
        RowBox[{"notebook", "."}]}], "\n", "   ", "===", "===", "===", "===", "===",
        "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
@@ -1573,8 +1575,8 @@ CC BY-NC-SA 4.0\>\"", ",", " ", "\"\<Text\>\""}], "]"}]}], "}"}], ",", " ",
                RowBox[{
                 RowBox[{"Last", "[", 
                  RowBox[{"#", "[", 
-                  RowBox[{"[", "1", "]"}], "]"}], "]"}], " ", "!=", " ", "2"}]
-                , " ", "&"}]}], "]"}]}], ";", "\n", "    ", 
+                  RowBox[{"[", "1", "]"}], "]"}], "]"}], " ", "!=", " ", 
+                "2"}], " ", "&"}]}], "]"}]}], ";", "\n", "    ", 
            RowBox[{"If", "[", 
             RowBox[{
              RowBox[{
@@ -1768,11 +1770,134 @@ not trained\>\"", ",", " ",
              RowBox[{"test", ",", " ", "10"}], "]"}]}], "]"}]}], "]"}], ";", 
         "\n", "   ", 
         RowBox[{"tfNet", " ", "=", " ", "net"}], ";", "\n", "   ", 
-        RowBox[{"tfLogSave", "[", "]"}], ";", "\n", "   ", "Null"}]}], 
-      "]"}]}], ";"}], "\n", "\n", 
+        RowBox[{"tfLogSave", "[", "]"}], ";", "\n", "   ", 
+        RowBox[{"tfNetsSave", "[", 
+         RowBox[{"<|", 
+          RowBox[{"\"\<tfNet\>\"", " ", "->", " ", "net"}], "|>"}], "]"}], ";",
+         "\n", "   ", "Null"}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]", " ", "the", " ", "trained", " ", "nets"}], ",", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+       "saved", " ", "as", " ", "a", " ", "notebook", " ", "beside", " ", 
+        "this", " ", "one", " ", 
+        "\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]", "\n", "   ", "ref3_transformer", "_vaswani2017", 
+        RowBox[{"_nets", ".", "nb"}], " ", "holds", " ", "one", " ", 
+        RowBox[{"cell", ":", " ", 
+         RowBox[{"each", " ", "net", " ", "as", "  ", "name"}]}]}], " ", "=", 
+       " ", 
+       RowBox[{"Uncompress", "[", "\"\<...\>\"", "]"}]}], ";", "  ", 
+      RowBox[{"evaluating", " ", "it", " ", "restores", " ", "the", " ", 
+       RowBox[{"nets", ".", "\n", "   ", "To"}], " ", "use", " ", "them", " ",
+        "with", " ", "this", " ", 
+       RowBox[{"notebook", "'"}], "s", " ", "functions", " ", "without", " ", 
+       "training", " ", "again"}]}], ",", " ", 
+     RowBox[{
+      RowBox[{"evaluate", "  ", "tfSkipDemo"}], " ", "=", " ", 
+      RowBox[{"True", "  ", "first"}]}], ",", "\n", "   ", 
+     RowBox[{"then", " ", "this", " ", "notebook", " ", 
+      RowBox[{"(", 
+       RowBox[{"its", " ", "demo", " ", "is", " ", "skipped"}], ")"}]}], ",", 
+     " ", 
+     RowBox[{"then", " ", "the", " ", "nets", " ", 
+      RowBox[{"notebook", "."}]}]}], " ", "*)"}], "\n", 
    RowBox[{
-    RowBox[{"tfDemo", "[", "]"}], ";"}], "\n", "\n"}]}]], "Input",ExpressionUU\
-ID->"bfb719d9-4667-4261-8380-9ce439b59020"]
+    RowBox[{
+     RowBox[{"tfNetsFile", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Quiet", "@", 
+         RowBox[{"Check", "[", 
+          RowBox[{
+           RowBox[{"NotebookDirectory", "[", "]"}], ",", " ", 
+           RowBox[{"Directory", "[", "]"}]}], "]"}]}], ",", 
+        " ", "\"\<ref3_transformer_vaswani2017_nets.nb\>\""}], "}"}], "]"}]}],
+     ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"tfNetsSave", "[", "nets_Association", "]"}], " ", ":=", " ", 
+     RowBox[{"Export", "[", 
+      RowBox[{
+       RowBox[{"tfNetsFile", "[", "]"}], ",", " ", 
+       RowBox[{"Notebook", "[", 
+        RowBox[{"{", 
+         RowBox[{"Cell", "[", 
+          RowBox[{
+           RowBox[{"BoxData", "[", 
+            RowBox[{"RowBox", "[", 
+             RowBox[{"Join", "[", "\n", "       ", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   RowBox[{"\"\<(*\>\"", ",", " ", 
+                    RowBox[{"\"\< id: \>\"", " ", "<>", " ", 
+                    RowBox[{"CreateUUID", "[", "]"}], " ", "<>", 
+                    " ", "\"\< \[CenterDot] ref3_transformer_vaswani2017_nets \
+\[CenterDot] cell 1 of 1 \[CenterDot] updated \>\"", " ", "<>", "\n", 
+                    "            ", 
+                    RowBox[{"DateString", "[", 
+                    RowBox[{
+                    RowBox[{"TimeZoneConvert", "[", 
+                    RowBox[{"Now", ",", " ", "0"}], "]"}], ",", " ", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"\<Year\>\"", ",", " ", "\"\<-\>\"", ",", 
+                    " ", "\"\<Month\>\"", ",", " ", "\"\<-\>\"", ",", 
+                    " ", "\"\<Day\>\"", ",", " ", "\"\< \>\"", ",", 
+                    " ", "\"\<Hour\>\"", ",", " ", "\"\<:\>\"", ",", 
+                    " ", "\"\<Minute\>\""}], "}"}]}], "]"}], " ", "<>", 
+                    " ", "\"\< UTC \>\""}], ",", " ", "\"\<*)\>\""}], "}"}], 
+                  "]"}], ",", " ", "\"\<\n\>\"", ",", "\n", "        ", 
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   
+                   RowBox[{"\"\<(*\>\"", ",", 
+                    " ", "\"\< Trained demo nets of \
+ref3_transformer_vaswani2017.nb. Evaluating this cell restores them; it \
+writes nothing anywhere.\n   \[Copyright] Computational Classnotes \
+\[CenterDot] CC BY-NC-SA 4.0 \>\"", ",", " ", "\"\<*)\>\""}], "}"}], "]"}], ",",
+                  " ", "\"\<\n\>\""}], "}"}], ",", "\n", "       ", 
+               RowBox[{"Riffle", "[", 
+                RowBox[{
+                 RowBox[{"KeyValueMap", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", " ", "\"\<=\>\"", ",", " ", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"\<Uncompress\>\"", ",", " ", "\"\<[\>\"", ",", 
+                    " ", 
+                    RowBox[{"\"\<\\\"\>\"", " ", "<>", " ", 
+                    RowBox[{"Compress", "[", "#2", "]"}], " ", "<>", 
+                    " ", "\"\<\\\"\>\""}], ",", " ", "\"\<]\>\""}], "}"}], 
+                    "]"}]}], "}"}], "]"}], ",", " ", "\"\<;\>\""}], "}"}], 
+                    "]"}], " ", "&"}], ",", " ", "nets"}], "]"}], ",", 
+                 " ", "\"\<\n\>\""}], "]"}]}], "]"}], "]"}], "]"}], ",", 
+           " ", "\"\<Input\>\""}], "]"}], "}"}], "]"}], ",", 
+       " ", "\"\<NB\>\""}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"!", " ", 
+       RowBox[{"TrueQ", "[", "tfSkipDemo", "]"}]}], ",", " ", 
+      RowBox[{"tfDemo", "[", "]"}]}], "]"}], ";"}], "\n", "\n"}]}]], "Input",E\
+xpressionUUID->"e66f75c7-c3ed-4218-a06f-5991d44b3be8"]
 },
 FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (May 19, 2026)",
 StyleDefinitions->"Default.nb",
@@ -1789,7 +1914,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[1460, 33, 72739, 1741, 70, "Input",ExpressionUUID->"bfb719d9-4667-4261-8380-9ce439b59020"]
+Cell[1460, 33, 78649, 1866, 70, "Input",ExpressionUUID->"e66f75c7-c3ed-4218-a06f-5991d44b3be8"]
 }
 ]
 *)

@@ -23,10 +23,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[      1060,         20]
-NotebookDataLength[     51552,       1234]
-NotebookOptionsPosition[     52181,       1235]
-NotebookOutlinePosition[     52498,       1249]
-CellTagsIndexPosition[     52455,       1246]
+NotebookDataLength[     57582,       1362]
+NotebookOptionsPosition[     58211,       1363]
+NotebookOutlinePosition[     58528,       1377]
+CellTagsIndexPosition[     58485,       1374]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -45,8 +45,8 @@ Cell[BoxData[
       " ", "of", " ", 
       RowBox[{"1", " ", "\[CenterDot]", " ", "updated"}], " ", "2026"}], "-", 
      "11", "-", 
-     RowBox[{"23", " ", "04"}]}], ":", 
-    RowBox[{"40", " ", "UTC"}]}], " ", "*)"}], "\n", 
+     RowBox[{"23", " ", "05"}]}], ":", 
+    RowBox[{"20", " ", "UTC"}]}], " ", "*)"}], "\n", 
   RowBox[{"(*", " ", 
    RowBox[{
     RowBox[{
@@ -231,8 +231,10 @@ Cell[BoxData[
        " ", "Wolfram", " ", "Cloud"}], ";", " ", 
      RowBox[{
       RowBox[{
-      "the", " ", "results", " ", "go", " ", "to", "\n", "   ", 
+      "the", " ", "trained", " ", "nets", " ", "go", " ", "to", "\n", "   ", 
        "ref1_seq2seq", "_sutskever2014", 
+       RowBox[{"_nets", ".", "nb"}], " ", "and", " ", "the", " ", "results", " ",
+        "to", "\n", "   ", "ref1_seq2seq", "_sutskever2014", 
        RowBox[{"_log", ".", "nb"}], " ", "beside", " ", "this", " ", 
        RowBox[{"notebook", "."}]}], "\n", "   ", "===", "===", "===", "===", "===",
        "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
@@ -1227,11 +1229,137 @@ comparison: reversing the source helps)\>\"", ",", "\n", "    ",
         "\n", "   ", 
         RowBox[{"s2sNetReversed", " ", "=", " ", "rev"}], ";", " ", 
         RowBox[{"s2sNetForward", " ", "=", " ", "fwd"}], ";", "\n", "   ", 
-        RowBox[{"s2sLogSave", "[", "]"}], ";", "\n", "   ", "Null"}]}], 
-      "]"}]}], ";"}], "\n", "\n", 
+        RowBox[{"s2sLogSave", "[", "]"}], ";", "\n", "   ", 
+        RowBox[{"s2sNetsSave", "[", 
+         RowBox[{"<|", 
+          RowBox[{
+           RowBox[{"\"\<s2sNetReversed\>\"", " ", "->", " ", "rev"}], ",", 
+           " ", 
+           RowBox[{"\"\<s2sNetForward\>\"", " ", "->", " ", "fwd"}]}], "|>"}],
+          "]"}], ";", "\n", "   ", "Null"}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]", " ", "the", " ", "trained", " ", "nets"}], ",", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+       "saved", " ", "as", " ", "a", " ", "notebook", " ", "beside", " ", 
+        "this", " ", "one", " ", 
+        "\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]", "\n", "   ", "ref1_seq2seq", "_sutskever2014", 
+        RowBox[{"_nets", ".", "nb"}], " ", "holds", " ", "one", " ", 
+        RowBox[{"cell", ":", " ", 
+         RowBox[{"each", " ", "net", " ", "as", "  ", "name"}]}]}], " ", "=", 
+       " ", 
+       RowBox[{"Uncompress", "[", "\"\<...\>\"", "]"}]}], ";", "  ", 
+      RowBox[{"evaluating", " ", "it", " ", "restores", " ", "the", " ", 
+       RowBox[{"nets", ".", "\n", "   ", "To"}], " ", "use", " ", "them", " ",
+        "with", " ", "this", " ", 
+       RowBox[{"notebook", "'"}], "s", " ", "functions", " ", "without", " ", 
+       "training", " ", "again"}]}], ",", " ", 
+     RowBox[{
+      RowBox[{"evaluate", "  ", "s2sSkipDemo"}], " ", "=", " ", 
+      RowBox[{"True", "  ", "first"}]}], ",", "\n", "   ", 
+     RowBox[{"then", " ", "this", " ", "notebook", " ", 
+      RowBox[{"(", 
+       RowBox[{"its", " ", "demo", " ", "is", " ", "skipped"}], ")"}]}], ",", 
+     " ", 
+     RowBox[{"then", " ", "the", " ", "nets", " ", 
+      RowBox[{"notebook", "."}]}]}], " ", "*)"}], "\n", 
    RowBox[{
-    RowBox[{"s2sDemo", "[", "]"}], ";"}], "\n", "\n"}]}]], "Input",ExpressionU\
-UID->"0bf111c1-9bdf-468e-bd6b-099a6ea6af70"]
+    RowBox[{
+     RowBox[{"s2sNetsFile", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Quiet", "@", 
+         RowBox[{"Check", "[", 
+          RowBox[{
+           RowBox[{"NotebookDirectory", "[", "]"}], ",", " ", 
+           RowBox[{"Directory", "[", "]"}]}], "]"}]}], ",", 
+        " ", "\"\<ref1_seq2seq_sutskever2014_nets.nb\>\""}], "}"}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"s2sNetsSave", "[", "nets_Association", "]"}], " ", ":=", " ", 
+     RowBox[{"Export", "[", 
+      RowBox[{
+       RowBox[{"s2sNetsFile", "[", "]"}], ",", " ", 
+       RowBox[{"Notebook", "[", 
+        RowBox[{"{", 
+         RowBox[{"Cell", "[", 
+          RowBox[{
+           RowBox[{"BoxData", "[", 
+            RowBox[{"RowBox", "[", 
+             RowBox[{"Join", "[", "\n", "       ", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   RowBox[{"\"\<(*\>\"", ",", " ", 
+                    RowBox[{"\"\< id: \>\"", " ", "<>", " ", 
+                    RowBox[{"CreateUUID", "[", "]"}], " ", "<>", 
+                    " ", "\"\< \[CenterDot] ref1_seq2seq_sutskever2014_nets \
+\[CenterDot] cell 1 of 1 \[CenterDot] updated \>\"", " ", "<>", "\n", 
+                    "            ", 
+                    RowBox[{"DateString", "[", 
+                    RowBox[{
+                    RowBox[{"TimeZoneConvert", "[", 
+                    RowBox[{"Now", ",", " ", "0"}], "]"}], ",", " ", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"\<Year\>\"", ",", " ", "\"\<-\>\"", ",", 
+                    " ", "\"\<Month\>\"", ",", " ", "\"\<-\>\"", ",", 
+                    " ", "\"\<Day\>\"", ",", " ", "\"\< \>\"", ",", 
+                    " ", "\"\<Hour\>\"", ",", " ", "\"\<:\>\"", ",", 
+                    " ", "\"\<Minute\>\""}], "}"}]}], "]"}], " ", "<>", 
+                    " ", "\"\< UTC \>\""}], ",", " ", "\"\<*)\>\""}], "}"}], 
+                  "]"}], ",", " ", "\"\<\n\>\"", ",", "\n", "        ", 
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   
+                   RowBox[{"\"\<(*\>\"", ",", 
+                    " ", "\"\< Trained demo nets of \
+ref1_seq2seq_sutskever2014.nb. Evaluating this cell restores them; it writes \
+nothing anywhere.\n   \[Copyright] Computational Classnotes \[CenterDot] CC \
+BY-NC-SA 4.0 \>\"", ",", " ", "\"\<*)\>\""}], "}"}], "]"}], ",", 
+                 " ", "\"\<\n\>\""}], "}"}], ",", "\n", "       ", 
+               RowBox[{"Riffle", "[", 
+                RowBox[{
+                 RowBox[{"KeyValueMap", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", " ", "\"\<=\>\"", ",", " ", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"\<Uncompress\>\"", ",", " ", "\"\<[\>\"", ",", 
+                    " ", 
+                    RowBox[{"\"\<\\\"\>\"", " ", "<>", " ", 
+                    RowBox[{"Compress", "[", "#2", "]"}], " ", "<>", 
+                    " ", "\"\<\\\"\>\""}], ",", " ", "\"\<]\>\""}], "}"}], 
+                    "]"}]}], "}"}], "]"}], ",", " ", "\"\<;\>\""}], "}"}], 
+                    "]"}], " ", "&"}], ",", " ", "nets"}], "]"}], ",", 
+                 " ", "\"\<\n\>\""}], "]"}]}], "]"}], "]"}], "]"}], ",", 
+           " ", "\"\<Input\>\""}], "]"}], "}"}], "]"}], ",", 
+       " ", "\"\<NB\>\""}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"!", " ", 
+       RowBox[{"TrueQ", "[", "s2sSkipDemo", "]"}]}], ",", " ", 
+      RowBox[{"s2sDemo", "[", "]"}]}], "]"}], ";"}], "\n", "\n"}]}]], "Input",\
+ExpressionUUID->"77b5afd2-b63b-4682-8ade-00fbe6ac2100"]
 },
 FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (May 19, 2026)",
 StyleDefinitions->"Default.nb",
@@ -1248,7 +1376,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[1460, 33, 50717, 1200, 70, "Input",ExpressionUUID->"0bf111c1-9bdf-468e-bd6b-099a6ea6af70"]
+Cell[1460, 33, 56747, 1328, 70, "Input",ExpressionUUID->"77b5afd2-b63b-4682-8ade-00fbe6ac2100"]
 }
 ]
 *)

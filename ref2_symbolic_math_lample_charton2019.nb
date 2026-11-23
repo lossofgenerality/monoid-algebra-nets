@@ -23,10 +23,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[      1060,         20]
-NotebookDataLength[     76717,       1831]
-NotebookOptionsPosition[     77346,       1832]
-NotebookOutlinePosition[     77663,       1846]
-CellTagsIndexPosition[     77620,       1843]
+NotebookDataLength[     82688,       1958]
+NotebookOptionsPosition[     83317,       1959]
+NotebookOutlinePosition[     83634,       1973]
+CellTagsIndexPosition[     83591,       1970]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -46,8 +46,8 @@ Cell[BoxData[
        "of", " ", 
       RowBox[{"1", " ", "\[CenterDot]", " ", "updated"}], " ", "2026"}], "-", 
      "11", "-", 
-     RowBox[{"23", " ", "04"}]}], ":", 
-    RowBox[{"40", " ", "UTC"}]}], " ", "*)"}], "\n", 
+     RowBox[{"23", " ", "05"}]}], ":", 
+    RowBox[{"20", " ", "UTC"}]}], " ", "*)"}], "\n", 
   RowBox[{"(*", " ", 
    RowBox[{
     RowBox[{
@@ -278,8 +278,11 @@ Cell[BoxData[
        " ", "Wolfram", " ", "Cloud"}], ";", " ", 
      RowBox[{
       RowBox[{
-      "the", " ", "results", " ", "go", " ", "to", "\n", "   ", 
+      "the", " ", "trained", " ", "nets", " ", "go", " ", "to", "\n", "   ", 
        "ref2_symbolic", "_math", "_lample", "_charton2019", 
+       RowBox[{"_nets", ".", "nb"}], " ", "and", " ", "the", " ", "results", " ",
+        "to", "\n", "   ", "ref2_symbolic", "_math", "_lample", 
+       "_charton2019", 
        RowBox[{"_log", ".", "nb"}], " ", "beside", " ", "this", " ", 
        RowBox[{"notebook", "."}]}], "\n", "   ", "===", "===", "===", "===", "===",
        "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
@@ -1824,11 +1827,135 @@ or the top one)\>\"", ",", "\n", "    ",
              RowBox[{"test", ",", " ", "12"}], "]"}]}], "]"}]}], "]"}], ";", 
         "\n", "   ", 
         RowBox[{"lcNet", " ", "=", " ", "net"}], ";", "\n", "   ", 
-        RowBox[{"lcLogSave", "[", "]"}], ";", "\n", "   ", "Null"}]}], 
-      "]"}]}], ";"}], "\n", "\n", 
+        RowBox[{"lcLogSave", "[", "]"}], ";", "\n", "   ", 
+        RowBox[{"lcNetsSave", "[", 
+         RowBox[{"<|", 
+          RowBox[{"\"\<lcNet\>\"", " ", "->", " ", "net"}], "|>"}], "]"}], ";",
+         "\n", "   ", "Null"}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]", " ", "the", " ", "trained", " ", "nets"}], ",", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+       "saved", " ", "as", " ", "a", " ", "notebook", " ", "beside", " ", 
+        "this", " ", "one", " ", 
+        "\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]", "\n", "   ", "ref2_symbolic", "_math", "_lample", 
+        "_charton2019", 
+        RowBox[{"_nets", ".", "nb"}], " ", "holds", " ", "one", " ", 
+        RowBox[{"cell", ":", " ", 
+         RowBox[{"each", " ", "net", " ", "as", "  ", "name"}]}]}], " ", "=", 
+       " ", 
+       RowBox[{"Uncompress", "[", "\"\<...\>\"", "]"}]}], ";", "  ", 
+      RowBox[{"evaluating", " ", "it", " ", "restores", " ", "the", " ", 
+       RowBox[{"nets", ".", "\n", "   ", "To"}], " ", "use", " ", "them", " ",
+        "with", " ", "this", " ", 
+       RowBox[{"notebook", "'"}], "s", " ", "functions", " ", "without", " ", 
+       "training", " ", "again"}]}], ",", " ", 
+     RowBox[{
+      RowBox[{"evaluate", "  ", "lcSkipDemo"}], " ", "=", " ", 
+      RowBox[{"True", "  ", "first"}]}], ",", "\n", "   ", 
+     RowBox[{"then", " ", "this", " ", "notebook", " ", 
+      RowBox[{"(", 
+       RowBox[{"its", " ", "demo", " ", "is", " ", "skipped"}], ")"}]}], ",", 
+     " ", 
+     RowBox[{"then", " ", "the", " ", "nets", " ", 
+      RowBox[{"notebook", "."}]}]}], " ", "*)"}], "\n", 
    RowBox[{
-    RowBox[{"lcDemo", "[", "]"}], ";"}], "\n", "\n"}]}]], "Input",ExpressionUU\
-ID->"8581586e-7a56-44bd-a125-3e36b53a67d5"]
+    RowBox[{
+     RowBox[{"lcNetsFile", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Quiet", "@", 
+         RowBox[{"Check", "[", 
+          RowBox[{
+           RowBox[{"NotebookDirectory", "[", "]"}], ",", " ", 
+           RowBox[{"Directory", "[", "]"}]}], "]"}]}], ",", 
+        " ", "\"\<ref2_symbolic_math_lample_charton2019_nets.nb\>\""}], "}"}],
+       "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"lcNetsSave", "[", "nets_Association", "]"}], " ", ":=", " ", 
+     RowBox[{"Export", "[", 
+      RowBox[{
+       RowBox[{"lcNetsFile", "[", "]"}], ",", " ", 
+       RowBox[{"Notebook", "[", 
+        RowBox[{"{", 
+         RowBox[{"Cell", "[", 
+          RowBox[{
+           RowBox[{"BoxData", "[", 
+            RowBox[{"RowBox", "[", 
+             RowBox[{"Join", "[", "\n", "       ", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   RowBox[{"\"\<(*\>\"", ",", " ", 
+                    RowBox[{"\"\< id: \>\"", " ", "<>", " ", 
+                    RowBox[{"CreateUUID", "[", "]"}], " ", "<>", 
+                    " ", "\"\< \[CenterDot] \
+ref2_symbolic_math_lample_charton2019_nets \[CenterDot] cell 1 of 1 \
+\[CenterDot] updated \>\"", " ", "<>", "\n", "            ", 
+                    RowBox[{"DateString", "[", 
+                    RowBox[{
+                    RowBox[{"TimeZoneConvert", "[", 
+                    RowBox[{"Now", ",", " ", "0"}], "]"}], ",", " ", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"\<Year\>\"", ",", " ", "\"\<-\>\"", ",", 
+                    " ", "\"\<Month\>\"", ",", " ", "\"\<-\>\"", ",", 
+                    " ", "\"\<Day\>\"", ",", " ", "\"\< \>\"", ",", 
+                    " ", "\"\<Hour\>\"", ",", " ", "\"\<:\>\"", ",", 
+                    " ", "\"\<Minute\>\""}], "}"}]}], "]"}], " ", "<>", 
+                    " ", "\"\< UTC \>\""}], ",", " ", "\"\<*)\>\""}], "}"}], 
+                  "]"}], ",", " ", "\"\<\n\>\"", ",", "\n", "        ", 
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   
+                   RowBox[{"\"\<(*\>\"", ",", 
+                    " ", "\"\< Trained demo nets of \
+ref2_symbolic_math_lample_charton2019.nb. Evaluating this cell restores them; \
+it writes nothing anywhere.\n   \[Copyright] Computational Classnotes \
+\[CenterDot] CC BY-NC-SA 4.0 \>\"", ",", " ", "\"\<*)\>\""}], "}"}], "]"}], ",",
+                  " ", "\"\<\n\>\""}], "}"}], ",", "\n", "       ", 
+               RowBox[{"Riffle", "[", 
+                RowBox[{
+                 RowBox[{"KeyValueMap", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", " ", "\"\<=\>\"", ",", " ", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"\<Uncompress\>\"", ",", " ", "\"\<[\>\"", ",", 
+                    " ", 
+                    RowBox[{"\"\<\\\"\>\"", " ", "<>", " ", 
+                    RowBox[{"Compress", "[", "#2", "]"}], " ", "<>", 
+                    " ", "\"\<\\\"\>\""}], ",", " ", "\"\<]\>\""}], "}"}], 
+                    "]"}]}], "}"}], "]"}], ",", " ", "\"\<;\>\""}], "}"}], 
+                    "]"}], " ", "&"}], ",", " ", "nets"}], "]"}], ",", 
+                 " ", "\"\<\n\>\""}], "]"}]}], "]"}], "]"}], "]"}], ",", 
+           " ", "\"\<Input\>\""}], "]"}], "}"}], "]"}], ",", 
+       " ", "\"\<NB\>\""}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"!", " ", 
+       RowBox[{"TrueQ", "[", "lcSkipDemo", "]"}]}], ",", " ", 
+      RowBox[{"lcDemo", "[", "]"}]}], "]"}], ";"}], "\n", "\n"}]}]], "Input",E\
+xpressionUUID->"b2a316a1-c0ae-4d07-af8d-f835789630cb"]
 },
 FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (May 19, 2026)",
 StyleDefinitions->"Default.nb",
@@ -1845,7 +1972,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[1460, 33, 75882, 1797, 70, "Input",ExpressionUUID->"8581586e-7a56-44bd-a125-3e36b53a67d5"]
+Cell[1460, 33, 81853, 1924, 70, "Input",ExpressionUUID->"b2a316a1-c0ae-4d07-af8d-f835789630cb"]
 }
 ]
 *)
