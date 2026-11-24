@@ -82,7 +82,7 @@ for term in sorted(TERMS, key=lambda t: t.lower().lstrip('⨂⨁ ')):
     items.append('<dt id="%s">%s</dt><dd>%s%s <a href="units/%s.html">Unit %d §%d</a></dd>' % (
         html.escape(term.split(' (')[0].replace(' ', '-').lower()), html.escape(term), html.escape(d),
         (' <span class="ex">' + html.escape(ex) + '</span>') if ex else '', U[u], u, s))
-nav = '<nav class="wtop"><a href="units/index.html">All units</a><a href="%s">Repository</a></nav>' % REPO
+nav = '<nav class="wtop"><a href="units/index.html">All units</a><a href="design.html">Design</a><a href="../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
 (ROOT / 'docs/glossary.html').write_text(page('Glossary · TensorNets units', '<h1>Glossary</h1><p>Every technical term of the four TensorNets units, defined in a sentence, with a small example where it helps, and a link to the section where it is worked out.</p><dl>%s</dl>' % ''.join(items), nav), encoding='utf-8')
 
 UNITS = [
@@ -93,13 +93,14 @@ UNITS = [
 ]
 cards = ''.join('<div class="unit"><h3>Unit %d · %s</h3><p>%s</p><p><a href="%s.html">Read</a> · <a href="%s.pdf">PDF</a> · <a href="%s/blob/main/docs/units/%s.md">Markdown</a> · <a href="%s/blob/main/%s">Notebook %s</a></p></div>'
                 % (n, html.escape(t), html.escape(d), s, s, REPO, s, REPO, nb, nb) for n, s, nb, t, d in UNITS)
-nav2 = '<nav class="wtop"><a href="../glossary.html">Glossary</a><a href="%s">Repository</a></nav>' % REPO
+nav2 = '<nav class="wtop"><a href="../glossary.html">Glossary</a><a href="../design.html">Design</a><a href="../../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
 intro = ('<h1>TensorNets · Units of learning</h1><p>Four units on how the TensorNets nets are made. Each unit has a write-up (HTML, PDF, Markdown) and a Wolfram notebook with the same section numbers: '
          'a toolkit cell, then one section per idea, each with a worked example by hand and a check that the kernel returns. Units 1–3 follow one paper each; Unit 4 builds our own net from them.</p>'
          '<p>Open a notebook in Wolfram, choose Evaluation ▸ Quit Kernel ▸ Local, and evaluate it from top to bottom. The notebooks are saved with their outputs, so they can also be read without running.</p>')
 (ROOT / 'docs/units/index.html').write_text(page('TensorNets · Units of learning', intro + cards, nav2), encoding='utf-8')
 root_cards = cards.replace('href="0', 'href="docs/units/0')
-(ROOT / 'index.html').write_text(page('TensorNets', intro.replace('TensorNets · Units of learning', 'TensorNets') +
-    '<p>Design: <a href="DESIGN-tensornets.pdf">DESIGN-tensornets.pdf</a> · <a href="docs/glossary.html">Glossary</a> · <a href="docs/units/index.html">Units</a></p>' + root_cards,
-    '<nav class="wtop"><a href="%s">Repository</a></nav>' % REPO), encoding='utf-8')
+(ROOT / 'index.html').write_text('<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n'
+    '<title>TensorNets</title>\n<meta http-equiv="refresh" content="0; url=docs/units/index.html">\n</head><body style="font:16px system-ui;margin:40px">\n'
+    '<p><a href="docs/units/index.html">TensorNets · Units of learning</a> · <a href="docs/design.html">design</a> · <a href="docs/glossary.html">glossary</a> · <a href="search.html">search</a></p>\n'
+    '<p>© 2026 Computational Classnotes · CC BY-NC-SA 4.0</p>\n</body></html>\n', encoding='utf-8')
 print(len(TERMS), 'terms')

@@ -1,0 +1,48 @@
+/* CCN design tokens v1 — Computational Classnotes. © Computational Classnotes · CC BY-NC-SA 4.0
+   One file for every CCN web page. Light and dark come from one declaration via light-dark(). */
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 400; font-display: swap; src: url(fonts/bricolage-grotesque-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 700; font-display: swap; src: url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 400; font-display: swap; src: url(fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 400; font-style: italic; font-display: swap; src: url(fonts/ibm-plex-sans-latin-400-italic.woff2) format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 500; font-display: swap; src: url(fonts/ibm-plex-sans-latin-500-normal.woff2) format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 600; font-display: swap; src: url(fonts/ibm-plex-sans-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; font-display: swap; src: url(fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 600; font-display: swap; src: url(fonts/jetbrains-mono-latin-600-normal.woff2) format("woff2"); }
+
+:root {
+  color-scheme: light dark;
+  /* brand */
+  --ccn-orange: #fa8f2b;                              /* RGB(0.98, 0.56, 0.17): fills, highlights, marks on dark */
+  --ccn-orange-ink: light-dark(#a35206, #ffb26b);     /* text, links, thin lines (5.57:1 on white, 10.5:1 on dark) */
+  --ccn-orange-mark: light-dark(#d4701a, #fa8f2b);    /* chart lines and icons (≥ 3:1) */
+  --ccn-orange-tint: light-dark(#fff3e6, #2a1d10);    /* callouts, active tab, selection */
+  --ccn-blue: light-dark(#2e5cc7, #6f97ff);           /* RGB(0.18, 0.36, 0.78): negative values, the cold end */
+  /* neutrals */
+  --ccn-page: light-dark(#f3f5f8, #0e131a);
+  --ccn-panel: light-dark(#ffffff, #151c25);
+  --ccn-code: light-dark(#f6f7f9, #0b1016);
+  --ccn-ink: light-dark(#17202b, #e5eaf0);
+  --ccn-soft: light-dark(#566273, #9aa7b6);
+  --ccn-line: light-dark(#d9dfe7, #263241);
+  --ccn-zero: light-dark(#f4f4f4, #2a313a);           /* the middle of the diverging scale */
+  /* semantic */
+  --ccn-good: light-dark(#1f7a3a, #6fd68f);
+  --ccn-bad: light-dark(#b3261e, #ff8a80);
+  --ccn-caution: light-dark(#8a6d0b, #e8c35a);
+  /* categorical data series, in order */
+  --ccn-c1: var(--ccn-orange-mark); --ccn-c2: var(--ccn-blue); --ccn-c3: light-dark(#177373, #5fc4c4);
+  --ccn-c4: light-dark(#7a4bb0, #c9a6ff); --ccn-c5: light-dark(#566273, #9aa7b6); --ccn-c6: light-dark(#8a6d0b, #e8c35a);
+  /* type */
+  --ccn-f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --ccn-f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --ccn-f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --ccn-t-xs: 12px; --ccn-t-sm: 13.5px; --ccn-t-base: 16px; --ccn-t-lg: 20px; --ccn-t-xl: clamp(26px, 3.4vw, 36px); --ccn-t-2xl: clamp(30px, 4.4vw, 48px);
+  /* space, shape, motion */
+  --ccn-s1: 4px; --ccn-s2: 8px; --ccn-s3: 12px; --ccn-s4: 16px; --ccn-s5: 24px; --ccn-s6: 32px; --ccn-s7: 48px;
+  --ccn-r-sm: 6px; --ccn-r: 10px; --ccn-r-pill: 999px;
+  --ccn-measure: 72ch; --ccn-page-max: 1240px;
+  --ccn-ease: cubic-bezier(.2, .7, .2, 1); --ccn-fast: 120ms; --ccn-slow: 240ms;
+}
+:root[data-theme=light] { color-scheme: light; }
+:root[data-theme=dark] { color-scheme: dark; }
+@media (prefers-reduced-motion: reduce) { :root { --ccn-fast: 0ms; --ccn-slow: 0ms; } }

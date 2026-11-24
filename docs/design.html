@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>DESIGN — ff_tensornets — Computational Classnotes</title><style>@page { size: A4; margin: 20mm 18mm 22mm 18mm;
+  @bottom-center { content: "© 2026 Computational Classnotes · CC BY-NC-SA 4.0"; } }
+body { font-family: "DejaVu Sans", sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d2430; }
+h1 { font-size: 20pt; margin: 0 0 4pt; color: #11161f; }
+h2 { font-size: 13.5pt; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid rgb(250,143,43); break-after: avoid; }
+p, li { orphans: 3; widows: 3; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; }
+table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 8pt 0; break-inside: auto; }
+th, td { border: 1px solid #c9d0db; padding: 3pt 5pt; vertical-align: top; text-align: left; }
+th { background: #eef1f6; }
+tr { break-inside: avoid; }
+img { max-width: 100%; max-height: 105mm; display: block; margin: 4pt auto; }
+figure { margin: 6pt 0; }
+figcaption { display: none; }
+math { font-family: "Latin Modern Math", "STIX Two Math", serif; }
+math[display="block"] { display: block; margin: 8pt 0; font-size: 11pt; }
+a { color: #1f5fbf; text-decoration: none; }
+hr { border: 0; border-top: 1px solid #c9d0db; margin: 16pt 0 8pt; }
+table { break-inside: avoid; }
+body{max-width:860px;margin:0 auto;padding:28px 22px 60px;background:#fff} img{max-width:100%;height:auto}nav.wtop{font-size:10pt;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap} nav.wtop a{color:rgb(212,86,28)} @media print{nav.wtop{display:none}}</style></head><body><nav class="wtop"><a href="units/index.html">All units</a><a href="../DESIGN-tensornets.pdf">PDF</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/DESIGN-tensornets.md">Markdown</a><a href="glossary.html">Glossary</a><a href="../search.html">Search</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets">Repository</a></nav><h1 id="design-ff_tensornets">DESIGN — ff_tensornets</h1>
+<p><em>Updated 23 November 2026, 04:05 UTC · Neural nets that parse,
+evaluate and simplify tensor-algebra expressions in ⨂ (tensor product)
+and ⨁ (direct sum). Wolfram Language first; Python follows
+later.</em></p>
+<p>By Dara O Shayda and Hikari Noor Hoshino (星野ヌール)<br />
+AI System Programming Group</p>
+<hr />
+<h2 id="the-design-in-one-paragraph">1. The design in one paragraph</h2>
+<p>The work is split into <strong>three separate nets</strong>, since
+the three tasks differ in kind:</p>
+<ul>
+<li>parsing is sequence-to-sequence translation;<a href="#fn1"
+class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></li>
+<li>simplification is a sequence of decisions;</li>
+<li>evaluation is regression.</li>
+</ul>
+<p>Each net is paired with an <strong>exact symbolic
+counterpart</strong>, which labels its training data and checks its
+answers. Neural nets have been shown to learn symbolic mathematics from
+generated data<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>; here they are never trusted alone.
+The nets decide; the exact engine executes. As a result, every rewrite
+the system performs is mathematically sound, whatever the quality of the
+nets. Terms marked † are explained in detail, with examples, in
+<strong>Appendix A</strong>.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Net</th>
+<th>Kind</th>
+<th>Exact counterpart (oracle)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Parse</td>
+<td><code>tnParserNet</code></td>
+<td>transformer encoder–decoder†<a href="#fn3" class="footnote-ref"
+id="fnref3" role="doc-noteref"><sup>3</sup></a>, tokens → prefix
+tree</td>
+<td><code>tnRefParse</code> (recursive descent, as in
+<code>tensor_parser.py</code><a href="#fn4" class="footnote-ref"
+id="fnref4" role="doc-noteref"><sup>4</sup></a>)</td>
+</tr>
+<tr class="even">
+<td>Simplify</td>
+<td><code>tnPolicyNet</code></td>
+<td>transformer encoder, two heads: <em>which rule</em>, <em>at which
+node</em>†; a <em>policy</em> net<a href="#fn5" class="footnote-ref"
+id="fnref5" role="doc-noteref"><sup>5</sup></a></td>
+<td><code>tnOracleStep</code> (first applicable rule, preorder
+scan†)</td>
+</tr>
+<tr class="odd">
+<td>Evaluate</td>
+<td><code>tnValueNet</code></td>
+<td>transformer encoder, pooled regression†; a <em>value</em> net<a
+href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a></td>
+<td><code>tnDimension</code>, <code>tnTermCount</code>,
+<code>tnNumeric</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="representation">2. Representation</h2>
+<ul>
+<li><strong>Lexer</strong> (<code>tnLex</code>, deterministic)†:
+identifiers become atom slots <code>x1 … x8</code> in order of first
+appearance, so the nets learn structure rather than names. Operator
+spellings (<code>⨁ ⊕ (+) +</code>, <code>⨂ ⊗ (x) *</code>,
+<code>^ ^⊗ ^⨂</code>) are kept as distinct tokens; recognising them is
+part of the parser’s task. <code>0</code>/<code>𝟎</code> is the zero
+space, <code>1</code>/<code>𝟙</code> the unit space†.</li>
+<li><strong>Tree</strong>: binary heads <code>tnS[a,b]</code> (⨁),
+<code>tnP[a,b]</code> (⨂), <code>tnE[n,a]</code> (tensor power), atoms
+<code>tnX[i]</code>, <code>tnZero</code>, <code>tnUnit</code>. Binary
+heads make the prefix form unambiguous; associativity is a rewrite
+rule.</li>
+<li><strong>Prefix (Polish) form</strong>†<a href="#fn7"
+class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> —
+<code>(a⨁b)⨂c</code> → <code>P S x1 x2 x3</code>. It is the parser’s
+output and the input of the other two nets. Its token <em>k</em> is node
+<em>k</em> of the tree in preorder, which is how the policy net points
+at a node.</li>
+</ul>
+<h2 id="net-1-the-parser">3. Net 1 — the parser</h2>
+<ul>
+<li><strong>Architecture</strong>†: token + position embeddings; encoder
+of <em>L</em> self-attention blocks; decoder of <em>L</em> blocks
+(causal self-attention, cross-attention to the encoder, feed-forward),
+each with residual connection and layer normalisation; softmax over the
+output vocabulary. Defaults <em>d</em> = 128, 4 heads, <em>L</em> =
+3.</li>
+<li><strong>Training</strong>†: teacher forcing on random trees written
+in random spellings (random glyphs, spacing and redundant parentheses),
+target = the tree’s prefix form.</li>
+<li><strong>Decoding:</strong> greedy and
+<strong>grammar-constrained</strong>. This is a simple form of
+grammar-constrained generation<a href="#fn8" class="footnote-ref"
+id="fnref8" role="doc-noteref"><sup>8</sup></a>. A counter of subtrees
+still owed forbids premature ends, and forbids atom slots beyond those
+in the input, so the output is always a well-formed tree.</li>
+<li><strong>Use:</strong> <code>tnParse</code> runs the net and checks
+it against the reference parser. With
+<code>Method -&gt; Automatic</code>, the reference result is returned
+whenever the two differ, and the disagreement is reported. With
+<code>Method -&gt; "Net"</code>, the net’s own answer is returned.</li>
+</ul>
+<h2 id="net-2-the-rewrite-policy">4. Net 2 — the rewrite policy</h2>
+<ul>
+<li><strong>Rules</strong> (all exact and sound; term rewriting in the
+usual sense<a href="#fn9" class="footnote-ref" id="fnref9"
+role="doc-noteref"><sup>9</sup></a>): <code>ZeroSum</code>,
+<code>ZeroProd</code>, <code>UnitProd</code>, <code>PowerExpand</code>,
+<code>DistRight</code>, <code>DistLeft</code>, <code>AssocSum</code>,
+<code>AssocProd</code>, <code>FactorLeft</code>,
+<code>FactorRight</code>, <code>PowerFold</code>.</li>
+<li><strong>Goals:</strong>
+<ul>
+<li><code>"Expand"</code>: distribute ⨂ over ⨁, remove 0 and 𝟙, expand
+powers, right-associate;</li>
+<li><code>"Factor"</code>: the reverse — take common factors out and
+fold powers;</li>
+<li><code>"Simplify"</code>: Expand, then Factor, keeping the result
+only if it is no longer than the input.</li>
+</ul></li>
+<li><strong>Architecture</strong>†: the goal token is prepended to the
+prefix sequence; encoder as above; the <em>rule head</em> reads the goal
+position, the <em>node head</em> scores every position.</li>
+<li><strong>Inference:</strong> the exact engine lists every
+<strong>legal</strong> (rule, node) pair, and the net’s probabilities
+choose among them. An illegal step can therefore never be taken, and
+Expand always terminates in its normal form.</li>
+<li><strong>Verification:</strong> every result is checked by
+<code>tnEquivalentQ</code>. Both sides are expanded into words (ordered
+⨂-factors) and compared as multisets. ⨁ is commutative up to natural
+isomorphism; ⨂ order is never changed.</li>
+</ul>
+<h2 id="net-3-the-value-net">5. Net 3 — the value net</h2>
+<ul>
+<li><strong>Input:</strong> prefix tokens, plus each atom’s log₂
+dimension.</li>
+<li><strong>Output:</strong> log₂(1 + dimension), log₂(1 + number of
+terms after expansion), and log₂(1 + Expand steps) — a pooled
+regression†.</li>
+<li><strong>Purpose:</strong> a fast cost estimate. For instance, it can
+warn before an expansion that would grow exponentially (the caveat in
+<code>CONTEXT.md</code><a href="#fn10" class="footnote-ref" id="fnref10"
+role="doc-noteref"><sup>10</sup></a>), and later it can guide a search
+for shorter factorisations. Exact values always come from the symbolic
+evaluator and are reported beside the estimate.</li>
+<li><strong>Numeric evaluation</strong> (⨂ → Kronecker product<a
+href="#fn11" class="footnote-ref" id="fnref11"
+role="doc-noteref"><sup>11</sup></a>; ⨁ → block-diagonal or
+concatenation) is left to <code>tnNumeric</code>: a net would add
+nothing but error there.</li>
+</ul>
+<h2 id="public-functions">6. Public functions</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tnTrainAll[]</code></td>
+<td>Generates data, trains the three nets, writes the log notebook</td>
+</tr>
+<tr class="even">
+<td><code>tnParse[s]</code></td>
+<td>String → tree, prefix, canonical string, method used</td>
+</tr>
+<tr class="odd">
+<td><code>tnSimplify[s, goal]</code></td>
+<td><code>"Expand"</code>, <code>"Factor"</code> or
+<code>"Simplify"</code>, with every step and a verification flag</td>
+</tr>
+<tr class="even">
+<td><code>tnEvaluate[s, dims]</code></td>
+<td>Exact dimension and term count, and the net’s estimate; matrices
+give a numeric value</td>
+</tr>
+<tr class="odd">
+<td><code>tnSolve[s, goal, dims]</code></td>
+<td>All of the above, JSON-ready</td>
+</tr>
+<tr class="even">
+<td><code>tnAPI</code></td>
+<td><code>APIFunction</code> over <code>tnSolve</code> (parameters
+<code>expr</code>, <code>goal</code>, <code>dims</code> as
+<code>"a=2,b=3"</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>tnAccuracy[n]</code></td>
+<td>Measures the nets against the oracles on fresh data</td>
+</tr>
+<tr class="even">
+<td><code>tnSaveNets[]</code>, <code>tnLoadNets[]</code></td>
+<td>Nets to and from <code>AI/freeform/ff/tensornets/nets/</code>;
+<code>tnSaveNets</code> writes nothing unless all three nets are
+trained</td>
+</tr>
+<tr class="odd">
+<td><code>tnLogSave[]</code></td>
+<td>Writes the log notebook</td>
+</tr>
+<tr class="even">
+<td><code>tensorNetsSave[]</code></td>
+<td>The release: CloudSaves the public functions and the bundle</td>
+</tr>
+</tbody>
+</table>
+<p>Nothing is printed. Training progress (per round) and summaries go to
+<code>ff_tensornets_log.nb</code>, beside the evaluating notebook.</p>
+<h2 id="notebooks-and-routine">7. Notebooks and routine</h2>
+<p>All work is in <code>~/Desktop/Research/TensorNets</code>, in
+notebooks only, each holding one Input cell, following CCN’s working
+practice<a href="#fn12" class="footnote-ref" id="fnref12"
+role="doc-noteref"><sup>12</sup></a>.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Notebook</th>
+<th>Holds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ff_tensornets_new.nb</code></td>
+<td>The current code: every function in one cell</td>
+</tr>
+<tr class="even">
+<td><code>ff_tensornets_test.nb</code></td>
+<td>The tests</td>
+</tr>
+<tr class="odd">
+<td><code>ff_tensornets_new_testlog.nb</code></td>
+<td>The latest test results</td>
+</tr>
+<tr class="even">
+<td><code>ff_tensornets_smallnets.nb</code></td>
+<td>The small development nets (wiring checks only)</td>
+</tr>
+<tr class="odd">
+<td><code>ff_tensornets.nb</code>,
+<code>ff_tensornets_testlog.nb</code></td>
+<td>The earlier version and its test log, kept unchanged</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Evaluating the cell writes nothing to the Wolfram
+Cloud.</strong> Cloud writes happen only when the owner calls them:
+<code>tensorNetsSave[]</code> (the release) and
+<code>tnSaveNets[]</code> (the nets).</li>
+<li>While <code>tensorNetsSave[]</code> saves (with
+<code>CloudSave</code><a href="#fn13" class="footnote-ref" id="fnref13"
+role="doc-noteref"><sup>13</sup></a>), every symbol in the cell’s
+context that does not belong to this project is blocked. Values left in
+a shared kernel can therefore never be swept into the release.</li>
+<li>Full-size training (<code>tnTrainAll[]</code>) has not yet been
+done. On CPU, expect an hour or more for all three nets at the
+defaults.</li>
+</ul>
+<h2
+id="tested-23-november-2026-wolfram-15.0-separate-wolframscript-process">8.
+Tested (23 November 2026, Wolfram 15.0, separate
+<code>wolframscript</code> process)</h2>
+<p><code>ff_tensornets_test.nb</code> evaluates the cell of
+<code>ff_tensornets_new.nb</code> and writes
+<code>ff_tensornets_new_testlog.nb</code>. It writes nothing to the
+Cloud and deletes nothing. Result: <strong>22 of 22 checks
+pass</strong>. They cover:</p>
+<ul>
+<li>the cell makes no Cloud call;</li>
+<li>the lexer and parser (2,000 random spellings);</li>
+<li>Expand and Factor soundness;</li>
+<li>⨂ order;</li>
+<li>numeric evaluation;</li>
+<li>the worked examples;</li>
+<li>the fall-back to the oracles;</li>
+<li>stray-symbol blocking in the release;</li>
+<li>the refusal of <code>tnSaveNets</code> without trained nets;</li>
+<li>the nets’ wiring;</li>
+<li>the JSON output and <code>tnAPI</code>.</li>
+</ul>
+<p>The small test nets (<em>d</em> = 32) do not measure quality. In a
+separate, longer run, a parser with <em>d</em> = 64 trained for about
+six minutes rebuilt 83 % of shallow trees exactly.</p>
+<h2 id="path-to-python">9. Path to Python</h2>
+<ul>
+<li>Nets export to ONNX<a href="#fn14" class="footnote-ref" id="fnref14"
+role="doc-noteref"><sup>14</sup></a> from Wolfram 15; a small net has
+already been carried across this way in the agent free-form language
+work. Whether <code>AttentionLayer</code> with <code>"MultiHead"</code>
+exports cleanly remains to be tested.</li>
+<li>The lexer, oracles and rule engine are small and port directly.
+<code>tensor_parser.py</code> is already the Python counterpart of
+<code>tnLex</code> + <code>tnRefParse</code>: same grammar, same
+operator spellings.</li>
+</ul>
+<h2 id="open-questions">10. Open questions</h2>
+<ol type="1">
+<li>Should ⨂ be treated as commutative up to isomorphism (as ⨁ is),
+which would let Factor find more common factors?</li>
+<li>Should scalars, duals or daggers enter the grammar now, or after the
+first full training?</li>
+<li>Should Factor become a search guided by the value net (beam search),
+rather than greedy imitation of the oracle?</li>
+</ol>
+<hr />
+<h2 id="appendix-a-terms-explained-with-examples">Appendix A — Terms
+explained, with examples</h2>
+<p>The running example throughout is the expression
+<strong><code>(a⨁b)⨂c</code></strong>.</p>
+<h3 id="a.1-lexer-tnlex-deterministic-and-atom-slots">A.1 Lexer
+(<code>tnLex</code>, deterministic) and atom slots</h3>
+<p><strong>Definition.</strong> A <em>lexer</em> cuts a string into
+<em>tokens</em>, the smallest meaningful pieces: names, operators,
+parentheses and numbers. <code>tnLex</code> is <em>deterministic</em>:
+it is ordinary code, not a net, and the same string always gives the
+same tokens.</p>
+<p>Whenever it meets a name (an <em>identifier</em>), it replaces the
+name with an <strong>atom slot</strong>: <code>x1</code> for the first
+distinct name, <code>x2</code> for the second, and so on up to
+<code>x8</code>. The real names are kept in a separate list, so the
+result can be printed with them afterwards.</p>
+<p><strong>Why.</strong> The meaning of <code>(a⨁b)⨂c</code> does not
+depend on the letters chosen. <code>(V⨁W)⨂U</code> and
+<code>(ψ'⨁φ_2)⨂H</code> have exactly the same structure. With slots, the
+nets see one pattern instead of thousands of spellings of it, and so
+learn structure rather than names.</p>
+<p><strong>Examples.</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Input string</th>
+<th>Tokens</th>
+<th>Atoms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>(a⨁b)⨂c</code></td>
+<td><code>( x1 ⨁ x2 ) ⨂ x3</code></td>
+<td><code>{a, b, c}</code></td>
+</tr>
+<tr class="even">
+<td><code>(V⨁W)⨂U</code></td>
+<td><code>( x1 ⨁ x2 ) ⨂ x3</code></td>
+<td><code>{V, W, U}</code></td>
+</tr>
+<tr class="odd">
+<td><code>a⨂b⨁a</code></td>
+<td><code>x1 ⨂ x2 ⨁ x1</code></td>
+<td><code>{a, b}</code> (a repeated name keeps its slot)</td>
+</tr>
+<tr class="even">
+<td><code>(V ⊕ W)^2</code></td>
+<td><code>( x1 ⊕ x2 ) ^ n2</code></td>
+<td><code>{V, W}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Operator spellings are kept as they were typed (<code>⨁</code> and
+<code>⊕</code> remain different tokens), because learning that they mean
+the same thing is part of the parser’s task. <code>(x)</code> is always
+read as a ⨂ spelling, never as a name, so the letters <code>x</code> and
+<code>X</code> are not used as names.</p>
+<h3 id="a.2-0𝟎-is-the-zero-space-1𝟙-the-unit-space">A.2
+<code>0</code>/<code>𝟎</code> is the zero space,
+<code>1</code>/<code>𝟙</code> the unit space</h3>
+<p><strong>Definition.</strong></p>
+<ul>
+<li>The <strong>zero space</strong><a href="#fn15" class="footnote-ref"
+id="fnref15" role="doc-noteref"><sup>15</sup></a> is the vector space
+with one element, the zero vector. Its dimension is 0. For every space
+V: V ⨁ 0 ≅ V, and V ⨂ 0 ≅ 0.</li>
+<li>The <strong>unit space</strong> is the ground field itself (for
+example ℝ or ℂ), a space of dimension 1. For every space V: V ⨂ 𝟙 ≅ V.
+It plays the part that the number 1 plays in multiplication.</li>
+</ul>
+<p><strong>Spelling.</strong> Either may be typed as a plain digit
+(<code>0</code>, <code>1</code>) or as the double-struck character
+(<code>𝟎</code>, <code>𝟙</code>). A digit directly after <code>^</code>
+is an exponent, not a space: <code>a^2</code> is a⨂a. Any other number
+is an error.</p>
+<p><strong>Examples</strong> (with
+<code>tnSimplify[…, "Simplify"]</code>):</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Result</th>
+<th>Rule that removed it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>a ⨁ 0</code></td>
+<td><code>a</code></td>
+<td><code>ZeroSum</code></td>
+</tr>
+<tr class="even">
+<td><code>(a⨁b) ⨂ 0</code></td>
+<td><code>0</code></td>
+<td><code>ZeroProd</code></td>
+</tr>
+<tr class="odd">
+<td><code>a ⨂ 𝟙 ⨂ b</code></td>
+<td><code>a ⨂ b</code></td>
+<td><code>UnitProd</code></td>
+</tr>
+<tr class="even">
+<td><code>(V⊕W)⨂(V⊕W) ⨂ 𝟙 ⨁ 0</code></td>
+<td><code>(V ⨁ W)^2</code></td>
+<td><code>ZeroSum</code>, <code>UnitProd</code>; expansion; then
+<code>FactorLeft</code>, <code>FactorRight</code>,
+<code>PowerFold</code></td>
+</tr>
+</tbody>
+</table>
+<p>In numeric evaluation, <code>𝟙</code> is the 1 × 1 matrix
+<code>{{1}}</code>.</p>
+<h3 id="a.3-prefix-polish-form-and-preorder">A.3 Prefix (Polish) form
+and preorder</h3>
+<p><strong>Definition.</strong> In <em>prefix form</em>, each operator
+is written <strong>before</strong> its operands, so no parentheses are
+needed: - <code>S</code> stands for ⨁ (two operands); - <code>P</code>
+stands for ⨂ (two operands); - <code>E2 … E9</code> stand for the tensor
+powers ^2 … ^9 (one operand).</p>
+<p>Reading the tree in <strong>preorder</strong><a href="#fn16"
+class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>
+means visiting a node first, then its left subtree, then its right
+subtree. Read this way, the nodes come out in exactly the order of the
+prefix tokens.</p>
+<p><strong>Example.</strong> <code>(a⨁b)⨂c</code> is the tree P(S(x1,
+x2), x3):</p>
+<table>
+<thead>
+<tr class="header">
+<th>Prefix token</th>
+<th><code>P</code></th>
+<th><code>S</code></th>
+<th><code>x1</code></th>
+<th><code>x2</code></th>
+<th><code>x3</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Node number (preorder)</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Meaning</td>
+<td>the whole ⨂</td>
+<td>the ⨁ inside</td>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+</tr>
+</tbody>
+</table>
+<p>A tensor power becomes, for example, <code>(V⨁W)^2</code> →
+<code>E2 S x1 x2</code>.</p>
+<h3 id="a.4-preorder-scan-the-oracles-choice">A.4 Preorder scan (the
+oracle’s choice)</h3>
+<p><strong>Definition.</strong> To choose the next rewrite step, the
+oracle <code>tnOracleStep</code> walks the nodes <strong>in
+preorder</strong> (node 1, node 2, …). At the <strong>first</strong>
+node where any rule allowed by the goal applies, it applies the
+highest-priority such rule. The priority order for Expand is
+<code>ZeroSum, ZeroProd, UnitProd, PowerExpand, DistRight, DistLeft, AssocSum, AssocProd</code>.
+In effect, the oracle always works on the outermost, leftmost place that
+can change. That makes it fully predictable, which is what a net
+learning to imitate it needs.</p>
+<p><strong>Example</strong> (goal Expand, on <code>(a⨁b)⨂c</code>): 1.
+Node 1 is P(S(a, b), c). <code>DistRight</code> applies: (A⨁B)⨂C → A⨂C ⨁
+B⨂C. Result: <code>a ⨂ c ⨁ b ⨂ c</code>. 2. The new tree is S(P(a, c),
+P(b, c)). No Expand rule applies at any node, so the scan ends: this is
+the normal form.</p>
+<p><strong>Longer example</strong> (goal Expand, on
+<code>(V⊕W)^2</code>): <code>PowerExpand</code> (node 1),
+<code>DistRight</code> (node 1), <code>DistLeft</code> (node 2),
+<code>AssocSum</code> (node 1), <code>DistLeft</code> (node 9). Result:
+<code>V ⨂ V ⨁ V ⨂ W ⨁ W ⨂ V ⨁ W ⨂ W</code>.</p>
+<h3 id="a.5-transformer-encoder-and-its-parts">A.5 Transformer encoder
+(and its parts)</h3>
+<p>The three nets are built from the same parts.</p>
+<ul>
+<li><strong>Token embedding.</strong> Each token is mapped to a learned
+vector of <em>d</em> numbers (<em>d</em> = 128 by default). The map is a
+lookup table: one row per vocabulary entry, adjusted during
+training.</li>
+<li><strong>Position embedding.</strong> A second learned vector is
+added according to the token’s place in the sequence (1st, 2nd, …).
+Without it, the net could not tell <code>P S x1 x2 x3</code> from the
+same tokens in another order.</li>
+<li><strong>Self-attention</strong><a href="#fn17" class="footnote-ref"
+id="fnref17" role="doc-noteref"><sup>17</sup></a>. Every position looks
+at every position, itself included. It computes how relevant each one is
+(scores, turned into weights that sum to 1), then takes the weighted mix
+of their vectors. <em>Multi-head</em> means this is done four times in
+parallel with different learned projections, so that different heads can
+follow different relations. For example, in
+<code>( x1 ⨁ x2 ) ⨂ x3</code>, one head can learn to pair each
+<code>)</code> with its <code>(</code>, while another links
+<code>⨂</code> with its operands.</li>
+<li><strong>Feed-forward.</strong> A small two-layer network applied to
+each position separately (<em>d</em> → 4<em>d</em> → <em>d</em>, with a
+GELU non-linearity<a href="#fn18" class="footnote-ref" id="fnref18"
+role="doc-noteref"><sup>18</sup></a>).</li>
+<li><strong>Residual connection</strong><a href="#fn19"
+class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>.
+Each part’s input is added to its output (output = x + f(x)). The block
+therefore only has to learn a correction, which keeps deep nets
+trainable.</li>
+<li><strong>Layer normalisation</strong><a href="#fn20"
+class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>.
+After each residual addition, the <em>d</em> numbers at each position
+are rescaled to mean 0 and variance 1, then multiplied and shifted by
+learned amounts. This keeps the scale steady from block to block.</li>
+<li><strong>Encoder.</strong> A stack of <em>L</em> blocks (<em>L</em> =
+3 by default), each block being self-attention then feed-forward, both
+with residual connection and layer normalisation. It turns a sequence of
+tokens into a sequence of vectors, one per token, each informed by the
+whole sequence.</li>
+</ul>
+<h3 id="a.6-the-parsers-architecture-encoderdecoder">A.6 The parser’s
+architecture (encoder–decoder)</h3>
+<blockquote>
+<p><em>Token + position embeddings; encoder of L self-attention blocks;
+decoder of L blocks (causal self-attention, cross-attention to the
+encoder, feed-forward), each with residual connection and layer
+normalisation; softmax over the output vocabulary.</em></p>
+</blockquote>
+<ul>
+<li><strong>Encoder:</strong> as in A.5, reading the lexer’s tokens. The
+input vocabulary has 32 entries: 13 operator and parenthesis spellings,
+the powers <code>n1 … n9</code>, the slots <code>x1 … x8</code>, and
+<code>0</code> and <code>1</code>.</li>
+<li><strong>Decoder:</strong> it writes the prefix form one token at a
+time. Each of its <em>L</em> blocks has three parts:
+<ul>
+<li><strong>Causal self-attention:</strong> like self-attention, but
+position <em>i</em> may look only at positions 1 … <em>i</em>, the
+tokens already written. It cannot see the future, which it will not have
+when it really generates.</li>
+<li><strong>Cross-attention to the encoder</strong><a href="#fn21"
+class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> —
+the decoder’s vectors ask questions of the encoder’s vectors. This is
+how the output is tied to the input string.</li>
+<li><strong>Feed-forward:</strong> as in A.5.</li>
+</ul></li>
+<li><strong>Softmax over the output vocabulary:</strong> at each step,
+the final vector is turned into a probability for each of the 22 output
+tokens (<code>S</code>, <code>P</code>, <code>E2 … E9</code>,
+<code>x1 … x8</code>, <code>0</code>, <code>1</code>, start
+<code>&lt;s&gt;</code> and end <code>&lt;/s&gt;</code>). The most
+probable <em>permitted</em> token is written.</li>
+</ul>
+<p><strong>Example</strong> (input <code>( x1 ⨁ x2 ) ⨂ x3</code>). The
+decoder writes <code>P</code>, <code>S</code>, <code>x1</code>,
+<code>x2</code>, <code>x3</code>. The grammar constraint keeps a count
+of subtrees still owed:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Written token</th>
+<th>none yet</th>
+<th><code>P</code></th>
+<th><code>S</code></th>
+<th><code>x1</code></th>
+<th><code>x2</code></th>
+<th><code>x3</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Subtrees still owed</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td>0 → stop</td>
+</tr>
+</tbody>
+</table>
+<p>An operator owes two subtrees and fills one (+1); an atom fills one
+(−1). A tree is complete exactly when the count reaches 0, so the output
+is always a well-formed tree.</p>
+<h3 id="a.7-teacher-forcing-on-random-spellings">A.7 Teacher forcing on
+random spellings</h3>
+<blockquote>
+<p><em>Teacher forcing on random trees written in random spellings
+(random glyphs, spacing and redundant parentheses), target = the tree’s
+prefix form.</em></p>
+</blockquote>
+<p><strong>Random trees.</strong> The generator draws trees at random:
+depth 1 to 5, one to five atoms, with occasional 0, 𝟙 and powers ^2 and
+^3.</p>
+<p><strong>Random spellings.</strong> Each tree is written out as a
+string in a random way: - each operator gets a random glyph (⨁ ⊕ (+) +,
+or ⨂ ⊗ (x) *, in proportions 5 : 3 : 1 : 1); - spaces are random; - each
+subexpression is put in unnecessary parentheses with probability 8 %; -
+the atoms get random names, such as <code>a</code>, <code>V'</code>,
+<code>ψ_1</code> or <code>B2</code>.</p>
+<p>So one tree is seen in many disguises, and all of them have the same
+target. For P(S(x1, x2), x3), for example:</p>
+<pre><code>(a⨁b)⨂c        (ψ (+) V_1)*B&#39;        ((u⊕ w))⊗(H2)</code></pre>
+<p><strong>Target.</strong> The tree’s prefix form, framed by start and
+end: <code>&lt;s&gt; P S x1 x2 x3 &lt;/s&gt;</code>.</p>
+<p><strong>Teacher forcing</strong><a href="#fn22" class="footnote-ref"
+id="fnref22" role="doc-noteref"><sup>22</sup></a>. During training, the
+decoder is not left to its own guesses. At every step it is shown the
+<strong>correct</strong> previous tokens, and is scored on predicting
+the next one:</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Decoder is given</th>
+<th><code>&lt;s&gt;</code></th>
+<th><code>&lt;s&gt; P</code></th>
+<th><code>&lt;s&gt; P S</code></th>
+<th><code>&lt;s&gt; P S x1</code></th>
+<th><code>&lt;s&gt; P S x1 x2</code></th>
+<th><code>&lt;s&gt; P S x1 x2 x3</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Must predict</td>
+<td><code>P</code></td>
+<td><code>S</code></td>
+<td><code>x1</code></td>
+<td><code>x2</code></td>
+<td><code>x3</code></td>
+<td><code>&lt;/s&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>The loss is the cross-entropy summed over all positions. All six
+predictions are trained at once (the causal mask of A.6 keeps each one
+honest), which makes training fast and stable. The weights are adjusted
+by <code>NetTrain</code><a href="#fn23" class="footnote-ref"
+id="fnref23" role="doc-noteref"><sup>23</sup></a> with its default
+optimiser, Adam<a href="#fn24" class="footnote-ref" id="fnref24"
+role="doc-noteref"><sup>24</sup></a>; the attention layers are Wolfram’s
+<code>AttentionLayer</code><a href="#fn25" class="footnote-ref"
+id="fnref25" role="doc-noteref"><sup>25</sup></a>.</p>
+<h3 id="a.8-two-heads-which-rule-at-which-node">A.8 Two heads: <em>which
+rule</em>, <em>at which node</em></h3>
+<blockquote>
+<p><em>The goal token is prepended to the prefix sequence; encoder as
+above; the rule head reads the goal position, the node head scores every
+position.</em></p>
+</blockquote>
+<p><strong>Input.</strong> The goal is written as an extra first token.
+For Expand on <code>(a⨁b)⨂c</code>, the sequence is:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Position</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Token</td>
+<td><code>&lt;Expand&gt;</code></td>
+<td><code>P</code></td>
+<td><code>S</code></td>
+<td><code>x1</code></td>
+<td><code>x2</code></td>
+<td><code>x3</code></td>
+</tr>
+<tr class="even">
+<td>Tree node</td>
+<td>(the goal)</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>The encoder (A.5) turns this into six vectors. A <em>head</em> is a
+small output layer on top of them.</p>
+<ul>
+<li><strong>Rule head (<em>which rule</em>):</strong> reads only the
+vector at position 1, the goal token. Through self-attention, that
+vector has gathered information about the whole expression. The head
+gives one probability per rule (11 rules), for example
+<code>DistRight</code> 0.92, <code>AssocSum</code> 0.03, and so on.</li>
+<li><strong>Node head (<em>at which node</em>):</strong> gives every
+position a score (a pointer over the input, as in pointer networks<a
+href="#fn26" class="footnote-ref" id="fnref26"
+role="doc-noteref"><sup>26</sup></a>), and a softmax turns the scores
+into probabilities over the positions. Position <em>k</em> + 1 stands
+for tree node <em>k</em>: here position 2 (node 1, the outer ⨂) might
+get 0.95.</li>
+</ul>
+<p><strong>Combining them with the legal-move mask.</strong> The exact
+engine lists the moves that are actually possible. Here there is only
+one: (<code>DistRight</code>, node 1). Each legal move is scored as
+<em>p</em>(rule) × <em>p</em>(node), and the best one is applied by the
+exact engine. The net therefore steers, but can never make an illegal or
+unsound step.</p>
+<h3 id="a.9-pooled-regression-the-value-net">A.9 Pooled regression (the
+value net)</h3>
+<blockquote>
+<p><em>Transformer encoder, pooled regression.</em></p>
+</blockquote>
+<p><strong>Definition.</strong> The encoder gives one vector per token.
+- <strong>Pooling</strong> combines them into a <strong>single</strong>
+vector for the whole expression; here, by taking their average. -
+<strong>Regression</strong> means the output is a real number, not a
+choice among classes. A small feed-forward head maps the pooled vector
+to three numbers, and training minimises the mean squared error against
+the exact values. - Besides the tokens, the net receives each atom’s
+log₂ dimension (0 for operators), added to the token’s vector.</p>
+<p><strong>Example</strong> (<code>(a⨁b)⨂c</code> with dim a = 2, dim b
+= 3, dim c = 4).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Prefix token</th>
+<th><code>P</code></th>
+<th><code>S</code></th>
+<th><code>x1</code></th>
+<th><code>x2</code></th>
+<th><code>x3</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>log₂ dimension supplied</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1.585</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Exact value</th>
+<th>What the net is trained to output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dimension, (2 + 3) · 4</td>
+<td>20</td>
+<td>log₂(21) = 4.39</td>
+</tr>
+<tr class="even">
+<td>Terms after expansion (a⨂c ⨁ b⨂c)</td>
+<td>2</td>
+<td>log₂(3) = 1.585</td>
+</tr>
+<tr class="odd">
+<td>Expand steps (one <code>DistRight</code>)</td>
+<td>1</td>
+<td>log₂(2) = 1</td>
+</tr>
+</tbody>
+</table>
+<p>The net’s outputs <em>y</em> are turned back into numbers by
+2^<em>y</em> − 1 and rounded. The logarithms keep huge values (an
+expansion with a million terms) and small ones on the same footing.
+<code>tnEvaluate</code> always reports the exact values beside the
+estimate.</p>
+<hr />
+<p>© Computational Classnotes · CC BY-NC-SA 4.0</p>
+<hr />
+<h2 id="references">References</h2>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I. Sutskever, O. Vinyals and Q. V. Le, “Sequence to
+Sequence Learning with Neural Networks”, <em>NeurIPS 2014</em>.
+arXiv:1409.3215. — Sequence-to-sequence translation.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>G. Lample and F. Charton, “Deep Learning for Symbolic
+Mathematics”, <em>ICLR 2020</em>. arXiv:1912.01412. — Transformers
+trained on generated expressions in prefix form.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L.
+Jones, A. N. Gomez, Ł. Kaiser and I. Polosukhin, “Attention Is All You
+Need”, <em>Advances in Neural Information Processing Systems 30</em>
+(NeurIPS 2017). arXiv:1706.03762. — The transformer: self-attention,
+multi-head attention, encoder–decoder.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Computational Classnotes, <code>tensor_parser.py</code>
+and its <code>CONTEXT.md</code>, Tensor Algebras project, 2026. — The
+pure-Python parser for the same notation.<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>D. Silver et al., “Mastering the game of Go with deep
+neural networks and tree search”, <em>Nature</em> 529, 2016,
+pp. 484–489. — The terms <em>policy network</em> (which move) and
+<em>value network</em> (how good, or how costly, a position is).<a
+href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>D. Silver et al., “Mastering the game of Go with deep
+neural networks and tree search”, <em>Nature</em> 529, 2016,
+pp. 484–489. — The terms <em>policy network</em> (which move) and
+<em>value network</em> (how good, or how costly, a position is).<a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>J. Łukasiewicz, <em>Elementy logiki matematycznej</em>
+(Elements of Mathematical Logic), Warsaw, 1929; English translation,
+Pergamon Press, 1963. — Prefix (“Polish”) notation.<a href="#fnref7"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>M. J. Kusner, B. Paige and J. M. Hernández-Lobato,
+“Grammar Variational Autoencoder”, <em>ICML 2017</em>. arXiv:1703.01925.
+— Generating only grammatically valid sequences by masking.<a
+href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>F. Baader and T. Nipkow, <em>Term Rewriting and All
+That</em>, Cambridge University Press, 1998. — Rewrite rules,
+termination and normal forms.<a href="#fnref9" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Computational Classnotes, <code>tensor_parser.py</code>
+and its <code>CONTEXT.md</code>, Tensor Algebras project, 2026. — The
+pure-Python parser for the same notation.<a href="#fnref10"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>C. F. Van Loan, “The ubiquitous Kronecker product”,
+<em>Journal of Computational and Applied Mathematics</em> 123, 2000,
+pp. 85–100.<a href="#fnref11" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Computational Classnotes,
+<code>ccn-hoshino-and-colleagues</code> (private repository):
+<code>common/working-practice.md</code>,
+<code>common/wolfram-cloud-build-process.md</code> and
+<code>projects/tensor-algebras.md</code>, 2026.<a href="#fnref12"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Wolfram Research, <code>CloudSave</code>, Wolfram
+Language Documentation.
+https://reference.wolfram.com/language/ref/CloudSave.html<a
+href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>ONNX, Open Neural Network Exchange. https://onnx.ai<a
+href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>P. R. Halmos, <em>Finite-Dimensional Vector
+Spaces</em>, 2nd ed., Van Nostrand, 1958 (reprinted by Springer, 1974).
+— Direct sums, tensor products, the zero space and the ground field.<a
+href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>D. E. Knuth, <em>The Art of Computer Programming, Vol.
+1: Fundamental Algorithms</em>, 3rd ed., Addison-Wesley, 1997, §2.3.1
+“Traversing Binary Trees”. — Preorder.<a href="#fnref16"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L.
+Jones, A. N. Gomez, Ł. Kaiser and I. Polosukhin, “Attention Is All You
+Need”, <em>Advances in Neural Information Processing Systems 30</em>
+(NeurIPS 2017). arXiv:1706.03762. — The transformer: self-attention,
+multi-head attention, encoder–decoder.<a href="#fnref17"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>D. Hendrycks and K. Gimpel, “Gaussian Error Linear
+Units (GELUs)”, 2016. arXiv:1606.08415.<a href="#fnref18"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>K. He, X. Zhang, S. Ren and J. Sun, “Deep Residual
+Learning for Image Recognition”, <em>Proceedings of CVPR 2016</em>,
+pp. 770–778. arXiv:1512.03385. — Residual connections.<a href="#fnref19"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p>J. L. Ba, J. R. Kiros and G. E. Hinton, “Layer
+Normalization”, 2016. arXiv:1607.06450.<a href="#fnref20"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>D. Bahdanau, K. Cho and Y. Bengio, “Neural Machine
+Translation by Jointly Learning to Align and Translate”, <em>ICLR
+2015</em>. arXiv:1409.0473. — Attention from a decoder to an encoder
+(cross-attention).<a href="#fnref21" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>R. J. Williams and D. Zipser, “A Learning Algorithm for
+Continually Running Fully Recurrent Neural Networks”, <em>Neural
+Computation</em> 1(2), 1989, pp. 270–280. — The origin of teacher
+forcing.<a href="#fnref22" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn23"><p>Wolfram Research, <code>NetTrain</code>, Wolfram
+Language Documentation.
+https://reference.wolfram.com/language/ref/NetTrain.html<a
+href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24"><p>D. P. Kingma and J. Ba, “Adam: A Method for Stochastic
+Optimization”, <em>ICLR 2015</em>. arXiv:1412.6980.<a href="#fnref24"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25"><p>Wolfram Research, <code>AttentionLayer</code>, Wolfram
+Language Documentation.
+https://reference.wolfram.com/language/ref/AttentionLayer.html<a
+href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn26"><p>O. Vinyals, M. Fortunato and N. Jaitly, “Pointer
+Networks”, <em>NeurIPS 2015</em>. arXiv:1506.03134. — An output that
+points at a position of the input.<a href="#fnref26"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+<footer style="margin-top:30px;font-size:9pt;color:#666">© 2026 Computational Classnotes · CC BY-NC-SA 4.0</footer></body></html>

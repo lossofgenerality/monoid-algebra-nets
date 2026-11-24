@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search — TensorNets · Computational Classnotes</title>
+<link rel="stylesheet" href="brand/ccn-tokens.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--ccn-page);color:var(--ccn-ink);font:16px/1.55 var(--ccn-f-body)}
+.top{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;max-width:920px;margin:0 auto;padding:16px 20px;border-bottom:1px solid var(--ccn-line)}
+.wm{font:700 20px/1.1 var(--ccn-f-display);letter-spacing:-.01em;white-space:nowrap;color:inherit;text-decoration:none}
+.wm b{color:var(--ccn-orange-ink)}
+.top a.l{color:var(--ccn-soft);font-size:14px} .top a.l:first-of-type{margin-left:auto}
+main{max-width:920px;margin:0 auto;padding:22px 20px 40px}
+h1{font:700 clamp(24px,2.4vw,28px)/1.15 var(--ccn-f-display);margin:0 0 6px}
+p.lede{margin:0 0 16px;color:var(--ccn-soft);font-size:15px}
+.box{display:flex;gap:8px;position:sticky;top:0;background:var(--ccn-page);padding:8px 0 10px;z-index:2}
+#q{flex:1;font:16px var(--ccn-f-body);padding:11px 14px;border:1.5px solid var(--ccn-line);border-radius:10px;background:var(--ccn-panel);color:var(--ccn-ink);outline:none}
+#q:focus{border-color:var(--ccn-orange)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 12px}
+.filters button{font:500 13.5px var(--ccn-f-body);padding:5px 12px;border-radius:999px;border:1px solid var(--ccn-line);background:var(--ccn-panel);color:var(--ccn-soft);cursor:pointer}
+.filters button.on{border-color:var(--ccn-orange);color:var(--ccn-ink);background:var(--ccn-orange-tint)}
+#count{font-size:13.5px;color:var(--ccn-soft);margin:0 0 10px}
+.r{display:block;text-decoration:none;color:inherit;background:var(--ccn-panel);border:1px solid var(--ccn-line);border-radius:10px;padding:12px 16px;margin-bottom:9px}
+.r:hover,.r:focus{border-color:var(--ccn-orange);outline:none}
+.r .src{font:600 11.5px var(--ccn-f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ccn-orange-ink)}
+.r .ttl{font:700 16.5px/1.3 var(--ccn-f-display);margin:2px 0 4px}
+.r .ttl span{font:400 14px var(--ccn-f-body);color:var(--ccn-soft)}
+.r .snip{font-size:14.5px;color:var(--ccn-ink)}
+mark{background:#ffe0bf;color:inherit;border-radius:3px;padding:0 1px}
+.empty{color:var(--ccn-soft);padding:20px 0}
+.tips{font-size:13.5px;color:var(--ccn-soft);margin-top:18px}
+footer{max-width:920px;margin:0 auto;padding:16px 20px 40px;color:var(--ccn-soft);font-size:13.5px;border-top:1px solid var(--ccn-line)}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<div class="top"><a class="wm" href="docs/units/index.html">Tensor<b>Nets</b></a>
+<a class="l" href="docs/units/index.html">Units</a><a class="l" href="docs/glossary.html">Glossary</a><a class="l" href="docs/design.html">Design</a><a class="l" href="https://github.com/lossofgenerality/tensor-algebra-nets">Repository</a></div>
+<main>
+<h1>Search</h1>
+<p class="lede">Every unit write-up, the design document and the glossary. Partial words match (“attent” finds “attention”); hyphens and spaces are interchangeable, and -ise/-ize spellings match each other.</p>
+<div class="box"><input id="q" type="search" placeholder="Search, e.g. beam search, label smoothing, Schröder …" autocomplete="off" autofocus aria-label="Search TensorNets"></div>
+<div class="filters" role="group" aria-label="Filter by source">
+<button data-f="" class="on">All</button><button data-f="Unit">Units</button><button data-f="Design">Design</button><button data-f="Glossary">Glossary</button></div>
+<div id="count" aria-live="polite"></div>
+<div id="res"></div>
+<div class="tips">Tips: several words must all appear in the same section; put a phrase in quotes to require it exactly. Press <kbd>/</kbd> to jump to the box.</div>
+</main>
+<footer>Index rebuilt with <code>tools/units/build_search.py</code>. Part of <a href="https://github.com/lossofgenerality/tensor-algebra-nets">lossofgenerality/tensor-algebra-nets</a>.<br>© Computational Classnotes · CC BY-NC-SA 4.0</footer>
+<script>
+(() => {
+  const SUB = { '₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','ₙ':'n','ₓ':'x' };
+  // normalise a string, keeping a map from each normalised character back to the original index
+  function norm(s) {
+    let out = '', map = [];
+    for (let i = 0; i < s.length; i++) {
+      let c = SUB[s[i]] || s[i];
+      c = c.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+      if (/[\-‐‑‒–—−_\s]/.test(c)) c = ' ';
+      for (const ch of c) {
+        if (ch === ' ' && out.endsWith(' ')) continue;
+        out += ch; map.push(i);
+      }
+    }
+    // -ise / -ize, -isation / -ization
+    out = out.replace(/iz/g, 'is');
+    return { out, map };
+  }
+  let DATA = [], filt = '';
+  const $ = id => document.getElementById(id), q = $('q');
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function terms(raw) {
+    const t = [], re = /"([^"]+)"|(\S+)/g; let m;
+    while ((m = re.exec(raw))) { const n = norm(m[1] || m[2]).out.trim(); if (n) t.push(n); }
+    // a query typed with hyphens ("random-walk") also arrives as one phrase "random walk"
+    return t;
+  }
+  function snippet(e, ts) {
+    const N = e.nx || (e.nx = norm(e.x));
+    let pos = -1, len = 0;
+    for (const t of ts) { const p = N.out.indexOf(t); if (p >= 0 && (pos < 0 || p < pos)) { pos = p; len = t.length; } }
+    if (pos < 0) return esc(e.x.slice(0, 200)) + (e.x.length > 200 ? ' …' : '');
+    const a = N.map[pos], b = (N.map[pos + len - 1] ?? a) + 1;
+    const from = Math.max(0, a - 90), to = Math.min(e.x.length, b + 140);
+    let s = esc(e.x.slice(from, to));
+    // highlight every term occurrence inside the window
+    const W = norm(e.x.slice(from, to)), marks = [];
+    for (const t of ts) { let p = -1; while ((p = W.out.indexOf(t, p + 1)) >= 0) marks.push([W.map[p], (W.map[p + t.length - 1] ?? W.map[p]) + 1]); }
+    marks.sort((x, y) => x[0] - y[0]);
+    const raw = e.x.slice(from, to); let html = '', at = 0;
+    for (const [x, y] of marks) { if (x < at) continue; html += esc(raw.slice(at, x)) + '<mark>' + esc(raw.slice(x, y)) + '</mark>'; at = y; }
+    html += esc(raw.slice(at));
+    return (from > 0 ? '… ' : '') + html + (to < e.x.length ? ' …' : '');
+  }
+  function run() {
+    const raw = q.value.trim(), ts = terms(raw), res = $('res');
+    history.replaceState(null, '', raw ? '?q=' + encodeURIComponent(raw) : location.pathname);
+    if (!ts.length) { res.innerHTML = ''; $('count').textContent = DATA.length + ' sections indexed.'; return; }
+    const hits = [];
+    for (const e of DATA) {
+      if (filt && e.s !== filt) continue;
+      const N = e.nx || (e.nx = norm(e.x)), H = e.nh || (e.nh = norm(e.t + ' ' + e.h).out);
+      if (!ts.every(t => N.out.includes(t) || H.includes(t))) continue;
+      let score = 0;
+      for (const t of ts) { score += (H.includes(t) ? 8 : 0) + Math.min(5, N.out.split(t).length - 1); }
+      if (ts.length > 1 && N.out.includes(ts.join(' '))) score += 10;
+      hits.push([score, e]);
+    }
+    hits.sort((a, b) => b[0] - a[0]);
+    $('count').textContent = hits.length ? hits.length + ' section' + (hits.length > 1 ? 's' : '') + ' found' : '';
+    res.innerHTML = hits.length ? hits.slice(0, 60).map(([, e]) =>
+      `<a class="r" href="${esc(e.u)}"><div class="src">${esc(e.s)} · ${esc(e.t)}</div><div class="ttl">${esc(e.h)}</div><div class="snip">${snippet(e, ts)}</div></a>`).join('')
+      : '<div class="empty">No section contains all of these words. Try fewer words or part of a word.</div>';
+  }
+  document.querySelectorAll('.filters button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.filters button').forEach(x => x.classList.toggle('on', x === b)); filt = b.dataset.f; run(); });
+  let t; q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(run, 120); });
+  addEventListener('keydown', e => { if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); q.select(); } });
+  fetch('search-index.json').then(r => r.json()).then(d => {
+    DATA = d; const p = new URLSearchParams(location.search).get('q'); if (p) q.value = p; run();
+  }).catch(() => { $('count').textContent = 'The search index could not be loaded.'; });
+})();
+</script>
+</body>
+</html>
