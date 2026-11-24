@@ -2,7 +2,7 @@
  "name": "owNet",
  "slug": "ownet",
  "project": "tensor-algebras",
- "status": "trained in Wolfram (Unit 4); not yet run in the lab",
+ "status": "trained in Wolfram (Unit 4)",
  "purpose": "The net built from scratch in Unit 4: it reads a short expression such as (a⨁b)⨂c, token by token, and writes the distributed form in prefix order (⨁ ⨂ a c ⨂ b c).",
  "structure": "Target (10 tokens); embedding 32; Input (10 tokens); embedding 32; encoder 2 × (4 heads, FF 128 ReLU); decoder 2 × (4 heads, FF 128 ReLU); softmax per token over 10 (Probabilities)",
  "numbers": 59950,
