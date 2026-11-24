@@ -1,4 +1,4 @@
-"""python3 tools/units/build_glossary.py -> docs/glossary.html, docs/units/index.html and index.html
+"""python3 tools/units/build_glossary.py -> docs/glossary.html, docs/units/index.html, docs/net-diagrams.html and index.html
 Every technical term of the units, defined where it is worked out. © Computational Classnotes · CC BY-NC-SA 4.0"""
 import pathlib, html
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -9,6 +9,9 @@ dt{font-weight:bold;margin-top:10px} dd{margin:2px 0 6px 18px} dd .ex{color:#555
 .unit{border:1px solid #c9d0db;border-radius:6px;padding:10px 14px;margin:10px 0} .unit h3{margin:0 0 4px}'''
 U = {1: '01-seq2seq', 2: '02-symbolic-data', 3: '03-transformer', 4: '04-build-your-own'}
 REPO = 'https://github.com/lossofgenerality/tensor-algebra-nets'
+# The Net Diagrams editor lives in ccn-agent-free-form-language; this site shows the live copy, so a change there appears here at once
+EDITOR = 'https://lossofgenerality.github.io/ccn-agent-free-form-language/editor/net-diagram-editor.html'
+EDITOR_README = 'https://github.com/lossofgenerality/ccn-agent-free-form-language/blob/main/editor/README.md'
 
 # term: (definition, example or formula, unit, section)
 TERMS = {
@@ -82,7 +85,7 @@ for term in sorted(TERMS, key=lambda t: t.lower().lstrip('⨂⨁ ')):
     items.append('<dt id="%s">%s</dt><dd>%s%s <a href="units/%s.html">Unit %d §%d</a></dd>' % (
         html.escape(term.split(' (')[0].replace(' ', '-').lower()), html.escape(term), html.escape(d),
         (' <span class="ex">' + html.escape(ex) + '</span>') if ex else '', U[u], u, s))
-nav = '<nav class="wtop"><a href="units/index.html">All units</a><a href="design.html">Design</a><a href="../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
+nav = '<nav class="wtop"><a href="units/index.html">All units</a><a href="design.html">Design</a><a href="net-diagrams.html">Net diagrams</a><a href="../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
 (ROOT / 'docs/glossary.html').write_text(page('Glossary · TensorNets units', '<h1>Glossary</h1><p>Every technical term of the four TensorNets units, defined in a sentence, with a small example where it helps, and a link to the section where it is worked out.</p><dl>%s</dl>' % ''.join(items), nav), encoding='utf-8')
 
 UNITS = [
@@ -93,7 +96,7 @@ UNITS = [
 ]
 cards = ''.join('<div class="unit"><h3>Unit %d · %s</h3><p>%s</p><p><a href="%s.html">Read</a> · <a href="%s.pdf">PDF</a> · <a href="%s/blob/main/docs/units/%s.md">Markdown</a> · <a href="%s/blob/main/%s">Notebook %s</a></p></div>'
                 % (n, html.escape(t), html.escape(d), s, s, REPO, s, REPO, nb, nb) for n, s, nb, t, d in UNITS)
-nav2 = '<nav class="wtop"><a href="../glossary.html">Glossary</a><a href="../design.html">Design</a><a href="../../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
+nav2 = '<nav class="wtop"><a href="../glossary.html">Glossary</a><a href="../design.html">Design</a><a href="../net-diagrams.html">Net diagrams</a><a href="../../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
 intro = ('<h1>TensorNets · Units of learning</h1><p>Four units on how the TensorNets nets are made. Each unit has a write-up (HTML, PDF, Markdown) and a Wolfram notebook with the same section numbers: '
          'a toolkit cell, then one section per idea, each with a worked example by hand and a check that the kernel returns. Units 1–3 follow one paper each; Unit 4 builds our own net from them.</p>'
          '<p>Open a notebook in Wolfram, choose Evaluation ▸ Quit Kernel ▸ Local, and evaluate it from top to bottom. The notebooks are saved with their outputs, so they can also be read without running.</p>')
@@ -101,6 +104,19 @@ intro = ('<h1>TensorNets · Units of learning</h1><p>Four units on how the Tenso
 root_cards = cards.replace('href="0', 'href="docs/units/0')
 (ROOT / 'index.html').write_text('<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n'
     '<title>TensorNets</title>\n<meta http-equiv="refresh" content="0; url=docs/units/index.html">\n</head><body style="font:16px system-ui;margin:40px">\n'
-    '<p><a href="docs/units/index.html">TensorNets · Units of learning</a> · <a href="docs/design.html">design</a> · <a href="docs/glossary.html">glossary</a> · <a href="search.html">search</a></p>\n'
+    '<p><a href="docs/units/index.html">TensorNets · Units of learning</a> · <a href="docs/design.html">design</a> · <a href="docs/glossary.html">glossary</a> · <a href="docs/net-diagrams.html">net diagrams</a> · <a href="search.html">search</a></p>\n'
     '<p>© 2026 Computational Classnotes · CC BY-NC-SA 4.0</p>\n</body></html>\n', encoding='utf-8')
+# ---------- The Net Diagrams editor, shown live from ccn-agent-free-form-language ----------
+nav3 = '<nav class="wtop"><a href="units/index.html">All units</a><a href="glossary.html">Glossary</a><a href="design.html">Design</a><a href="../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
+editor_body = ('<h1>Net diagrams</h1>'
+    '<p>Draw a small neural net and let the editor write the code that builds and trains it: a Wolfram notebook (our own code, and <code>NetTrain</code>) '
+    'or a Python script (our own code, NumPy only). Its elements are feature groups, a hash, an input vector of slots, layers, dropout, joins and a softmax; '
+    'it reads left to right, and wires are drawn from port to port.</p>'
+    '<p>The editor belongs to the CCN agent free-form language. This page shows the live copy, so every change made there appears here at once. '
+    'It draws small feed-forward nets such as SubjectNet; the transformers of the units above are not among its elements yet.</p>'
+    '<p><a href="%s">Open the editor in its own tab</a> · <a href="%s">How it works</a></p>'
+    '<iframe src="%s" title="CCN Net Diagrams editor" style="width:100%%;height:820px;border:1px solid #c9d0db;border-radius:6px" loading="lazy"></iframe>'
+    % (EDITOR, EDITOR_README, EDITOR))
+(ROOT / 'docs/net-diagrams.html').write_text(page('Net diagrams · TensorNets', editor_body, nav3).replace('max-width:860px', 'max-width:1280px', 1), encoding='utf-8')
+
 print(len(TERMS), 'terms')

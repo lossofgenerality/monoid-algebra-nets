@@ -102,6 +102,7 @@ First@First@owBeam[owNet, {"(", "a", "⨁", "b", ")", "⨂", "c"}, 4, True]   (*
 ## Related
 
 - `python/tensor_parser.py` and `python/CONTEXT.md`: a pure-Python parser for the same notation.
+- **Net diagrams** ([`docs/net-diagrams.html`](https://lossofgenerality.github.io/tensor-algebra-nets/docs/net-diagrams.html)): the CCN Net Diagrams editor, for drawing a small neural net and generating a Wolfram notebook or a Python script that trains it. The editor lives in `lossofgenerality/ccn-agent-free-form-language` (`editor/net-diagram-editor.html`). This site shows the live copy, so a change there appears here at once, with no copy to keep in step. The page is made by `tools/units/build_glossary.py`.
 
 ## Use
 
