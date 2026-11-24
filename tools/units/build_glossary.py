@@ -10,7 +10,7 @@ dt{font-weight:bold;margin-top:10px} dd{margin:2px 0 6px 18px} dd .ex{color:#555
 U = {1: '01-seq2seq', 2: '02-symbolic-data', 3: '03-transformer', 4: '04-build-your-own'}
 REPO = 'https://github.com/lossofgenerality/tensor-algebra-nets'
 # The Net Diagrams editor lives in ccn-agent-free-form-language; this site shows the live copy, so a change there appears here at once
-EDITOR = 'https://lossofgenerality.github.io/ccn-agent-free-form-language/editor/net-diagram-editor.html'
+EDITOR = 'https://lossofgenerality.github.io/ccn-agent-free-form-language/editor/net-diagram-editor.html?example=tnparser'   # opens on tnParserNet
 EDITOR_README = 'https://github.com/lossofgenerality/ccn-agent-free-form-language/blob/main/editor/README.md'
 
 # term: (definition, example or formula, unit, section)
@@ -114,7 +114,7 @@ editor_body = ('<h1>Net diagrams</h1>'
     'it reads left to right, and wires are drawn from port to port.</p>'
     '<p>The editor belongs to the CCN agent free-form language. This page shows the live copy, so every change made there appears here at once. '
     'Besides small feed-forward nets such as SubjectNet, it draws transformers: tokens, embeddings, encoders, decoders and their outputs. '
-    'Under <i>Examples</i> are owNet (Unit 4) and the three TensorNets nets, tnParserNet, tnPolicyNet and tnValueNet, drawn from their definitions; '
+    'Here it opens on tnParserNet, and keeps your changes on this page apart from the editor\u2019s other pages. Under <i>Examples</i> are owNet (Unit 4) and the other TensorNets nets, tnPolicyNet and tnValueNet, all drawn from their definitions; '
     'for each, the editor counts the weights as Wolfram does and writes the net as a Wolfram <code>NetGraph</code>.</p>'
     '<p><a href="%s">Open the editor in its own tab</a> · <a href="%s">How it works</a></p>'
     '<iframe src="%s" title="CCN Net Diagrams editor" style="width:100%%;height:820px;border:1px solid #c9d0db;border-radius:6px" loading="lazy"></iframe>'
