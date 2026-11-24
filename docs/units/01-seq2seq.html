@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Unit 1 · Reading a Sequence, Writing a Sequence — Computational Classnotes</title><style>@page { size: A4; margin: 20mm 18mm 22mm 18mm;
+  @bottom-center { content: "© 2026 Computational Classnotes · CC BY-NC-SA 4.0"; } }
+body { font-family: "DejaVu Sans", sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d2430; }
+h1 { font-size: 20pt; margin: 0 0 4pt; color: #11161f; }
+h2 { font-size: 13.5pt; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid rgb(250,143,43); break-after: avoid; }
+p, li { orphans: 3; widows: 3; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; }
+table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 8pt 0; break-inside: auto; }
+th, td { border: 1px solid #c9d0db; padding: 3pt 5pt; vertical-align: top; text-align: left; }
+th { background: #eef1f6; }
+tr { break-inside: avoid; }
+img { max-width: 100%; max-height: 105mm; display: block; margin: 4pt auto; }
+figure { margin: 6pt 0; }
+figcaption { display: none; }
+math { font-family: "Latin Modern Math", "STIX Two Math", serif; }
+math[display="block"] { display: block; margin: 8pt 0; font-size: 11pt; }
+a { color: #1f5fbf; text-decoration: none; }
+hr { border: 0; border-top: 1px solid #c9d0db; margin: 16pt 0 8pt; }
+table { break-inside: avoid; }
+
+body{max-width:860px;margin:0 auto;padding:28px 22px 60px;background:#fff}
+img{max-width:100%;height:auto}
+nav.wtop{font-size:10pt;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap}
+nav.wtop a{color:rgb(212,86,28)}
+@media print{nav.wtop{display:none} footer{display:none}}
+</style></head><body><nav class="wtop"><a href="index.html">All units</a><a href="01-seq2seq.pdf">PDF</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/docs/units/01-seq2seq.md">Markdown</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/unit1_seq2seq.nb">Notebook unit1_seq2seq.nb</a><a href="../glossary.html">Glossary</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets">Repository</a></nav><h1 id="unit-1-reading-a-sequence-writing-a-sequence">Unit 1 · Reading a
+Sequence, Writing a Sequence</h1>
+<p>24 November 2026 · Computational Classnotes · TensorNets units of
+learning, 1 of 4</p>
+<p>Two recurrent networks can translate. One reads the whole sentence
+into a fixed-size vector, and the other writes the translation from that
+vector. Sutskever, Vinyals and Le (2014) built this from deep LSTMs and
+reached 34.8 BLEU on English to French. This unit builds each part of
+their machine from plain arrays and checks it against Wolfram’s own
+layers. The notebook <code>unit1_seq2seq.nb</code> carries the same
+section numbers and computes every number quoted here.</p>
+<h2 id="scope-and-conventions">Scope and conventions</h2>
+<ul>
+<li><strong>Vectors.</strong> h is the hidden state an LSTM shows; c is
+the memory cell it keeps. σ(x) = 1/(1 + e⁻ˣ).</li>
+<li><strong>Words.</strong> A sentence is a list of word vectors
+(embeddings). The decoder writes one word per step and stops at the
+end-of-sentence word, written <code>&lt;EOS&gt;</code> (or
+<code>&lt;e&gt;</code> in toy examples).</li>
+<li><strong>Numbering.</strong> Sections 2–11 here match notebook
+Sections 2–11; notebook Section 1 is the toolkit, one Input cell with
+every function. Every number below was returned by the Wolfram kernel
+(Wolfram 15.0).</li>
+<li><strong>Paper.</strong> I. Sutskever, O. Vinyals, Q. V. Le,
+<em>Sequence to Sequence Learning with Neural Networks</em>, NeurIPS
+2014, <a href="https://arxiv.org/abs/1409.3215">arXiv:1409.3215</a>.
+Section numbers “Section n” refer to the paper; “§n” refers to this
+unit.</li>
+<li><strong>Repository.</strong>
+https://github.com/lossofgenerality/tensor-algebra-nets · notebook
+<code>unit1_seq2seq.nb</code> · glossary
+<code>docs/glossary.html</code>.</li>
+</ul>
+<h2 id="at-a-glance">At a glance</h2>
+<p><strong>Read the reversed source into a vector, then write the target
+from it, one word at a time.</strong></p>
+<figure>
+<img src="img/unit1-fig1.png" alt="Fig. 1" />
+<figcaption aria-hidden="true">Fig. 1</figcaption>
+</figure>
+<p><strong>Fig. 1.</strong> The encoder–decoder. The encoder reads the
+reversed source and ends in the thought vector v. The decoder starts
+from v and writes the target, reading back each word it has just written
+(§2).</p>
+<h2 id="read-everything-then-write">2. Read everything, then write</h2>
+<p>A sentence and its translation rarely have the same length, and word
+i of one is not word i of the other. So the paper uses two networks. The
+<strong>encoder</strong> reads the source one word at a time and ends in
+a fixed-size vector v, the <strong>thought vector</strong>. The
+<strong>decoder</strong> starts from v and writes the target one word at
+a time, feeding each word back in, until it writes
+<code>&lt;EOS&gt;</code>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>y</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>y</mi><mrow><mi>T</mi><mi>′</mi></mrow></msub><mo>∣</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>T</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munderover><mo>∏</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>T</mi><mi>′</mi></mrow></munderover><mi>p</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>t</mi></msub><mo>∣</mo><mi>v</mi><mo>,</mo><mspace width="0.167em"></mspace><msub><mi>y</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>y</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+p(y_1,\dots,y_{T&#39;}\mid x_1,\dots,x_T)=\prod_{t=1}^{T&#39;} p\big(y_t \mid v,\,y_1,\dots,y_{t-1}\big).
+</annotation></semantics></math></p>
+<p>Three choices made it work (Section 2 of the paper): two different
+LSTMs for reading and writing, four layers each, and the source fed in
+reverse (§6).</p>
+<h2 id="the-lstm-cell">3. The LSTM cell</h2>
+<p>An LSTM keeps the hidden state h and the memory cell c. At each step
+it reads an input x and computes four <strong>gates</strong> from x and
+the previous h:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>i</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>W</mi><mi>i</mi></msub><mi>x</mi><mo>+</mo><msub><mi>U</mi><mi>i</mi></msub><mi>h</mi><mo>+</mo><msub><mi>b</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mtd><mtd columnalign="right" style="text-align: right"><mi>f</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>W</mi><mi>f</mi></msub><mi>x</mi><mo>+</mo><msub><mi>U</mi><mi>f</mi></msub><mi>h</mi><mo>+</mo><msub><mi>b</mi><mi>f</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mi>o</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>W</mi><mi>o</mi></msub><mi>x</mi><mo>+</mo><msub><mi>U</mi><mi>o</mi></msub><mi>h</mi><mo>+</mo><msub><mi>b</mi><mi>o</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mtd><mtd columnalign="right" style="text-align: right"><mi>g</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mo>tanh</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>W</mi><mi>g</mi></msub><mi>x</mi><mo>+</mo><msub><mi>U</mi><mi>g</mi></msub><mi>h</mi><mo>+</mo><msub><mi>b</mi><mi>g</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mtd></mtr></mtable><mspace width="2.0em"></mspace><mi>c</mi><mi>′</mi><mo>=</mo><mi>f</mi><mspace width="0.167em"></mspace><mi>c</mi><mo>+</mo><mi>i</mi><mspace width="0.167em"></mspace><mi>g</mi><mo>,</mo><mspace width="2.0em"></mspace><mi>h</mi><mi>′</mi><mo>=</mo><mi>o</mi><mspace width="0.167em"></mspace><mo>tanh</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\begin{aligned}
+i&amp;=\sigma(W_i x+U_i h+b_i), &amp; f&amp;=\sigma(W_f x+U_f h+b_f),\\
+o&amp;=\sigma(W_o x+U_o h+b_o), &amp; g&amp;=\tanh(W_g x+U_g h+b_g),
+\end{aligned}
+\qquad
+c&#39;=f\,c+i\,g,\qquad h&#39;=o\,\tanh(c&#39;).
+</annotation></semantics></math></p>
+<p>The input gate i decides how much new content g to write, the forget
+gate f how much old memory to keep, and the output gate o how much
+memory to show. The memory is updated by <strong>addition</strong>. This
+additive update is why information and gradients survive over long
+sentences.</p>
+<p><strong>Worked by hand.</strong> Take one input and one cell, every
+weight 0.5 and every bias 0, start from h = c = 0 and read x = 1. Every
+gate sees 0.5·1 + 0.5·0 + 0 = 0.5. So i = f = o = σ(0.5) = 0.6225 and g
+= tanh(0.5) = 0.4621. Then c′ = 0.6225·0 + 0.6225·0.4621 = 0.2877, and
+h′ = 0.6225·tanh(0.2877) = 0.6225·0.2800 = 0.1743.</p>
+<p>Wolfram’s <code>LongShortTermMemoryLayer</code> stores exactly these
+twelve arrays (it calls g the <em>memory gate</em>). Its ports
+<code>State</code> and <code>CellState</code> are h and c.</p>
+<p>The forget gate decides how long memory lasts. After a single input
+pulse the memory is multiplied by f at every step, so it decays like fᵗ
+(Fig. 2).</p>
+<figure>
+<img src="img/unit1-fig2.png" alt="Fig. 2" />
+<figcaption aria-hidden="true">Fig. 2</figcaption>
+</figure>
+<p><strong>Fig. 2.</strong> The memory c of a one-cell LSTM after one
+input pulse, for three forget-gate biases. With f = 0.95 the pulse is
+still 30 % present after 25 steps; with f = 0.05 it is gone after
+two.</p>
+<p><strong>Checked (notebook §3):</strong> the hand computation gives h′
+= 0.17427, c′ = 0.28765. Our step, copied weights and all, equals
+<code>LongShortTermMemoryLayer</code> (6 cells, 7 steps: True), also
+from given starting states (True). After the pulse the ratio of
+successive memories is σ(3) = 0.9526 exactly (True).</p>
+<h2 id="a-deep-encoder-and-its-thought-vector">4. A deep encoder and its
+thought vector</h2>
+<p>The paper stacks four LSTMs. Layer k reads the hidden states of layer
+k − 1. After the last source word, the final (h, c) of every layer is
+kept. Together they are the thought vector: 2 × 4 × 1000 = 8000 numbers
+in the paper’s model.</p>
+<p><strong>Checked (notebook §4):</strong> a three-layer stack coded
+from arrays equals <code>NetChain</code> of three LSTM layers (True);
+its thought vector has 2 × 3 × 5 = 30 numbers, and the paper’s 8000.</p>
+<h2 id="the-decoder">5. The decoder</h2>
+<p>The decoder is a second deep LSTM with its own weights. Its layers
+start from the encoder’s final states. At each step it reads the
+embedding of the previous word, and a <strong>softmax</strong> turns its
+top hidden state into probabilities for the next word:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mtext mathvariant="normal">next word</mtext><mo>=</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mi>e</mi><msub><mi>z</mi><mi>k</mi></msub></msup><mrow><munder><mo>∑</mo><mi>j</mi></munder><msup><mi>e</mi><msub><mi>z</mi><mi>j</mi></msub></msup></mrow></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mi>z</mi><mo>=</mo><mi>W</mi><mi>h</mi><mo>+</mo><mi>b</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+p(\text{next word}=k)=\frac{e^{z_k}}{\sum_j e^{z_j}},\qquad z=Wh+b .
+</annotation></semantics></math></p>
+<p><strong>Worked by hand.</strong> For scores z = (2, 1, 0): e² =
+7.389, e¹ = 2.718 and e⁰ = 1, with total 11.107. The probabilities are
+0.665, 0.245 and 0.090. They are positive and sum to 1, and adding the
+same number to every score changes nothing.</p>
+<p>During training the decoder reads the correct previous word, not its
+own guess (<strong>teacher forcing</strong>). At test time it reads its
+own output, and beam search (§8) decides which outputs to keep.</p>
+<p><strong>Checked (notebook §5):</strong> softmax(2, 1, 0) = (0.665,
+0.245, 0.090), and the same after adding 10 to every score. One decoder
+step gives a distribution over 10 words that is positive and sums to 1,
+and its first layer, started from the encoder’s states, matches
+Wolfram’s layer (True, True, True).</p>
+<h2 id="reversing-the-source">6. Reversing the source</h2>
+<p>The paper feeds the source reversed: c, b, a instead of a, b, c,
+while the target stays α, β, γ. Nothing else changes, yet test BLEU rose
+from 25.9 to 30.6 (Section 3.3).</p>
+<p>The reason is distance. Put the source at positions 1…T and the
+target after it at T + 1…2T, with target word i aligned to source word
+i.</p>
+<p><strong>Worked by hand (T = 3).</strong> Forward, a, b, c sit at 1,
+2, 3 and α, β, γ at 4, 5, 6, so every pair is 3 steps apart. Reversed, a
+sits at 3, b at 2 and c at 1, so the gaps are 4 − 3 = 1, 5 − 2 = 3 and 6
+− 1 = 5. The average is 3 both ways, but the first pair is now 1 step
+apart. The network can link a to α at once and build from there.</p>
+<figure>
+<img src="img/unit1-fig3.png" alt="Fig. 3" />
+<figcaption aria-hidden="true">Fig. 3</figcaption>
+</figure>
+<p><strong>Fig. 3.</strong> Distance between source word i and target
+word i for T = 8. Forward, every pair is 8 apart. Reversed, the
+distances are 1, 3, 5, …, 15: the same average, but the first words are
+neighbours.</p>
+<p><strong>Checked (notebook §6):</strong> T = 3 gives {3, 3, 3} and {1,
+3, 5}; T = 8 gives averages 8 and 8, and shortest distances 8 and 1.</p>
+<h2 id="the-training-recipe">7. The training recipe</h2>
+<p><strong>Starting weights.</strong> Every parameter starts uniformly
+distributed in [−0.08, 0.08] (Section 3.4). Wolfram’s
+<code>NetInitialize</code> does this with one option, but it always sets
+the LSTM forget-gate biases to 1. That is a later practice, recommended
+by Jozefowicz, Zaremba and Sutskever (2015). To follow the paper, the
+notebook’s <code>uniformInit</code> resets those biases too.</p>
+<p><strong>Clipping the gradient by its norm.</strong> LSTMs rarely
+suffer from vanishing gradients but can suffer from exploding ones. For
+each batch the paper computes the norm of the whole gradient, all
+parameters together, and rescales it if it exceeds 5:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>=</mo><mo stretchy="false" form="prefix">∥</mo><mi>g</mi><msub><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msub><mo>,</mo><mspace width="2.0em"></mspace><mrow><mtext mathvariant="normal">if </mtext><mspace width="0.333em"></mspace></mrow><mi>s</mi><mo>&gt;</mo><mn>5</mn><mo>:</mo><mspace width="1.0em"></mspace><mi>g</mi><mo>←</mo><mfrac><mrow><mn>5</mn><mspace width="0.167em"></mspace><mi>g</mi></mrow><mi>s</mi></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+s=\lVert g\rVert_2,\qquad \text{if } s&gt;5:\quad g\leftarrow \frac{5\,g}{s}.
+</annotation></semantics></math></p>
+<p><strong>Worked by hand.</strong> g = (6, 8) has norm √(36 + 64) = 10
+&gt; 5, so it becomes (6, 8)·5/10 = (3, 4), with norm 5 and the same
+direction. Clamping each component to ±5 would give (5, 5) instead,
+which points elsewhere: its cosine with g is 70/(10·√50) = 0.990.</p>
+<p><strong>The learning rate.</strong> The paper used plain stochastic
+gradient descent without momentum, with batches of 128 sentences and a
+rate of 0.7. After 5 epochs the rate is halved every half epoch, and
+training stops after 7.5 epochs (Fig. 4).</p>
+<figure>
+<img src="img/unit1-fig4.png" alt="Fig. 4" />
+<figcaption aria-hidden="true">Fig. 4</figcaption>
+</figure>
+<p><strong>Fig. 4.</strong> The learning rate over the 7.5 epochs of
+training.</p>
+<p><strong>Checked (notebook §7):</strong> plain
+<code>NetInitialize</code> leaves every forget-gate bias at 1.; after
+<code>uniformInit</code> every parameter of a two-layer LSTM is within
+±0.08 (True). Clipping gives (3, 4), leaves (0.3, 0.4) alone, keeps the
+direction (cosine 1) where clamping does not (0.9899). The rate is 0.7,
+0.35, 0.175 and 0.021875 at epochs 4.99, 5, 5.5 and 7.4.</p>
+<h2 id="beam-search">8. Beam search</h2>
+<p>To write, the decoder must choose words. <strong>Greedy
+decoding</strong> takes the most likely word at each step. <strong>Beam
+search</strong> keeps the B most likely partial outputs instead. Each is
+extended by every word, and the B best extensions are kept. A hypothesis
+that ends in <code>&lt;EOS&gt;</code> leaves the beam and joins the
+finished list. The paper finds that B = 1 already works well and that B
+= 2 gives most of the benefit (Section 3.2).</p>
+<p><strong>Worked by hand.</strong> A toy model writes A (0.6) or B
+(0.4) first. After A it hesitates: A 0.3, B 0.3, <code>&lt;e&gt;</code>
+0.4. After B it almost always stops: <code>&lt;e&gt;</code> 0.95. Greedy
+takes A, then <code>&lt;e&gt;</code>, so its output has probability 0.6
+× 0.4 = 0.24. A beam of width 2 keeps both A and B after step 1. At step
+2 the six extensions are <code>A&lt;e&gt;</code> 0.24, AA 0.18, AB 0.18,
+<code>B&lt;e&gt;</code> 0.38, BA 0.01 and BB 0.01. The best two are both
+finished, and <code>B&lt;e&gt;</code> wins with 0.38.</p>
+<figure>
+<img src="img/unit1-fig5.png" alt="Fig. 5" />
+<figcaption aria-hidden="true">Fig. 5</figcaption>
+</figure>
+<p><strong>Fig. 5.</strong> The search tree of the toy model. Greedy
+follows the dashed path; the beam of width 2 also keeps B and finds the
+better output (orange).</p>
+<p><strong>Checked (notebook §8):</strong> greedy returns
+<code>{&lt;s&gt;, A, &lt;e&gt;}</code> with probability 0.24; the beam
+of width 2 returns <code>{&lt;s&gt;, B, &lt;e&gt;}</code> with 0.38.</p>
+<h2 id="how-big-is-the-papers-model">9. How big is the paper’s
+model?</h2>
+<p>An LSTM layer with nᵢₙ inputs and n cells has four gates, each with
+an n × nᵢₙ input matrix, an n × n state matrix and n biases:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">parameters</mtext><mo>=</mo><mn>4</mn><mspace width="0.167em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mspace width="0.167em"></mspace><msub><mi>n</mi><mtext mathvariant="normal">in</mtext></msub><mo>+</mo><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>n</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\text{parameters} = 4\,(n\,n_{\text{in}} + n^2 + n).
+</annotation></semantics></math></p>
+<p><strong>Worked by hand.</strong> One layer of 1000 cells reading 1000
+numbers has 4 × (1 000 000 + 1 000 000 + 1000) = 8 004 000 parameters.
+Eight such layers make 64 032 000. The embeddings add 160 000 × 1000 +
+80 000 × 1000 = 240 000 000, and the softmax adds 80 000 × 1000 + 80 000
+= 80 080 000. The total is 384 112 000, the paper’s “384M parameters”.
+Most of them belong to the vocabulary, not to the LSTMs.</p>
+<p><strong>Checked (notebook §9):</strong> the formula equals Wolfram’s
+count for a layer with 4 inputs and 6 cells (True); the total is 384 112
+000.</p>
+<h2 id="exercises">10. Exercises</h2>
+<ol type="1">
+<li>Repeat the hand computation of §3 with x = −1. Which gates change,
+and why is h′ negative?</li>
+<li>For a source of length T = 10, list the forward and reversed
+distances of §6 and their averages.</li>
+<li>What is the learning rate at epoch 6.2?</li>
+<li>How many parameters has a two-layer LSTM with 256 inputs and 512
+cells per layer?</li>
+<li>In the toy model of §8, change the probability of
+<code>&lt;e&gt;</code> after A from 0.4 to 0.7. Does greedy decoding
+still lose?</li>
+</ol>
+<p><strong>Answers (notebook §10):</strong> (1) every gate sees −0.5, so
+g = −0.4621 is negative, and c′ = −0.1745, h′ = −0.0652. (2) Forward 10
+each; reversed 1, 3, …, 19; both average 10. (3) 0.0875. (4) 3 674 112,
+which equals Wolfram’s count. (5) No: greedy now finds
+<code>A&lt;e&gt;</code> with 0.42, which beats <code>B&lt;e&gt;</code>
+with 0.38.</p>
+<h2 id="summary">11. Summary</h2>
+<p>Two deep LSTMs translate. One reads the whole source into the final
+states of its layers, and the other writes from them, one word at a
+time. The LSTM’s additive memory, controlled by its forget gate, carries
+information across the sentence. Reversing the source puts the first
+words next to each other. Small starting weights, norm clipping and a
+halving learning rate make training reliable. A narrow beam finds better
+outputs than greedy decoding.</p>
+<p>Next, Unit 2 turns mathematics into sequences a machine can learn
+from, and Unit 3 replaces the LSTM with attention.</p>
+<h2 id="verified-results">Verified results</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Notebook §</th>
+<th>Quantity</th>
+<th>Value returned by the kernel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3</td>
+<td>one LSTM step by hand (h′, c′)</td>
+<td>0.17427, 0.28765</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>array LSTM = <code>LongShortTermMemoryLayer</code>, zero and given
+start</td>
+<td>True, True</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>memory ratio after a pulse = σ(3)</td>
+<td>True (0.9526)</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>3-layer stack = <code>NetChain</code>; thought-vector sizes</td>
+<td>True; 30 and 8000</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>softmax(2, 1, 0)</td>
+<td>0.665, 0.245, 0.090</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>decoder step: positive, sums to 1, matches layer</td>
+<td>True, True, True</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>distances T = 3 forward / reversed</td>
+<td>{3, 3, 3} / {1, 3, 5}</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>T = 8: means; shortest</td>
+<td>8, 8; 8, 1</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>forget biases after <code>NetInitialize</code>; after
+<code>uniformInit</code> within ±0.08</td>
+<td>1.; True</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>clip (6, 8); cosine after clipping / clamping</td>
+<td>(3, 4); 1, 0.9899</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>learning rate at 4.99, 5, 5.5, 7.4</td>
+<td>0.7, 0.35, 0.175, 0.021875</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>greedy / beam 2 on the toy model</td>
+<td><code>A&lt;e&gt;</code> 0.24 / <code>B&lt;e&gt;</code> 0.38</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>parameter formula = Wolfram; paper total</td>
+<td>True; 384 112 000</td>
+</tr>
+</tbody>
+</table>
+<p>All 20 outputs of the notebook agree with the values above; the
+notebook ran with no messages.</p>
+<h2 id="references">References</h2>
+<p>Items marked † were not opened for this unit; their links were not
+checked.</p>
+<p><strong>The paper and its direct context</strong></p>
+<ol type="1">
+<li>I. Sutskever, O. Vinyals, Q. V. Le. Sequence to sequence learning
+with neural networks. NeurIPS 2014. <a
+href="https://arxiv.org/abs/1409.3215">arXiv:1409.3215</a>. The model of
+this unit.</li>
+<li>K. Cho et al. Learning phrase representations using RNN
+encoder–decoder for statistical machine translation. EMNLP 2014. <a
+href="https://arxiv.org/abs/1406.1078">arXiv:1406.1078</a>. The parallel
+encoder–decoder proposal, with the GRU cell. †</li>
+<li>D. Bahdanau, K. Cho, Y. Bengio. Neural machine translation by
+jointly learning to align and translate. ICLR 2015. <a
+href="https://arxiv.org/abs/1409.0473">arXiv:1409.0473</a>. Replaces the
+single thought vector with attention; leads to Unit 3. †</li>
+</ol>
+<p><strong>The LSTM</strong></p>
+<ol start="4" type="1">
+<li>S. Hochreiter, J. Schmidhuber. Long short-term memory. <em>Neural
+Computation</em> 9(8), 1997. <a
+href="https://doi.org/10.1162/neco.1997.9.8.1735">doi:10.1162/neco.1997.9.8.1735</a>.
+The original cell. †</li>
+<li>F. A. Gers, J. Schmidhuber, F. Cummins. Learning to forget:
+continual prediction with LSTM. <em>Neural Computation</em> 12(10),
+2000. <a
+href="https://doi.org/10.1162/089976600300015015">doi:10.1162/089976600300015015</a>.
+Adds the forget gate of §3. †</li>
+<li>A. Graves. Generating sequences with recurrent neural networks.
+2013. <a href="https://arxiv.org/abs/1308.0850">arXiv:1308.0850</a>.
+Deep LSTMs that write sequences one step at a time. †</li>
+</ol>
+<p><strong>Training</strong></p>
+<ol start="7" type="1">
+<li>Y. Bengio, P. Simard, P. Frasconi. Learning long-term dependencies
+with gradient descent is difficult. <em>IEEE Trans. Neural Networks</em>
+5(2), 1994. <a
+href="https://doi.org/10.1109/72.279181">doi:10.1109/72.279181</a>. Why
+plain recurrent networks forget. †</li>
+<li>R. Pascanu, T. Mikolov, Y. Bengio. On the difficulty of training
+recurrent neural networks. ICML 2013. <a
+href="https://arxiv.org/abs/1211.5063">arXiv:1211.5063</a>. Exploding
+gradients and clipping by the norm (§7). †</li>
+<li>R. Jozefowicz, W. Zaremba, I. Sutskever. An empirical exploration of
+recurrent network architectures. ICML 2015. <a
+href="https://proceedings.mlr.press/v37/jozefowicz15.html">PMLR 37</a>.
+Recommends a forget-gate bias of 1, as Wolfram’s
+<code>NetInitialize</code> sets (§7). †</li>
+</ol>
+<p><strong>Decoding and evaluation</strong></p>
+<ol start="10" type="1">
+<li>Y. Wu et al. Google’s neural machine translation system. 2016. <a
+href="https://arxiv.org/abs/1609.08144">arXiv:1609.08144</a>. Beam
+search with a length penalty (used in Unit 3). †</li>
+<li>K. Papineni, S. Roukos, T. Ward, W.-J. Zhu. BLEU: a method for
+automatic evaluation of machine translation. ACL 2002. <a
+href="https://aclanthology.org/P02-1040/">ACL Anthology P02-1040</a>.
+The score the paper reports. †</li>
+</ol>
+<p><strong>Wolfram Language</strong></p>
+<ol start="12" type="1">
+<li><code>LongShortTermMemoryLayer</code>, <code>NetInitialize</code>,
+<code>NetGraph</code>. Wolfram Language Documentation, <a
+href="https://reference.wolfram.com/language/ref/LongShortTermMemoryLayer.html">reference.wolfram.com</a>.
+Layer arrays and ports used in §3–§5. †</li>
+</ol>
+<hr />
+<p>© Computational Classnotes · CC BY-NC-SA 4.0</p>
+<footer style="margin-top:30px;font-size:9pt;color:#666">© 2026 Computational Classnotes · CC BY-NC-SA 4.0</footer></body></html>

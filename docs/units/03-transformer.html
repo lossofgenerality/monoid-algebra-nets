@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Unit 3 · Attention, Part by Part — Computational Classnotes</title><style>@page { size: A4; margin: 20mm 18mm 22mm 18mm;
+  @bottom-center { content: "© 2026 Computational Classnotes · CC BY-NC-SA 4.0"; } }
+body { font-family: "DejaVu Sans", sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d2430; }
+h1 { font-size: 20pt; margin: 0 0 4pt; color: #11161f; }
+h2 { font-size: 13.5pt; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid rgb(250,143,43); break-after: avoid; }
+p, li { orphans: 3; widows: 3; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; }
+table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 8pt 0; break-inside: auto; }
+th, td { border: 1px solid #c9d0db; padding: 3pt 5pt; vertical-align: top; text-align: left; }
+th { background: #eef1f6; }
+tr { break-inside: avoid; }
+img { max-width: 100%; max-height: 105mm; display: block; margin: 4pt auto; }
+figure { margin: 6pt 0; }
+figcaption { display: none; }
+math { font-family: "Latin Modern Math", "STIX Two Math", serif; }
+math[display="block"] { display: block; margin: 8pt 0; font-size: 11pt; }
+a { color: #1f5fbf; text-decoration: none; }
+hr { border: 0; border-top: 1px solid #c9d0db; margin: 16pt 0 8pt; }
+table { break-inside: avoid; }
+
+body{max-width:860px;margin:0 auto;padding:28px 22px 60px;background:#fff}
+img{max-width:100%;height:auto}
+nav.wtop{font-size:10pt;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap}
+nav.wtop a{color:rgb(212,86,28)}
+@media print{nav.wtop{display:none} footer{display:none}}
+</style></head><body><nav class="wtop"><a href="index.html">All units</a><a href="03-transformer.pdf">PDF</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/docs/units/03-transformer.md">Markdown</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/unit3_transformer.nb">Notebook unit3_transformer.nb</a><a href="../glossary.html">Glossary</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets">Repository</a></nav><h1 id="unit-3-attention-part-by-part">Unit 3 · Attention, Part by
+Part</h1>
+<p>24 November 2026 · Computational Classnotes · TensorNets units of
+learning, 3 of 4</p>
+<p>The transformer drops recurrence: every word looks at every other
+word at once, through attention, and word order is added as a code.
+Vaswani et al. (2017) built a translator from attention alone and
+trained it faster and better than recurrent models. This unit builds
+each part twice, once from plain arrays to see the mathematics and once
+as a Wolfram net from primitive layers to train it, and checks that the
+two agree. The notebook <code>unit3_transformer.nb</code> has the same
+section numbers and computes every number quoted here.</p>
+<h2 id="scope-and-conventions">Scope and conventions</h2>
+<ul>
+<li><strong>Shapes.</strong> A sequence is a matrix with one row per
+position. dmodel is the width of each row, h the number of heads, dₖ =
+dmodel/h, and dff the width of the feed-forward layer. The base model
+has dmodel = 512, h = 8, dff = 2048 and 6 encoder and 6 decoder
+layers.</li>
+<li><strong>Two versions.</strong> Every part is coded from arrays
+(<code>sdpa</code>, <code>mha</code>, <code>pe</code>, <code>ffn</code>,
+<code>layerNorm</code>, <code>encoderLayer</code>,
+<code>decoderLayer</code>) and as a net (<code>mhaNet</code>,
+<code>peNet</code>, <code>ffnNet</code>, <code>encoderLayerNet</code>,
+<code>decoderLayerNet</code>). The array versions read their weights out
+of the nets, so the comparison is exact.</li>
+<li><strong>Numbering.</strong> Sections 2–16 here match notebook
+Sections 2–16; notebook Section 1 is the toolkit. Every number below was
+returned by the Wolfram kernel (Wolfram 15.0).</li>
+<li><strong>Paper.</strong> A. Vaswani, N. Shazeer, N. Parmar, J.
+Uszkoreit, L. Jones, A. N. Gomez, Ł. Kaiser, I. Polosukhin,
+<em>Attention Is All You Need</em>, NeurIPS 2017, <a
+href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a>. “Section
+n” refers to the paper; “§n” refers to this unit.</li>
+</ul>
+<h2 id="at-a-glance">At a glance</h2>
+<p><strong>An encoder–decoder in which every layer is attention plus a
+small feed-forward network.</strong></p>
+<figure>
+<img src="img/unit3-fig1.png" alt="Fig. 1" />
+<figcaption aria-hidden="true">Fig. 1</figcaption>
+</figure>
+<p><strong>Fig. 1.</strong> The transformer. Each encoder layer is
+self-attention, then a feed-forward network, each wrapped as add &amp;
+LayerNorm. Each decoder layer adds masked self-attention and attention
+over the encoder’s output (orange arrow). The paper uses N = 6.</p>
+<h2 id="attention-instead-of-recurrence">2. Attention instead of
+recurrence</h2>
+<p>An LSTM (Unit 1) reads one word after another. The first word reaches
+the last only through every step between them, and the steps cannot run
+in parallel. The transformer lets every position look at every other
+position directly. Each position asks a question (its
+<strong>query</strong>), every position offers a <strong>key</strong>
+and a <strong>value</strong>, and the output is an average of the values
+weighted by how well the keys match the query.</p>
+<h2 id="scaled-dot-product-attention">3. Scaled dot-product
+attention</h2>
+<p>Stack the queries as rows of Q, the keys as rows of K and the values
+as rows of V. Compare every query with every key by a dot product,
+divide by √dₖ (§4), take the softmax of each row and average the values
+with those weights (Section 3.2.1):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Q</mi><mo>,</mo><mi>K</mi><mo>,</mo><mi>V</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>Q</mi><msup><mi>K</mi><mi>𝖳</mi></msup></mrow><msqrt><msub><mi>d</mi><mi>k</mi></msub></msqrt></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>V</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\mathrm{Attention}(Q,K,V)=\mathrm{softmax}\!\left(\frac{QK^{\mathsf T}}{\sqrt{d_k}}\right)V .
+</annotation></semantics></math></p>
+<p><strong>Worked by hand.</strong> Let q = (1, 0), with keys k₁ = (1,
+0) and k₂ = (0, 1), values v₁ = (1, 0) and v₂ = (0, 1), and dₖ = 2. The
+scores are q·k₁/√2 = 0.7071 and q·k₂/√2 = 0. The weights are
+e<sup>0.7071/(e</sup>0.7071 + 1) = 2.028/3.028 = 0.670 and 1/3.028 =
+0.330. The output is 0.670 v₁ + 0.330 v₂ = (0.670, 0.330): mostly the
+value of the matching key.</p>
+<p><strong>Checked (notebook §3):</strong> {{0.670, 0.330}}. The formula
+from arrays equals Wolfram’s
+<code>AttentionLayer["Dot", "ScoreRescaling" -&gt; "DimensionSqrt"]</code>
+for 4 queries and 7 keys, and every row of weights sums to 1 (True,
+True).</p>
+<h2 id="why-divide-by-dₖ">4. Why divide by √dₖ</h2>
+<p>If the components of q and k are independent with mean 0 and variance
+1, then q·k = q₁k₁ + … + q_d k_d is a sum of dₖ independent terms, each
+of variance 1. So Var(q·k) = dₖ and Var(q·k/√dₖ) = 1 (footnote 4 of the
+paper). For dₖ = 64 the unscaled scores are about ±8, the softmax is
+nearly one-hot, and its gradient is tiny.</p>
+<figure>
+<img src="img/unit3-fig2.png" alt="Fig. 2" />
+<figcaption aria-hidden="true">Fig. 2</figcaption>
+</figure>
+<p><strong>Fig. 2.</strong> The mean largest softmax weight over 10
+random keys. Without scaling it climbs towards 1 as dₖ grows; with
+scaling it stays near 0.3 for every dₖ.</p>
+<p><strong>Checked (notebook §4):</strong> for dₖ = 64 the measured
+variances are 63.6 unscaled and 0.994 scaled. The largest weight is
+above 0.75 unscaled and below 0.6 scaled (True, True).</p>
+<h2 id="masks">5. Masks</h2>
+<p>A mask is added to the scores before the softmax: 0 where attention
+is allowed, and a very large negative number where it is not, so those
+weights become 0. A <strong>padding mask</strong> hides padding at the
+end of short sequences. A <strong>causal mask</strong> stops position i
+of the decoder from seeing positions after i, so it cannot read the word
+it must predict (Section 3.2.3).</p>
+<p><strong>Worked by hand.</strong> For three positions the causal mask
+is ((0, −∞, −∞), (0, 0, −∞), (0, 0, 0)). Row 1 sees only position 1, so
+its weights are (1, 0, 0) whatever the scores. Row 2 shares its weight
+between positions 1 and 2, and row 3 sees all three.</p>
+<figure>
+<img src="img/unit3-fig3.png" alt="Fig. 3" />
+<figcaption aria-hidden="true">Fig. 3</figcaption>
+</figure>
+<p><strong>Fig. 3.</strong> Attention weights with a causal mask, for 6
+positions. Everything above the diagonal is exactly 0.</p>
+<p><strong>Checked (notebook §5):</strong> changing positions 5 and 6
+leaves outputs 1–4 unchanged; the array mask equals
+<code>AttentionLayer</code> with <code>"Mask" -&gt; "Causal"</code>;
+with 4 real keys, changing the 2 padding keys changes nothing (True,
+True, True). In Wolfram, padding needs no mask: sequences of different
+lengths are <code>"Varying"</code> dimensions, and <code>NetTrain</code>
+pads and masks them itself.</p>
+<h2 id="multi-head-attention">6. Multi-head attention</h2>
+<p>One attention with dmodel-dimensional queries is replaced by h
+attentions of dₖ = dmodel/h dimensions each, on different learned
+projections. Their outputs are joined and projected once more (Section
+3.2.2):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">H</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Q</mi><mo>,</mo><mi>K</mi><mo>,</mo><mi>V</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">c</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mrow><mi mathvariant="normal">h</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mrow><mi mathvariant="normal">h</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><mi>h</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><msup><mi>W</mi><mi>O</mi></msup><mo>,</mo><mspace width="2.0em"></mspace><msub><mrow><mi mathvariant="normal">h</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><mi>i</mi></msub><mo>=</mo><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Q</mi><msubsup><mi>W</mi><mi>i</mi><mi>Q</mi></msubsup><mo>,</mo><mspace width="0.167em"></mspace><mi>K</mi><msubsup><mi>W</mi><mi>i</mi><mi>K</mi></msubsup><mo>,</mo><mspace width="0.167em"></mspace><mi>V</mi><msubsup><mi>W</mi><mi>i</mi><mi>V</mi></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\mathrm{MultiHead}(Q,K,V)=\mathrm{Concat}(\mathrm{head}_1,\dots,\mathrm{head}_h)\,W^{O},\qquad
+\mathrm{head}_i=\mathrm{Attention}(QW_i^{Q},\,KW_i^{K},\,VW_i^{V}).
+</annotation></semantics></math></p>
+<p>As a Wolfram net, <code>mhaNet</code> uses <code>LinearLayer</code>
+for the projections (all heads at once), <code>ReshapeLayer</code> to
+split the dmodel features into h groups of dₖ,
+<code>AttentionLayer</code> with <code>"MultiHead" -&gt; True</code> for
+the h attentions, <code>FlattenLayer</code> to join them and a last
+<code>LinearLayer</code> for W^O.</p>
+<p><strong>Worked by hand.</strong> In the base model dmodel = 512 and h
+= 8, so each head works in dₖ = 64 dimensions. The four projections are
+512 × 512 matrices with 512 biases each: 4 × (512² + 512) = 1 050 624
+parameters, whatever the number of heads.</p>
+<p><strong>Checked (notebook §6):</strong> the net from primitive layers
+equals multi-head attention from arrays (d = 16, h = 4), also with the
+causal mask. It has 4(d² + d) parameters, the same for 1 head as for 4,
+and 1 050 624 for the base model (True, True, True, 1050624).</p>
+<h2 id="positional-encoding">7. Positional encoding</h2>
+<p>Attention by itself ignores word order, so a position code is added
+to each embedding (Section 3.5). Each pair of components is a sine and a
+cosine of the position, with wavelengths from 2π to 10000 · 2π:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><msub><mi>E</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>p</mi><mi>o</mi><mi>s</mi><mo>,</mo><mspace width="0.167em"></mspace><mn>2</mn><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>=</mo><mo>sin</mo><mspace width="-0.167em"></mspace><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><mi>p</mi><mi>o</mi><mi>s</mi><mi>/</mi><msup><mn>10000</mn><mrow><mn>2</mn><mi>i</mi><mi>/</mi><msub><mi>d</mi><mtext mathvariant="normal">model</mtext></msub></mrow></msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mo>,</mo><mspace width="2.0em"></mspace><mi>P</mi><msub><mi>E</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>p</mi><mi>o</mi><mi>s</mi><mo>,</mo><mspace width="0.167em"></mspace><mn>2</mn><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>=</mo><mo>cos</mo><mspace width="-0.167em"></mspace><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><mi>p</mi><mi>o</mi><mi>s</mi><mi>/</mi><msup><mn>10000</mn><mrow><mn>2</mn><mi>i</mi><mi>/</mi><msub><mi>d</mi><mtext mathvariant="normal">model</mtext></msub></mrow></msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+PE_{(pos,\,2i)}=\sin\!\big(pos/10000^{2i/d_{\text{model}}}\big),\qquad PE_{(pos,\,2i+1)}=\cos\!\big(pos/10000^{2i/d_{\text{model}}}\big).
+</annotation></semantics></math></p>
+<p><strong>Worked by hand.</strong> Take dmodel = 4 and pos = 1. For i =
+0 the frequency is 1, giving (sin 1, cos 1) = (0.8415, 0.5403). For i =
+1 it is 1/10000^(2/4) = 0.01, giving (sin 0.01, cos 0.01) = (0.0100,
+0.99995). Fast components tell nearby positions apart; slow ones tell
+distant ones apart.</p>
+<figure>
+<img src="img/unit3-fig4.png" alt="Fig. 4" />
+<figcaption aria-hidden="true">Fig. 4</figcaption>
+</figure>
+<p><strong>Fig. 4.</strong> The position code of positions 0–99 (across)
+in 64 dimensions (down). The first dimensions oscillate fast; the last
+ones hardly change.</p>
+<p>The paper chose sinusoids because, for every offset k, one fixed
+matrix Mₖ (a rotation in each pair of components) gives PE(pos + k) = Mₖ
+PE(pos) for every position. “k places later” is therefore a linear
+operation. In Wolfram, writing cos x = sin(x + π/2) makes every
+component sin(pos ω + φ): a frozen <code>LinearLayer</code> from the
+position, then <code>Sin</code>. That is <code>peNet</code>.</p>
+<p><strong>Checked (notebook §7):</strong> PE(1) = (0.8415, 0.5403,
+0.0100, 0.99995). One rotation per offset works for k = 1, 5 and 17.
+PE(pos)·PE(pos + 7) is the same for every pos. <code>peNet</code>
+(<code>SequenceIndicesLayer</code>, a frozen <code>LinearLayer</code>,
+<code>Sin</code>) adds exactly these codes for any length (True, True,
+True).</p>
+<h2 id="feed-forward-residual-and-layernorm">8. Feed-forward, residual
+and LayerNorm</h2>
+<p>After attention, every position goes through the same two-layer
+network on its own: dmodel → dff → dmodel with a ReLU between (Section
+3.3). Every sub-layer is wrapped in a residual connection and followed
+by layer normalisation (Section 3.1):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">F</mi><mi mathvariant="normal">F</mi><mi mathvariant="normal">N</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>max</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mspace width="0.167em"></mspace><mi>x</mi><msub><mi>W</mi><mn>1</mn></msub><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><msub><mi>W</mi><mn>2</mn></msub><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub><mo>,</mo><mspace width="2.0em"></mspace><mtext mathvariant="normal">output</mtext><mo>=</mo><mrow><mi mathvariant="normal">L</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">y</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">N</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><mi>x</mi><mo>+</mo><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">y</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mo>,</mo><mspace width="2.0em"></mspace><mrow><mi mathvariant="normal">L</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">y</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">N</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>γ</mi><mspace width="0.167em"></mspace><mfrac><mrow><mi>v</mi><mo>−</mo><mover><mi>v</mi><mo accent="true">‾</mo></mover></mrow><msqrt><mrow><mo>var</mo><mi>v</mi><mo>+</mo><mi>ε</mi></mrow></msqrt></mfrac><mo>+</mo><mi>β</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\mathrm{FFN}(x)=\max(0,\,xW_1+b_1)\,W_2+b_2,\qquad
+\text{output}=\mathrm{LayerNorm}\big(x+\mathrm{Sublayer}(x)\big),\qquad
+\mathrm{LayerNorm}(v)=\gamma\,\frac{v-\bar v}{\sqrt{\operatorname{var}v+\varepsilon}}+\beta .
+</annotation></semantics></math></p>
+<p>The residual lets the signal and its gradient pass straight through.
+The normalisation keeps every position’s vector at mean 0 and variance
+1, before a learned scale γ and shift β.</p>
+<p><strong>Worked by hand.</strong> LayerNorm of v = (1, 2, 3) with γ =
+1, β = 0: the mean is 2 and the variance (1 + 0 + 1)/3 = 2/3. With ε =
+0.001, √(2/3 + 0.001) = 0.8171, so the result is (−1.2238, 0, 1.2238).
+Without ε it would be ±1.2247.</p>
+<p><strong>Checked (notebook §8):</strong> Wolfram’s
+<code>NormalizationLayer[2, 2]</code> gives (−1.2238, 0, 1.2238), with ε
+= 0.001. <code>ffnNet</code> equals the formula at every position, and
+<code>NormalizationLayer</code> equals LayerNorm from arrays with a
+random γ and β (True, True). The paper normalises after the residual sum
+(post-norm). Many later transformers normalise before the sub-layer
+(pre-norm), which is easier to train when there are many layers.</p>
+<h2 id="one-encoder-layer-and-one-decoder-layer">9. One encoder layer
+and one decoder layer</h2>
+<p>An encoder layer is self-attention, then the feed-forward network,
+each wrapped as LayerNorm(x + Sublayer(x)). A decoder layer has three
+sub-layers: causal self-attention over the output so far; attention over
+the encoder’s output, with queries from the decoder and keys and values
+from the encoder; and the feed-forward network (Fig. 1).</p>
+<p><strong>Checked (notebook §9):</strong> both layer nets equal their
+array versions, and the decoder is causal: output i does not change when
+a later output position changes (True, True, True).</p>
+<h2 id="shared-embeddings-multiplied-by-dmodel">10. Shared embeddings,
+multiplied by √dmodel</h2>
+<p>The paper uses one weight matrix for the input embedding, the output
+embedding and the projection before the softmax, and multiplies the
+embeddings by √dmodel (Section 3.4). In Wolfram the sharing is
+<code>NetSharedArray</code>. <code>EmbeddingLayer</code> stores a V × d
+matrix, and <code>LinearLayer[V]</code> on d-dimensional inputs stores a
+V × d matrix too, so one array serves both.</p>
+<p><strong>Checked (notebook §10):</strong> the embedding and the output
+projection are one array, stored once: 20 × 8 = 160 shared weights plus
+20 output biases, 180 in all (True, 180).</p>
+<h2 id="label-smoothing">11. Label smoothing</h2>
+<p>The training target is not one-hot. With ε = 0.1 and K classes it
+puts 1 − ε + ε/K on the right class and ε/K on each of the others:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ε</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">t</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ε</mi><mi>/</mi><mi>K</mi><mo>,</mo><mspace width="2.0em"></mspace><mtext mathvariant="normal">loss</mtext><mo>=</mo><mo>−</mo><munder><mo>∑</mo><mi>k</mi></munder><msub><mi>q</mi><mi>k</mi></msub><mo>log</mo><msub><mi>p</mi><mi>k</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
+q=(1-\varepsilon)\,\mathrm{onehot}(y)+\varepsilon/K,\qquad \text{loss}=-\sum_k q_k\log p_k .
+</annotation></semantics></math></p>
+<p>The model learns to be less sure. The paper reports that this hurts
+perplexity but improves accuracy and BLEU (Section 5.4).</p>
+<p><strong>Worked by hand.</strong> K = 4, right class 3, ε = 0.1: q =
+(0.025, 0.025, 0.925, 0.025). If the model predicts q itself, the loss
+is −(0.925 ln 0.925 + 3 × 0.025 ln 0.025) = 0.0721 + 0.2767 = 0.349. If
+it is 99.9 % sure of class 3, the three small classes alone cost 0.075 ×
+ln 3000 = 0.601. Being too sure is now penalised.</p>
+<figure>
+<img src="img/unit3-fig5.png" alt="Fig. 5" />
+<figcaption aria-hidden="true">Fig. 5</figcaption>
+</figure>
+<p><strong>Fig. 5.</strong> The label-smoothed loss for K = 4, as a
+function of the probability given to the right class. Its minimum is at
+0.925 (dashed), not at 1.</p>
+<p><strong>Checked (notebook §11):</strong> q = (0.025, 0.025, 0.925,
+0.025); losses 0.349 and 0.601.</p>
+<h2 id="the-warm-up-learning-rate-schedule">12. The warm-up
+learning-rate schedule</h2>
+<p>Adam with β₁ = 0.9, β₂ = 0.98 and ε = 10⁻⁹. The learning rate rises
+linearly for the first 4000 steps, then falls as 1/√step (Section
+5.3):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">lrate</mtext><mo>=</mo><msubsup><mi>d</mi><mtext mathvariant="normal">model</mtext><mrow><mo>−</mo><mn>0.5</mn></mrow></msubsup><mo>⋅</mo><mo>min</mo><mspace width="-0.167em"></mspace><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mtext mathvariant="normal">step</mtext><mrow><mo>−</mo><mn>0.5</mn></mrow></msup><mo>,</mo><mspace width="0.222em"></mspace><mtext mathvariant="normal">step</mtext><mo>⋅</mo><msup><mtext mathvariant="normal">warmup</mtext><mrow><mo>−</mo><mn>1.5</mn></mrow></msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mo>,</mo><mspace width="2.0em"></mspace><mtext mathvariant="normal">warmup</mtext><mo>=</mo><mn>4000</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\text{lrate}=d_{\text{model}}^{-0.5}\cdot\min\!\big(\text{step}^{-0.5},\ \text{step}\cdot\text{warmup}^{-1.5}\big),\qquad \text{warmup}=4000 .
+</annotation></semantics></math></p>
+<p>The warm-up protects the young network from large, badly aimed
+steps.</p>
+<p><strong>Worked by hand.</strong> The two terms are equal when
+step^−0.5 = step · 4000^−1.5, that is at step 4000. There the rate is
+512^−0.5 × 4000^−0.5 = 0.04419 × 0.01581 = 6.99 × 10⁻⁴, the peak.</p>
+<figure>
+<img src="img/unit3-fig6.png" alt="Fig. 6" />
+<figcaption aria-hidden="true">Fig. 6</figcaption>
+</figure>
+<p><strong>Fig. 6.</strong> The learning rate over the first 40 000
+steps.</p>
+<p><strong>Checked (notebook §12):</strong> the peak is 0.000699, at
+step 4000 (True). In Wolfram the schedule is a factor of the learning
+rate:
+<code>NetTrain[…, Method -&gt; {"ADAM", "Beta1" -&gt; 0.9, "Beta2" -&gt; 0.98, "LearningRate" -&gt; peak, "LearningRateSchedule" -&gt; (warmRate[#]/peak &amp;)}]</code>.
+Unit 4 does this.</p>
+<h2 id="beam-search-with-a-length-penalty">13. Beam search with a length
+penalty</h2>
+<p>Unit 1’s beam search keeps the B best partial outputs. Its scores are
+sums of log-probabilities, which only fall as a hypothesis grows, so
+plain beam search prefers short outputs. The paper uses beam size 4 and
+divides each finished hypothesis’s log-probability by a length penalty
+with α = 0.6 (Section 6.1, from Wu et al. 2016):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">score</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mo>log</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mo>∣</mo><mi>X</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>l</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mi>l</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mn>5</mn><mo>+</mo><mrow><mo stretchy="true" form="prefix">|</mo><mi>Y</mi><mo stretchy="true" form="postfix">|</mo></mrow></mrow><mn>6</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>α</mi></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\text{score}(Y)=\frac{\log P(Y\mid X)}{lp(Y)},\qquad lp(Y)=\left(\frac{5+|Y|}{6}\right)^{\alpha}.
+</annotation></semantics></math></p>
+<p><strong>Worked by hand.</strong> Take a short hypothesis with log P =
+−2.0 and 2 tokens, and a long one with −2.6 and 8 tokens. Without the
+penalty the short one wins. With α = 0.6, lp(2) = (7/6)^0.6 = 1.097 and
+lp(8) = (13/6)^0.6 = 1.590. The scores become −1.823 and −1.635, and the
+long one wins.</p>
+<p><strong>Checked (notebook §13):</strong> {1.097, 1.590, −1.823,
+−1.635}.</p>
+<h2 id="how-big-is-the-base-model">14. How big is the base model?</h2>
+<p><strong>Worked by hand.</strong> One attention block has 4(512² +
+512) = 1 050 624 parameters. The feed-forward network has 512 × 2048 +
+2048 + 2048 × 512 + 512 = 2 099 712, and one LayerNorm has 2 × 512 =
+1024. So an encoder layer has 3 152 384 parameters and a decoder layer 4
+204 032. Six of each make 44 138 496. The shared embedding adds 37 000 ×
+512 = 18 944 000, and the softmax biases 37 000. The total is 63 119
+496, within 3 % of the 65M in the paper’s Table 3. The exact figure
+depends on the vocabulary and on what is counted.</p>
+<p><strong>Checked (notebook §14):</strong> the per-layer counts {1 050
+624, 2 099 712, 1024}, the total 63 119 496, and the per-layer formulas
+agree with Wolfram’s counts for the small layers of §9 (True).</p>
+<h2 id="exercises">15. Exercises</h2>
+<ol type="1">
+<li>Repeat §3 with q = (2, 0). Does the output move towards v₁ or away
+from it?</li>
+<li>With dₖ = 16 and no scaling, what is the standard deviation of
+q·k?</li>
+<li>Compute PE(2) for dmodel = 4.</li>
+<li>With K = 10 and ε = 0.1, what probability does the smoothed target
+give the right class?</li>
+<li>After the peak, at which step is the learning rate of §12 half its
+peak?</li>
+</ol>
+<p><strong>Answers (notebook §15):</strong> (1) (0.804, 0.196): a better
+match gives v₁ more weight. (2) 4. (3) (sin 2, cos 2, sin 0.02, cos
+0.02) = (0.909, −0.416, 0.020, 0.9998). (4) 0.91. (5) Step 16 000, since
+the rate falls as 1/√step.</p>
+<h2 id="summary">16. Summary</h2>
+<p>Attention is a weighted average, softmax(QKᵀ/√dₖ)V, where the √dₖ
+keeps the softmax from saturating. Masks decide who may look at whom.
+Several heads attend in different subspaces for the price of one.
+Sinusoidal codes add order in a way that makes shifts linear. Each
+sub-layer is wrapped as LayerNorm(x + Sublayer(x)), and encoder and
+decoder layers are built from these parts alone. Shared embeddings,
+label smoothing, warm-up and a length penalty complete the recipe. Every
+part built from primitive Wolfram layers equals its array version.</p>
+<p>Next, Unit 4 assembles these nets into a transformer that expands ⨂/⨁
+expressions, and trains it.</p>
+<h2 id="verified-results">Verified results</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Notebook §</th>
+<th>Quantity</th>
+<th>Value returned by the kernel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3</td>
+<td>one query, two keys</td>
+<td>(0.670, 0.330)</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>arrays = <code>AttentionLayer</code>; rows sum to 1</td>
+<td>True, True</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Var(q·k), Var(q·k/√64)</td>
+<td>63.6, 0.994</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>saturation at dₖ = 64: unscaled &gt; 0.75, scaled &lt; 0.6</td>
+<td>True, True</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>causal outputs unchanged; = <code>AttentionLayer</code> causal;
+padding ignored</td>
+<td>True, True, True</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><code>mhaNet</code> = arrays, plain and causal; parameter count;
+base model</td>
+<td>True, True, True; 1 050 624</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>PE(1) for dmodel = 4</td>
+<td>(0.8415, 0.5403, 0.0100, 0.99995)</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>shifts are rotations; dot product depends on distance only;
+<code>peNet</code> exact</td>
+<td>True, True, True</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>LayerNorm (1, 2, 3); ε</td>
+<td>(−1.2238, 0, 1.2238); 0.001</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><code>ffnNet</code> = formula; <code>NormalizationLayer</code> =
+LayerNorm</td>
+<td>True, True</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>encoder layer, decoder layer = arrays; decoder causal</td>
+<td>True, True, True</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>shared array; parameters</td>
+<td>True; 180</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>smoothed target; losses</td>
+<td>(0.025, 0.025, 0.925, 0.025); 0.349, 0.601</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>peak learning rate at step 4000</td>
+<td>0.000699; True</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>lp(2), lp(8); scores</td>
+<td>1.097, 1.590; −1.823, −1.635</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>per-layer counts; base total; formulas = Wolfram</td>
+<td>1 050 624, 2 099 712, 1024; 63 119 496; True</td>
+</tr>
+</tbody>
+</table>
+<p>All 24 outputs of the notebook agree with the values above; the
+notebook ran with no messages.</p>
+<h2 id="references">References</h2>
+<p>Items marked † were not opened for this unit; their links were not
+checked.</p>
+<p><strong>The paper and its predecessors</strong></p>
+<ol type="1">
+<li>A. Vaswani et al. Attention is all you need. NeurIPS 2017. <a
+href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a>. The model
+of this unit.</li>
+<li>D. Bahdanau, K. Cho, Y. Bengio. Neural machine translation by
+jointly learning to align and translate. ICLR 2015. <a
+href="https://arxiv.org/abs/1409.0473">arXiv:1409.0473</a>. Attention
+added to a recurrent encoder–decoder. †</li>
+<li>M.-T. Luong, H. Pham, C. D. Manning. Effective approaches to
+attention-based neural machine translation. EMNLP 2015. <a
+href="https://arxiv.org/abs/1508.04025">arXiv:1508.04025</a>.
+Dot-product attention scores. †</li>
+</ol>
+<p><strong>The parts</strong></p>
+<ol start="4" type="1">
+<li>K. He, X. Zhang, S. Ren, J. Sun. Deep residual learning for image
+recognition. CVPR 2016. <a
+href="https://arxiv.org/abs/1512.03385">arXiv:1512.03385</a>. Residual
+connections (§8). †</li>
+<li>J. L. Ba, J. R. Kiros, G. E. Hinton. Layer normalization. 2016. <a
+href="https://arxiv.org/abs/1607.06450">arXiv:1607.06450</a>. LayerNorm
+(§8). †</li>
+<li>R. Xiong et al. On layer normalization in the transformer
+architecture. ICML 2020. <a
+href="https://arxiv.org/abs/2002.04745">arXiv:2002.04745</a>. Post-norm
+against pre-norm, and why warm-up matters (§8, §12). †</li>
+<li>O. Press, L. Wolf. Using the output embedding to improve language
+models. EACL 2017. <a
+href="https://arxiv.org/abs/1608.05859">arXiv:1608.05859</a>. Shared
+input and output embeddings (§10). †</li>
+<li>C. Szegedy, V. Vanhoucke, S. Ioffe, J. Shlens, Z. Wojna. Rethinking
+the Inception architecture for computer vision. CVPR 2016. <a
+href="https://arxiv.org/abs/1512.00567">arXiv:1512.00567</a>. Label
+smoothing (§11). †</li>
+<li>D. P. Kingma, J. Ba. Adam: a method for stochastic optimization.
+ICLR 2015. <a
+href="https://arxiv.org/abs/1412.6980">arXiv:1412.6980</a>. The
+optimiser of §12. †</li>
+</ol>
+<p><strong>Decoding</strong></p>
+<ol start="10" type="1">
+<li>Y. Wu et al. Google’s neural machine translation system. 2016. <a
+href="https://arxiv.org/abs/1609.08144">arXiv:1609.08144</a>. The length
+penalty of §13. †</li>
+</ol>
+<p><strong>Wolfram Language</strong></p>
+<ol start="11" type="1">
+<li><code>AttentionLayer</code>, <code>NormalizationLayer</code>,
+<code>NetSharedArray</code>, <code>SequenceIndicesLayer</code>,
+<code>NetTrain</code>. Wolfram Language Documentation, <a
+href="https://reference.wolfram.com/language/ref/AttentionLayer.html">reference.wolfram.com</a>.
+†</li>
+</ol>
+<hr />
+<p>© Computational Classnotes · CC BY-NC-SA 4.0</p>
+<footer style="margin-top:30px;font-size:9pt;color:#666">© 2026 Computational Classnotes · CC BY-NC-SA 4.0</footer></body></html>

@@ -1,0 +1,19 @@
+@page { size: A4; margin: 20mm 18mm 22mm 18mm;
+  @bottom-center { content: "© 2026 Computational Classnotes · CC BY-NC-SA 4.0"; } }
+body { font-family: "DejaVu Sans", sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d2430; }
+h1 { font-size: 20pt; margin: 0 0 4pt; color: #11161f; }
+h2 { font-size: 13.5pt; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid rgb(250,143,43); break-after: avoid; }
+p, li { orphans: 3; widows: 3; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; }
+table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 8pt 0; break-inside: auto; }
+th, td { border: 1px solid #c9d0db; padding: 3pt 5pt; vertical-align: top; text-align: left; }
+th { background: #eef1f6; }
+tr { break-inside: avoid; }
+img { max-width: 100%; max-height: 105mm; display: block; margin: 4pt auto; }
+figure { margin: 6pt 0; }
+figcaption { display: none; }
+math { font-family: "Latin Modern Math", "STIX Two Math", serif; }
+math[display="block"] { display: block; margin: 8pt 0; font-size: 11pt; }
+a { color: #1f5fbf; text-decoration: none; }
+hr { border: 0; border-top: 1px solid #c9d0db; margin: 16pt 0 8pt; }
+table { break-inside: avoid; }

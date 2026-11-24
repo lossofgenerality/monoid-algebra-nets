@@ -53,9 +53,24 @@ The paper-sized models are defined and their sizes counted, but not trained: 384
 
 The papers themselves are not included; they are freely available on arXiv (1409.3215, 1912.01412, 1706.03762).
 
-## Lessons: how the nets work, part by part
+## Units of learning
 
-Four teaching notebooks code the important parts of references [1]–[3] from plain arrays, check each part against Wolfram's own layers, and then put them together on our own problem. Each has one Input cell; evaluating it writes a log notebook with the explanation, the formulas, the results and a PASS/FAIL line for every check. Nothing is printed and nothing is written to the Wolfram Cloud.
+Four units explain how the nets are made, in the format of the Laplacian write-ups. Each unit has a **write-up** (HTML, PDF, Markdown) and a **notebook** with the same section numbers. The notebook starts with one toolkit cell, then one section per idea. Each section has an explanation, a worked example done by hand and a check that the kernel returns. The notebooks are saved with their outputs, so they can be read without running them.
+
+| Unit | Write-up | Notebook | Follows |
+|---|---|---|---|
+| 1 · Reading a Sequence, Writing a Sequence | [HTML](docs/units/01-seq2seq.html) · [PDF](docs/units/01-seq2seq.pdf) · [md](docs/units/01-seq2seq.md) | `unit1_seq2seq.nb` | Sutskever, Vinyals and Le (2014) |
+| 2 · Mathematics as Data | [HTML](docs/units/02-symbolic-data.html) · [PDF](docs/units/02-symbolic-data.pdf) · [md](docs/units/02-symbolic-data.md) | `unit2_symbolic_data.nb` | Lample and Charton (2019) |
+| 3 · Attention, Part by Part | [HTML](docs/units/03-transformer.html) · [PDF](docs/units/03-transformer.pdf) · [md](docs/units/03-transformer.md) | `unit3_transformer.nb` | Vaswani et al. (2017) |
+| 4 · Building Our Own Net | [HTML](docs/units/04-build-your-own.html) · [PDF](docs/units/04-build-your-own.pdf) · [md](docs/units/04-build-your-own.md) | `unit4_build_your_own.nb`, trained net in `unit4_build_your_own_nets.nb` | Units 1–3, on ⨂/⨁ expressions |
+
+Every technical term is defined in the [glossary](docs/glossary.html); the [units index](docs/units/index.html) links everything. The write-ups are built by `tools/units/build_docs.py` and the glossary and index by `tools/units/build_glossary.py`.
+
+To use a unit, open its notebook in Wolfram, choose Evaluation ▸ Quit Kernel ▸ Local, and evaluate it from top to bottom. Unit 4 trains its net in about five minutes; to skip that, evaluate §1 and then `unit4_build_your_own_nets.nb`.
+
+## Lessons (superseded by the units)
+
+The earlier single-cell lesson notebooks, kept for the record until their removal is approved. They code the important parts of references [1]–[3] from plain arrays, check each part against Wolfram's own layers, and then put them together on our own problem. Each has one Input cell; evaluating it writes a log notebook with the explanation, the formulas, the results and a PASS/FAIL line for every check. Nothing is printed and nothing is written to the Wolfram Cloud.
 
 | Notebook | Covers | Checks |
 |---|---|---|
