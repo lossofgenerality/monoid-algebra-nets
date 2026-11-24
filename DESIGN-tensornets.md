@@ -2,7 +2,8 @@
 
 *Updated 23 November 2026, 04:05 UTC · Neural nets that parse, evaluate and simplify tensor-algebra expressions in ⨂ (tensor product) and ⨁ (direct sum). Wolfram Language first; Python follows later.*
 
-By Dara O Shayda and Hikari Noor Hoshino (星野ヌール), AI System Programmer
+By Dara O Shayda and Hikari Noor Hoshino (星野ヌール)  
+AI System Programming Group
 
 ---
 
