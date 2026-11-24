@@ -1,0 +1,1379 @@
+(* Content-type: application/vnd.wolfram.cdf.text *)
+
+(*** Wolfram CDF File ***)
+(* http://www.wolfram.com/cdf *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*************************************************************************)
+(*                                                                       *)
+(*                                                                       *)
+(*  This file was created under the Wolfram Enterprise licensing terms.  *)
+(*                                                                       *)
+(*       For additional information concerning CDF licensing see:        *)
+(*                                                                       *)
+(*        www.wolfram.com/cdf/adopting-cdf/licensing-options.html        *)
+(*                                                                       *)
+(*                                                                       *)
+(*                                                                       *)
+(*************************************************************************)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[      1060,         20]
+NotebookDataLength[     56290,       1357]
+NotebookOptionsPosition[     51865,       1304]
+NotebookOutlinePosition[     52182,       1318]
+CellTagsIndexPosition[     52139,       1315]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Lesson 1 log \[CenterDot] Sequence to sequence with deep LSTMs", "Title",ExpressionUUID->"57a1cfa5-cdea-499f-9803-322089995b9d"],
+
+Cell["\<\
+Written 2026-11-24 01:47 UTC by lesson1_lstm_seq2seq.nb. 19 of 19 checks pass.\
+\>", "Text",ExpressionUUID->"44215871-c006-4b28-b440-7f619ec5772e"],
+
+Cell["\<\
+Paper: I. Sutskever, O. Vinyals, Q. V. Le, Sequence to Sequence Learning with \
+Neural Networks, NeurIPS 2014, arXiv:1409.3215. Each part is coded from plain \
+arrays in lesson1_lstm_seq2seq.nb and checked against Wolfram's layers. The \
+trained demo nets for this paper are in ref1_seq2seq_sutskever2014.nb.\
+\>", "Text",ExpressionUUID->"d8f86dbf-530f-448b-a76c-4f976baac4ee"],
+
+Cell["1. The LSTM cell", "Section",ExpressionUUID->"a483db52-f4b9-4e65-bff4-a4eb6047fd69"],
+
+Cell["\<\
+An LSTM keeps a hidden state h and a memory cell c. Each step reads one input \
+vector x and computes four gates; the memory is updated by addition, which is \
+what lets information and gradients survive across long sentences.\
+\>", "Text",ExpressionUUID->"b0c375b9-f92a-4288-a6e2-b823f3938eb8"],
+
+Cell["\<\
+i = \[Sigma](Wi\[CenterDot]x + Ui\[CenterDot]h + bi)    f = \[Sigma](Wf\
+\[CenterDot]x + Uf\[CenterDot]h + bf)    o = \[Sigma](Wo\[CenterDot]x + Uo\
+\[CenterDot]h + bo)
+g = tanh(Wg\[CenterDot]x + Ug\[CenterDot]h + bg)
+c' = f\[Times]c + i\[Times]g        h' = o\[Times]tanh(c')\
+\>", "Program",ExpressionUUID->"8f7c018a-4a8d-4e48-a30b-1cd9b7d81137"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "the cell coded from arrays gives the same hidden states as \
+LongShortTermMemoryLayer (7 steps, 4 inputs, 6 cells)"
+}], "Text",ExpressionUUID->"b4bd4753-12f8-4325-b0ee-04d454e14d90"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "it also agrees when it starts from given states h0, c0 (the decoder's \
+situation)"
+}], "Text",ExpressionUUID->"c6e3b06e-c5f5-4c3e-a68c-338a07e8306c"],
+
+Cell["\<\
+In Wolfram the four gates are the arrays InputGate\[Ellipsis], ForgetGate\
+\[Ellipsis], OutputGate\[Ellipsis] and MemoryGate\[Ellipsis] of \
+LongShortTermMemoryLayer; the ports State and CellState are h and c, and are \
+reached through NetGraph (sqWithStates).\
+\>", "Text",ExpressionUUID->"55e97a0a-6006-4359-bb2f-fc28d20d84d2"],
+
+Cell["2. The deep LSTM encoder and the thought vector", "Section",ExpressionUUID->"d0f496b7-3c0c-4f88-9d74-4f577c9fa6cd"],
+
+Cell["\<\
+The paper stacks four LSTMs: layer k reads the hidden states of layer k\
+\[Minus]1. After the last source word, the final (h, c) of every layer \
+together form a fixed-size summary of the whole sentence. The decoder starts \
+from it.\
+\>", "Text",ExpressionUUID->"ec739c5a-8e9b-4eac-9401-2832ecc46f71"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "a 3-layer stack coded from arrays matches NetChain of three \
+LongShortTermMemoryLayers"
+}], "Text",ExpressionUUID->"a11af8e5-45c8-42c9-800c-7d045e1d9592"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "the thought vector of the paper's model has 2 \[Times] 4 \[Times] 1000 = \
+8000 numbers (paper, Section 3.4)"
+}], "Text",ExpressionUUID->"69758ac5-b3df-4825-97d2-0faac40c5d7e"],
+
+Cell["3. The decoder step", "Section",ExpressionUUID->"3f24df63-e931-4b4e-907f-ecd585aa4482"],
+
+Cell["\<\
+The decoder is a second deep LSTM with its own weights (the paper uses two \
+different LSTMs). It starts from the encoder's final states, reads the \
+embedding of the previous output word, and a softmax over the target \
+vocabulary gives the probability of the next word.\
+\>", "Text",ExpressionUUID->"730ec9f3-dc69-49a5-9281-ffbcbf115ea8"],
+
+Cell["\<\
+p(y_t | y_<t, x) = softmax(W\[CenterDot]h_t + b),   h_t from the top decoder \
+layer\
+\>", "Program",ExpressionUUID->"848e3e4b-cba2-47de-aef1-b2962f6c6b78"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "the decoder's next-word distribution is a probability distribution over the \
+10 target words"
+}], "Text",ExpressionUUID->"aa115572-c3e9-4faa-950a-cafcfeeb94fd"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "the decoder's first layer, started from the encoder's states, matches \
+LongShortTermMemoryLayer with State and CellState given"
+}], "Text",ExpressionUUID->"224af5cd-9c6a-458b-bc80-20fdeb60d7be"],
+
+Cell["4. Reversing the source sentence", "Section",ExpressionUUID->"28eec756-f5af-4808-9582-4cbc8e7e0b54"],
+
+Cell["\<\
+Instead of mapping a, b, c to \[Alpha], \[Beta], \[Gamma], the LSTM maps c, \
+b, a to \[Alpha], \[Beta], \[Gamma]. Put the source words at positions 1\
+\[Ellipsis]T and the target words at T+1\[Ellipsis]2T, with target word i \
+aligned to source word i. The table gives the distance between each aligned \
+pair for T = 8.\
+\>", "Text",ExpressionUUID->"359dddd4-bddf-47d1-ad0c-e98cc7368cab"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\"pair i\"\>", "1", "2", "3", "4", "5", "6", "7", "8"},
+    {"\<\"forward\"\>", "8", "8", "8", "8", "8", "8", "8", "8"},
+    {"\<\"reversed\"\>", "1", "3", "5", "7", "9", "11", "13", "15"}
+   },
+   AutoDelete->False,
+   GridBoxBackground->{"Columns" -> {
+       GrayLevel[0.85]}, "Rows" -> {{None}}},
+   GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",ExpressionUUID->"7d6e4eab-3c65-4807-b541-4de8f9f492d9"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "reversal leaves the average distance unchanged (8)"
+}], "Text",ExpressionUUID->"c4d1f8be-c954-4104-a386-3628bd7a5231"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "but cuts the shortest distance from T = 8 to 1, so the first words can \
+'communicate' at once"
+}], "Text",ExpressionUUID->"ddf53a29-5eae-4670-9ba9-e3d9cbe43926"],
+
+Cell["\<\
+The paper reports test perplexity falling from 5.8 to 4.7 and BLEU rising \
+from 25.9 to 30.6 with reversed sources (Section 3.3).\
+\>", "Text",ExpressionUUID->"6bc2dd81-8171-4731-aa70-0111aa52e8e3"],
+
+Cell["5. Uniform initialisation in [\[Minus]0.08, 0.08]", "Section",ExpressionUUID->"0c2957d1-6a06-4069-aa81-7cb7bd016368"],
+
+Cell["\<\
+All parameters start uniformly distributed in [\[Minus]0.08, 0.08] (Section \
+3.4). In Wolfram, NetInitialize does this with one option, except for the \
+LSTM forget-gate biases, which it always sets to 1 (a later practice: \
+Jozefowicz, Zaremba and Sutskever, 2015). sqUniformInit resets those too.\
+\>", "Text",ExpressionUUID->"7d473ed5-4217-4027-9ff4-67fcf00ddb86"],
+
+Cell["\<\
+NetInitialize[net, All, Method -> {\"Random\", \"Weights\" -> \
+UniformDistribution[{-0.08, 0.08}], \"Biases\" -> UniformDistribution[{-0.08, \
+0.08}]}]
+then NetReplacePart[net, {k, \"ForgetGateBiases\"} -> \
+RandomVariate[UniformDistribution[{-0.08, 0.08}], n]]\
+\>", "Program",ExpressionUUID->"d5794c7d-e5e6-430f-800c-801e2695710f"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "NetInitialize alone sets the forget-gate biases to 1, so the paper's rule \
+needs one more step"
+}], "Text",ExpressionUUID->"72420e3c-686a-4db4-b9cd-1d1d79c6f7f7"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "after sqUniformInit, every one of the 5760 parameters of a 2-layer LSTM \
+lies in [\[Minus]0.08, 0.08]"
+}], "Text",ExpressionUUID->"33df8507-2d3c-4a9e-b237-59e829bbce54"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[1., 0.835, 0.25], EdgeForm[{RGBColor[
+    0.21999999999999997`, 0.18369999999999997`, 0.05499999999999999], Opacity[
+    0.66], Thickness[Small]}], {}, 
+    {RGBColor[1., 0.835, 0.25], EdgeForm[{RGBColor[
+     0.21999999999999997`, 0.18369999999999997`, 0.05499999999999999], 
+     Opacity[0.66], Thickness[Small]}], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           RectangleBox[{-0.08, 0}, {-0.07, 372.}, "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 372]& ,
+        TagBoxNote->"372"],
+       StyleBox["372", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[372, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{-0.07, 0}, {-0.060000000000000005`, 363.}, 
+            "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 363]& ,
+        TagBoxNote->"363"],
+       StyleBox["363", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[363, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{-0.060000000000000005`, 0}, {-0.05, 311.}, 
+            "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 311]& ,
+        TagBoxNote->"311"],
+       StyleBox["311", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[311, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{-0.05, 0}, {-0.04000000000000001, 370.}, 
+            "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 370]& ,
+        TagBoxNote->"370"],
+       StyleBox["370", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[370, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{-0.04000000000000001, 0}, {-0.030000000000000006`, 
+            331.}, "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 331]& ,
+        TagBoxNote->"331"],
+       StyleBox["331", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[331, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{-0.030000000000000006`, 0}, {-0.020000000000000004`, 
+            338.}, "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 338]& ,
+        TagBoxNote->"338"],
+       StyleBox["338", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[338, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{-0.020000000000000004`, 0}, {-0.010000000000000004`, 
+            367.}, "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 367]& ,
+        TagBoxNote->"367"],
+       StyleBox["367", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[367, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{-0.010000000000000004`, 0}, {-3.469446951953614*^-18,
+             374.}, "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 374]& ,
+        TagBoxNote->"374"],
+       StyleBox["374", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[374, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{-3.469446951953614*^-18, 0}, {0.009999999999999997, 
+            374.}, "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 374]& ,
+        TagBoxNote->"374"],
+       StyleBox["374", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[374, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{0.009999999999999997, 0}, {0.019999999999999997`, 
+            355.}, "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 355]& ,
+        TagBoxNote->"355"],
+       StyleBox["355", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[355, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{0.019999999999999997`, 0}, {0.03, 369.}, 
+            "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 369]& ,
+        TagBoxNote->"369"],
+       StyleBox["369", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[369, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{0.03, 0}, {0.039999999999999994`, 370.}, 
+            "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 370]& ,
+        TagBoxNote->"370"],
+       StyleBox["370", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[370, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           RectangleBox[{0.039999999999999994`, 0}, {0.049999999999999996`, 
+            382.}, "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 382]& ,
+        TagBoxNote->"382"],
+       StyleBox["382", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[382, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{0.049999999999999996`, 0}, {0.06, 365.}, 
+            "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 365]& ,
+        TagBoxNote->"365"],
+       StyleBox["365", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[365, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{0.06, 0}, {0.06999999999999999, 348.}, 
+            "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 348]& ,
+        TagBoxNote->"348"],
+       StyleBox["348", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[348, {}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           
+           RectangleBox[{0.06999999999999999, 0}, {0.08, 371.}, 
+            "RoundingRadius" -> 0]}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 371]& ,
+        TagBoxNote->"371"],
+       StyleBox["371", {}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[371, {}], 
+       "Tooltip"]& ]}, {}, {}}, {{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{-0.10400000000000001`, 0},
+  Frame->True,
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->360,
+  Method->{CoordinatesToolOptions -> {"DisplayFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& )}, "AxisPadding" -> Scaled[0.02], "ChartDefaultStyle" -> {
+      Directive[
+       EdgeForm[{
+         Opacity[1], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.8]]}], 
+       RGBColor[1, 0.8, 0, 0.8]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[0., 0.665, 0.95]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[0.375, 0.75, 0.]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[1., 0.37, 0.1]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[0.725, 0.45, 1.]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[0.85, 0.51, 0.]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[0., 0.7, 0.7]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[1., 0.4, 0.76]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[0.64, 0.8, 0.]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[1., 0.61, 0.]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[0.65, 0.664, 1.]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[1., 0.5, 0.5]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[
+       0.7792381093092542, 0.8593242721122579, 0.14568974765050105`]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[
+       0.8795508847078471, 0.35632892385929255`, 0.8609048228736547]], 
+      Directive[
+       EdgeForm[{
+         Opacity[0.66], 
+         LightDarkSwitched[
+          GrayLevel[0.5], 
+          GrayLevel[0.7]]}], 
+       Opacity[0.7], 
+       RGBColor[
+       0.15342460575502262`, 0.7830599790949564, 0.6021943875429379]]}, 
+    "DefaultBoundaryStyle" -> Automatic, "DefaultChartBaseStyle" -> 
+    Directive[
+      RGBColor[1., 0.835, 0.25]], 
+    "DefaultGraphicsInteraction" -> {
+     "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+      "Effects" -> {
+       "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+        "Droplines" -> {
+         "freeformCursorMode" -> True, 
+          "placement" -> {"x" -> "All", "y" -> "None"}}}}, "DefaultPlotStyle" -> 
+    Automatic, "DomainPadding" -> Scaled[0.02], "RangePadding" -> 
+    Scaled[0.05]},
+  PlotLabel->FormBox["\"initial parameters\"", TraditionalForm],
+  PlotRange->{{-0.1, 0.1}, {All, All}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {None, 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",ExpressionUUID->"4b809007-1647-\
+469f-8441-cec87ec15b95"],
+
+Cell["6. Clipping the gradient by its norm", "Section",ExpressionUUID->"e8366319-1057-487e-bc15-e9716b5198c7"],
+
+Cell["\<\
+LSTMs rarely have vanishing gradients but can have exploding ones. For each \
+batch the paper computes the norm s of the whole gradient g (all parameters \
+together) and, if s > 5, rescales g to 5 g / s (Section 3.4).\
+\>", "Text",ExpressionUUID->"ab1190cb-bbbf-40eb-ba6a-3a678717120f"],
+
+Cell["s = \[LeftDoubleBracketingBar]g\[RightDoubleBracketingBar]\:2082 ;   if \
+s > 5 :  g \[LeftArrow] 5 g / s", "Program",ExpressionUUID->"aae2a581-7ab6-\
+462d-8243-d1cdb7570a84"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "after clipping, the norm is 5 (it was 13.8)"
+}], "Text",ExpressionUUID->"5ee77268-915b-448c-9442-651ebecd60a8"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "the direction is unchanged: cosine(g, clipped g) = 1"
+}], "Text",ExpressionUUID->"57a65070-195c-4a79-a716-bed3c4c9d42d"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "clamping each component to [\[Minus]1, 1] instead turns the direction \
+(cosine 0.915)"
+}], "Text",ExpressionUUID->"c229640c-6afa-4a73-9029-cd96ebd63a07"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "a small gradient is left alone"
+}], "Text",ExpressionUUID->"25b59d76-3339-4424-9fa1-2da1ff7d20f5"],
+
+Cell["7. The learning-rate schedule", "Section",ExpressionUUID->"56bb4af0-73c9-4152-8c05-3897c39efeaf"],
+
+Cell["\<\
+Plain stochastic gradient descent without momentum, learning rate 0.7. After \
+5 epochs the rate is halved every half epoch; training stops after 7.5 \
+epochs. Batches hold 128 sentences (Section 3.4).\
+\>", "Text",ExpressionUUID->"2fd9eb3a-771e-4965-bcca-2f2a5367de4e"],
+
+Cell[BoxData[
+ GraphicsBox[
+  InterpretationBox[{
+    TagBox[{{{}, {}, 
+       TagBox[
+        {RGBColor[0.24, 0.6, 0.8], AbsoluteThickness[2], Opacity[1.], 
+         LineBox[CompressedData["
+1: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
+gtObjzyW/gnrujPo8y/Av7iKVykU+D+GGLJf
+          "]]},
+        Annotation[#, "Charting`Private`Tag#1"]& ]}, {}},
+     {"WolframDynamicHighlight", <|
+      "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>}], 
+    StyleBox[
+     DynamicBox[(Charting`HighlightActionBox["DynamicHighlight", {}, 
+       Slot["HighlightElements"], 
+       Slot["LayoutOptions"], 
+       Slot["Meta"], 
+       Charting`HighlightActionFunction["DynamicHighlight", {{{{}, {}, 
+           Annotation[{
+             Directive[
+              Opacity[1.], 
+              RGBColor[0.24, 0.6, 0.8], 
+              AbsoluteThickness[2]], 
+             Line[CompressedData["
+1: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
+gtObjzyW/gnrujPo8y/Av7iKVykU+D+GGLJf
+              "]]}, "Charting`Private`Tag#1"]}}, {}}, <|
+        "HighlightElements" -> <|
+          "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+         "LayoutOptions" -> <|
+          "PanelPlotLayout" -> <||>, 
+           "PlotRange" -> {{0., 7.499999981203008}, {0., 0.75}}, 
+           "Frame" -> {{True, True}, {True, True}}, "AxesOrigin" -> {0, 0}, 
+           "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {True, True}, 
+           "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), 
+           "DefaultStyle" -> {
+             Directive[
+              Opacity[1.], 
+              RGBColor[0.24, 0.6, 0.8], 
+              AbsoluteThickness[2]]}, 
+           "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+               (Identity[#]& )[
+                Part[#, 1]], 
+               (Identity[#]& )[
+                Part[#, 2]]}& ), 
+             "ScalingFunctions" -> {{Identity, Identity}, {
+               Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+           False|>, 
+         "Meta" -> <|
+          "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+           Plot, "GroupHighlight" -> False|>|>]]& )[<|
+       "HighlightElements" -> <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+        "LayoutOptions" -> <|
+         "PanelPlotLayout" -> <||>, 
+          "PlotRange" -> {{0., 7.499999981203008}, {0., 0.75}}, 
+          "Frame" -> {{True, True}, {True, True}}, "AxesOrigin" -> {0, 0}, 
+          "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {True, True}, 
+          "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), 
+          "DefaultStyle" -> {
+            Directive[
+             Opacity[1.], 
+             RGBColor[0.24, 0.6, 0.8], 
+             AbsoluteThickness[2]]}, 
+          "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+              (Identity[#]& )[
+               Part[#, 1]], 
+              (Identity[#]& )[
+               Part[#, 2]]}& ), 
+            "ScalingFunctions" -> {{Identity, Identity}, {
+              Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> False|>,
+         "Meta" -> <|
+         "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+          Plot, "GroupHighlight" -> False|>|>]],
+     Selectable->False]},
+   Annotation[{{{{}, {}, 
+       Annotation[{
+         Directive[
+          Opacity[1.], 
+          RGBColor[0.24, 0.6, 0.8], 
+          AbsoluteThickness[2]], 
+         Line[CompressedData["
+1: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
+gtObjzyW/gnrujPo8y/Av7iKVykU+D+GGLJf
+          "]]}, "Charting`Private`Tag#1"]}}, {}}, <|
+    "HighlightElements" -> <|
+      "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+     "LayoutOptions" -> <|
+      "PanelPlotLayout" -> <||>, 
+       "PlotRange" -> {{0., 7.499999981203008}, {0., 0.75}}, 
+       "Frame" -> {{True, True}, {True, True}}, "AxesOrigin" -> {0, 0}, 
+       "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {True, True}, 
+       "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), "DefaultStyle" -> {
+         Directive[
+          Opacity[1.], 
+          RGBColor[0.24, 0.6, 0.8], 
+          AbsoluteThickness[2]]}, 
+       "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+           (Identity[#]& )[
+            Part[#, 1]], 
+           (Identity[#]& )[
+            Part[#, 2]]}& ), 
+         "ScalingFunctions" -> {{Identity, Identity}, {Identity, Identity}}|>,
+        "Primitives" -> {}, "GCFlag" -> False|>, 
+     "Meta" -> <|
+      "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+       Plot, "GroupHighlight" -> False|>|>, "DynamicHighlight"]],
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+  DisplayFunction->Identity,
+  Frame->{{True, True}, {True, True}},
+  FrameLabel->{{
+     FormBox[
+      TagBox["\"learning rate\"", HoldForm], TraditionalForm], None}, {
+     FormBox[
+      TagBox["\"epoch\"", HoldForm], TraditionalForm], None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  ImageSize->360,
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, 
+    "DefaultGraphicsInteraction" -> {
+     "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+      "Effects" -> {
+       "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+        "Droplines" -> {
+         "freeformCursorMode" -> True, 
+          "placement" -> {"x" -> "All", "y" -> "None"}}}}, "DefaultMeshStyle" -> 
+    AbsolutePointSize[6], "ScalingFunctions" -> None, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotInteractivity:>True,
+  PlotRange->{{0., 7.499999981203008}, {0., 0.75}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",ExpressionUUID->"b0ffdffa-0b44-\
+4e2c-8365-470b58d2a999"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "0.7 up to epoch 5, then 0.35, 0.175, \[Ellipsis] down to 0.7/32 in the last \
+half epoch"
+}], "Text",ExpressionUUID->"2da037d5-ade6-4e40-806e-8c08c6c72354"],
+
+Cell["8. Beam search", "Section",ExpressionUUID->"d413ddd1-49c4-4760-9907-f6a1f263f527"],
+
+Cell["\<\
+The decoder is run left to right, keeping the B most likely partial \
+translations. Each is extended by every word; the B best of all the \
+extensions are kept. A hypothesis that ends in <EOS> leaves the beam and \
+joins the finished list. The paper finds that even B = 1 works well and that \
+B = 2 gives most of the benefit (Section 3.2).\
+\>", "Text",ExpressionUUID->"f6c9f423-d135-4a21-9e76-828c3e3bb2fa"],
+
+Cell["\<\
+Toy model: the first word is A (0.6) or B (0.4). After A the model hesitates \
+(A, B: 0.35; <e>: 0.3); after B it almost always stops (<e>: 0.95). Greedy \
+decoding takes A and is trapped; a beam of width 2 keeps B alive.\
+\>", "Text",ExpressionUUID->"60340d71-2da8-41cc-91e4-6b75217b99a1"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\"width\"\>", "\<\"best output\"\>", "\<\"probability\"\>"},
+    {"1", 
+     TemplateBox[{
+      "\[ThinSpace]", "\" \"", "\"A\"", "\"A\"", "\"A\"", "\"A\"", "\"A\"", 
+       "\"A\""},
+      "RowWithSeparators"], 
+     TagBox[
+      InterpretationBox[
+       StyleBox["\<\"0.00315\"\>",
+        ShowStringCharacters->False],
+       0.0031513124999999983`,
+       AutoDelete->True],
+      NumberForm[#, 3]& ]},
+    {"2", 
+     TemplateBox[{"\[ThinSpace]", "\" \"", "\"B\"", "\"<e>\""},
+      "RowWithSeparators"], 
+     TagBox[
+      InterpretationBox[
+       StyleBox["\<\"0.38\"\>",
+        ShowStringCharacters->False],
+       0.38,
+       AutoDelete->True],
+      NumberForm[#, 3]& ]}
+   },
+   AutoDelete->False,
+   GridBoxBackground->{"Columns" -> {{None}}, "Rows" -> {
+       GrayLevel[0.85]}},
+   GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",ExpressionUUID->"37b388cd-f07a-4667-9fb2-f841fb8778dc"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "the beam of width 2 finds 'B <e>' with probability 0.38"
+}], "Text",ExpressionUUID->"70f6ccaf-159a-4ec3-affe-fdf05fca7bb7"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "greedy decoding (width 1) ends with a less likely output"
+}], "Text",ExpressionUUID->"e0c9e3a0-1402-483c-9483-1284e9930e0b"],
+
+Cell["9. The parameter count of the paper's model", "Section",ExpressionUUID->"12aff64b-0763-4e48-9c7f-975cb42cabea"],
+
+Cell["\<\
+An LSTM layer with nIn inputs and n cells has four gates, each with \
+n\[Times]nIn input weights, n\[Times]n state weights and n biases: 4(n\
+\[CenterDot]nIn + n\.b2 + n).\
+\>", "Text",ExpressionUUID->"d884ff93-904d-4b6e-92e5-3355b4797cc3"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\"source embeddings 160,000 \[Times] 1000\"\>", 
+     TagBox[
+      InterpretationBox[
+       StyleBox["\<\"160,000,000\"\>",
+        ShowStringCharacters->False],
+       160000000,
+       Editable->False],
+      NumberForm[#, DigitBlock -> 3]& ]},
+    {"\<\"target embeddings 80,000 \[Times] 1000\"\>", 
+     TagBox[
+      InterpretationBox[
+       StyleBox["\<\"80,000,000\"\>",
+        ShowStringCharacters->False],
+       80000000,
+       Editable->False],
+      NumberForm[#, DigitBlock -> 3]& ]},
+    {"\<\"encoder: 4 LSTM layers of 1000 cells\"\>", 
+     TagBox[
+      InterpretationBox[
+       StyleBox["\<\"32,016,000\"\>",
+        ShowStringCharacters->False],
+       32016000,
+       Editable->False],
+      NumberForm[#, DigitBlock -> 3]& ]},
+    {"\<\"decoder: 4 LSTM layers of 1000 cells\"\>", 
+     TagBox[
+      InterpretationBox[
+       StyleBox["\<\"32,016,000\"\>",
+        ShowStringCharacters->False],
+       32016000,
+       Editable->False],
+      NumberForm[#, DigitBlock -> 3]& ]},
+    {"\<\"softmax 80,000 \[Times] 1000 + 80,000\"\>", 
+     TagBox[
+      InterpretationBox[
+       StyleBox["\<\"80,080,000\"\>",
+        ShowStringCharacters->False],
+       80080000,
+       Editable->False],
+      NumberForm[#, DigitBlock -> 3]& ]},
+    {
+     StyleBox["\<\"total\"\>",
+      StripOnInput->False,
+      FontWeight->Bold], 
+     StyleBox[
+      TagBox[
+       InterpretationBox[
+        StyleBox["\<\"384,112,000\"\>",
+         ShowStringCharacters->False],
+        384112000,
+        Editable->False],
+       NumberForm[#, DigitBlock -> 3]& ],
+      StripOnInput->False,
+      FontWeight->Bold]}
+   },
+   AutoDelete->False,
+   GridBoxAlignment->{"Columns" -> {Left, Right}},
+   GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",ExpressionUUID->"29bc8751-9215-4ccc-ad1c-368c522ddbd5"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "the formula agrees with Wolfram's count for an LSTM layer with 4 inputs and \
+6 cells (264)"
+}], "Text",ExpressionUUID->"e2faf427-8b82-4b6b-b621-a783608d5730"],
+
+Cell[TextData[{
+ StyleBox["PASS  ",
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0.5, 0]],
+ "the total is 384,112,000: the paper's '384M parameters' (Section 3.4)"
+}], "Text",ExpressionUUID->"21bb1817-4591-46c8-b4da-da5b742d5d86"],
+
+Cell["Where this is used in TensorNets", "Section",ExpressionUUID->"374a6a43-2892-422c-8901-06a92cc6ba53"],
+
+Cell["\<\
+tnParserNet is a transformer rather than an LSTM (Lesson 3), but three ideas \
+come from this paper: an encoder\[Dash]decoder that reads the whole input \
+before writing, beam search over the decoder, and clipping the gradient by \
+its norm.\
+\>", "Text",ExpressionUUID->"b9e39298-46fc-4170-88b4-4de566a92da2"],
+
+Cell["\[Copyright] Computational Classnotes \[CenterDot] CC BY-NC-SA 4.0", \
+"Text",ExpressionUUID->"b611f68d-1cfc-4c75-a224-7bdce7fd1f2a"]
+},
+FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"7326cfb5-1c1a-45da-9bea-a8139005f657"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[1460, 33, 134, 0, 70, "Title",ExpressionUUID->"57a1cfa5-cdea-499f-9803-322089995b9d"],
+Cell[1597, 35, 157, 2, 70, "Text",ExpressionUUID->"44215871-c006-4b28-b440-7f619ec5772e"],
+Cell[1757, 39, 387, 5, 70, "Text",ExpressionUUID->"d8f86dbf-530f-448b-a76c-4f976baac4ee"],
+Cell[2147, 46, 90, 0, 70, "Section",ExpressionUUID->"a483db52-f4b9-4e65-bff4-a4eb6047fd69"],
+Cell[2240, 48, 305, 4, 70, "Text",ExpressionUUID->"b0c375b9-f92a-4288-a6e2-b823f3938eb8"],
+Cell[2548, 54, 358, 6, 70, "Program",ExpressionUUID->"8f7c018a-4a8d-4e48-a30b-1cd9b7d81137"],
+Cell[2909, 62, 275, 6, 70, "Text",ExpressionUUID->"b4bd4753-12f8-4325-b0ee-04d454e14d90"],
+Cell[3187, 70, 243, 6, 70, "Text",ExpressionUUID->"c6e3b06e-c5f5-4c3e-a68c-338a07e8306c"],
+Cell[3433, 78, 339, 5, 70, "Text",ExpressionUUID->"55e97a0a-6006-4359-bb2f-fc28d20d84d2"],
+Cell[3775, 85, 121, 0, 70, "Section",ExpressionUUID->"d0f496b7-3c0c-4f88-9d74-4f577c9fa6cd"],
+Cell[3899, 87, 312, 5, 70, "Text",ExpressionUUID->"ec739c5a-8e9b-4eac-9401-2832ecc46f71"],
+Cell[4214, 94, 248, 6, 70, "Text",ExpressionUUID->"a11af8e5-45c8-42c9-800c-7d045e1d9592"],
+Cell[4465, 102, 269, 6, 70, "Text",ExpressionUUID->"69758ac5-b3df-4825-97d2-0faac40c5d7e"],
+Cell[4737, 110, 93, 0, 70, "Section",ExpressionUUID->"3f24df63-e931-4b4e-907f-ecd585aa4482"],
+Cell[4833, 112, 350, 5, 70, "Text",ExpressionUUID->"730ec9f3-dc69-49a5-9281-ffbcbf115ea8"],
+Cell[5186, 119, 166, 3, 70, "Program",ExpressionUUID->"848e3e4b-cba2-47de-aef1-b2962f6c6b78"],
+Cell[5355, 124, 254, 6, 70, "Text",ExpressionUUID->"aa115572-c3e9-4faa-950a-cafcfeeb94fd"],
+Cell[5612, 132, 288, 6, 70, "Text",ExpressionUUID->"224af5cd-9c6a-458b-bc80-20fdeb60d7be"],
+Cell[5903, 140, 106, 0, 70, "Section",ExpressionUUID->"28eec756-f5af-4808-9582-4cbc8e7e0b54"],
+Cell[6012, 142, 400, 6, 70, "Text",ExpressionUUID->"359dddd4-bddf-47d1-ad0c-e98cc7368cab"],
+Cell[6415, 150, 555, 11, 70, "Output",ExpressionUUID->"7d6e4eab-3c65-4807-b541-4de8f9f492d9"],
+Cell[6973, 163, 211, 5, 70, "Text",ExpressionUUID->"c4d1f8be-c954-4104-a386-3628bd7a5231"],
+Cell[7187, 170, 255, 6, 70, "Text",ExpressionUUID->"ddf53a29-5eae-4670-9ba9-e3d9cbe43926"],
+Cell[7445, 178, 209, 3, 70, "Text",ExpressionUUID->"6bc2dd81-8171-4731-aa70-0111aa52e8e3"],
+Cell[7657, 183, 123, 0, 70, "Section",ExpressionUUID->"0c2957d1-6a06-4069-aa81-7cb7bd016368"],
+Cell[7783, 185, 378, 5, 70, "Text",ExpressionUUID->"7d473ed5-4217-4027-9ff4-67fcf00ddb86"],
+Cell[8164, 192, 344, 6, 70, "Program",ExpressionUUID->"d5794c7d-e5e6-430f-800c-801e2695710f"],
+Cell[8511, 200, 256, 6, 70, "Text",ExpressionUUID->"72420e3c-686a-4db4-b9cd-1d1d79c6f7f7"],
+Cell[8770, 208, 263, 6, 70, "Text",ExpressionUUID->"33df8507-2d3c-4a9e-b237-59e829bbce54"],
+Cell[9036, 216, 14961, 489, 70, "Output",ExpressionUUID->"4b809007-1647-469f-8441-cec87ec15b95"],
+Cell[24000, 707, 110, 0, 70, "Section",ExpressionUUID->"e8366319-1057-487e-bc15-e9716b5198c7"],
+Cell[24113, 709, 296, 4, 70, "Text",ExpressionUUID->"ab1190cb-bbbf-40eb-ba6a-3a678717120f"],
+Cell[24412, 715, 181, 2, 70, "Program",ExpressionUUID->"aae2a581-7ab6-462d-8243-d1cdb7570a84"],
+Cell[24596, 719, 204, 5, 70, "Text",ExpressionUUID->"5ee77268-915b-448c-9442-651ebecd60a8"],
+Cell[24803, 726, 213, 5, 70, "Text",ExpressionUUID->"57a65070-195c-4a79-a716-bed3c4c9d42d"],
+Cell[25019, 733, 247, 6, 70, "Text",ExpressionUUID->"c229640c-6afa-4a73-9029-cd96ebd63a07"],
+Cell[25269, 741, 191, 5, 70, "Text",ExpressionUUID->"25b59d76-3339-4424-9fa1-2da1ff7d20f5"],
+Cell[25463, 748, 103, 0, 70, "Section",ExpressionUUID->"56bb4af0-73c9-4152-8c05-3897c39efeaf"],
+Cell[25569, 750, 280, 4, 70, "Text",ExpressionUUID->"2fd9eb3a-771e-4965-bcca-2f2a5367de4e"],
+Cell[25852, 756, 20051, 377, 70, "Output",ExpressionUUID->"b0ffdffa-0b44-4e2c-8365-470b58d2a999"],
+Cell[45906, 1135, 249, 6, 70, "Text",ExpressionUUID->"2da037d5-ade6-4e40-806e-8c08c6c72354"],
+Cell[46158, 1143, 88, 0, 70, "Section",ExpressionUUID->"d413ddd1-49c4-4760-9907-f6a1f263f527"],
+Cell[46249, 1145, 419, 6, 70, "Text",ExpressionUUID->"f6c9f423-d135-4a21-9e76-828c3e3bb2fa"],
+Cell[46671, 1153, 300, 4, 70, "Text",ExpressionUUID->"60340d71-2da8-41cc-91e4-6b75217b99a1"],
+Cell[46974, 1159, 1054, 31, 70, "Output",ExpressionUUID->"37b388cd-f07a-4667-9fb2-f841fb8778dc"],
+Cell[48031, 1192, 216, 5, 70, "Text",ExpressionUUID->"70f6ccaf-159a-4ec3-affe-fdf05fca7bb7"],
+Cell[48250, 1199, 217, 5, 70, "Text",ExpressionUUID->"e0c9e3a0-1402-483c-9483-1284e9930e0b"],
+Cell[48470, 1206, 117, 0, 70, "Section",ExpressionUUID->"12aff64b-0763-4e48-9c7f-975cb42cabea"],
+Cell[48590, 1208, 250, 4, 70, "Text",ExpressionUUID->"d884ff93-904d-4b6e-92e5-3355b4797cc3"],
+Cell[48843, 1214, 1956, 61, 70, "Output",ExpressionUUID->"29bc8751-9215-4ccc-ad1c-368c522ddbd5"],
+Cell[50802, 1277, 252, 6, 70, "Text",ExpressionUUID->"e2faf427-8b82-4b6b-b621-a783608d5730"],
+Cell[51057, 1285, 230, 5, 70, "Text",ExpressionUUID->"21bb1817-4591-46c8-b4da-da5b742d5d86"],
+Cell[51290, 1292, 106, 0, 70, "Section",ExpressionUUID->"374a6a43-2892-422c-8901-06a92cc6ba53"],
+Cell[51399, 1294, 320, 5, 70, "Text",ExpressionUUID->"b9e39298-46fc-4170-88b4-4de566a92da2"],
+Cell[51722, 1301, 139, 1, 70, "Text",ExpressionUUID->"b611f68d-1cfc-4c75-a224-7bdce7fd1f2a"]
+}
+]
+*)
+
+(* End of internal cache information *)

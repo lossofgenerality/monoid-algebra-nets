@@ -1,0 +1,2531 @@
+(* Content-type: application/vnd.wolfram.cdf.text *)
+
+(*** Wolfram CDF File ***)
+(* http://www.wolfram.com/cdf *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*************************************************************************)
+(*                                                                       *)
+(*                                                                       *)
+(*  This file was created under the Wolfram Enterprise licensing terms.  *)
+(*                                                                       *)
+(*       For additional information concerning CDF licensing see:        *)
+(*                                                                       *)
+(*        www.wolfram.com/cdf/adopting-cdf/licensing-options.html        *)
+(*                                                                       *)
+(*                                                                       *)
+(*                                                                       *)
+(*************************************************************************)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[      1060,         20]
+NotebookDataLength[    105402,       2509]
+NotebookOptionsPosition[    106030,       2510]
+NotebookOutlinePosition[    106347,       2524]
+CellTagsIndexPosition[    106304,       2521]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"id", ":", " ", 
+    RowBox[{"e5870e9d", "-", 
+     RowBox[{"67", "d5"}], "-", "4791", "-", 
+     RowBox[{"96", "fe"}], "-", 
+     RowBox[{"0", 
+      RowBox[{"bbdee137a8d", " ", "\[CenterDot]", " ", "lesson4_build"}], 
+      "_your", 
+      RowBox[{"_own", " ", "\[CenterDot]", " ", "cell"}], " ", "1", " ", "of",
+       " ", 
+      RowBox[{"1", " ", "\[CenterDot]", " ", "updated"}], " ", "2026"}], "-", 
+     "11", "-", 
+     RowBox[{"24", " ", "02"}]}], ":", 
+    RowBox[{"02", " ", "UTC"}]}], " ", "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", 
+     RowBox[{"==", "\n", "   ", 
+      RowBox[{"Lesson", " ", 
+       RowBox[{"4", " ", "\[CenterDot]", " ", "Building"}], " ", "our", " ", 
+       RowBox[{"own", ":", " ", 
+        RowBox[{
+         RowBox[{
+         "a", " ", "transformer", " ", "that", " ", "expands", " ", 
+          "tensor"}], "-", 
+         RowBox[{
+         "algebra", " ", "expressions", "\n", "\n", "   ", "What", " ", "the",
+           " ", "lesson", " ", "does", "\n", "     ", "It", " ", "puts", " ", 
+          "Lessons", " ", "1"}], "-", 
+         RowBox[{"3", " ", "together", " ", "on", " ", "our", " ", "own", " ", 
+          RowBox[{"problem", ".", " ", "The"}], " ", "task", " ", "is", " ", 
+          "Expand"}]}], ":", " ", 
+        RowBox[{
+        "given", " ", "an", " ", "expression", "\n", "     ", "such", " ", 
+         "as", " ", 
+         RowBox[{"(", "a\:2a01b", ")"}], "\:2a02c"}]}]}]}]}], ",", " ", 
+    RowBox[{
+    "write", " ", "its", " ", "expansion", " ", "a\:2a02c", " ", "\:2a01", " ",
+      "b\:2a02c", " ", "in", " ", "prefix", " ", 
+     RowBox[{"notation", ".", "\n", "       ", "1."}], " ", 
+     RowBox[{"data", ":", " ", 
+      RowBox[{"uniform", " ", "random", " ", 
+       RowBox[{"\:2a02", "/", "\:2a01"}], " ", "trees", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Lesson", " ", "2"}], ",", " ", 
+         RowBox[{"Algorithm", " ", "1"}]}], ")"}]}]}]}], ",", " ", 
+    RowBox[{
+     RowBox[{
+     "written", " ", "in", " ", "infix", " ", "with", " ", "the", "\n", 
+      "          ", "fewest", " ", "parentheses", " ", 
+      RowBox[{"(", 
+       RowBox[{
+       "\:2a02", " ", "binds", " ", "tighter", " ", "than", " ", "\:2a01"}], 
+       ")"}]}], ";", " ", 
+     RowBox[{
+     "the", " ", "target", " ", "is", " ", "the", " ", "exact", " ", 
+      "expansion"}]}], ",", "\n", "          ", 
+    RowBox[{
+     RowBox[{"computed", " ", "by", " ", "an", " ", "oracle"}], ";", "\n", 
+     "       ", 
+     RowBox[{"2.", " ", "the", " ", 
+      RowBox[{"oracle", ":", " ", 
+       RowBox[{
+       "an", " ", "expression", " ", "is", " ", "a", " ", "list", " ", "of", " ",
+         "words", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"ordered", " ", "\:2a02"}], "-", 
+          RowBox[{"products", " ", "of", " ", "atoms"}]}], ")"}]}]}]}], ";", 
+     " ", 
+     RowBox[{
+     "two", "\n", "          ", "expressions", " ", "are", " ", "equal", " ", 
+      "when", " ", "their", " ", "lists", " ", "of", " ", "words", " ", 
+      "agree", " ", "up", " ", "to", " ", "order", " ", 
+      RowBox[{"(", 
+       RowBox[{"as", " ", "tnEquivalentQ"}], ")"}]}], ";", "\n", "       ", 
+     RowBox[{"3.", " ", "the", " ", 
+      RowBox[{"net", ":", " ", 
+       RowBox[{
+        RowBox[{"a", " ", "transformer", " ", "encoder"}], "-", 
+        RowBox[{
+        "decoder", " ", "assembled", " ", "from", " ", "the", " ", "parts", " ",
+          "of", " ", "Lesson", " ", "3", "\n", "          ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"multi", "-", 
+            RowBox[{"head", " ", "attention"}]}], ",", " ", 
+           RowBox[{"feed", "-", "forward"}], ",", " ", 
+           RowBox[{"LayerNorm", 
+            RowBox[{"(", 
+             RowBox[{"x", " ", "+", " ", 
+              RowBox[{"Sublayer", 
+               RowBox[{"(", "x", ")"}]}]}], ")"}]}], ",", " ", 
+           RowBox[{"sinusoidal", "\n", "          ", "positions"}], ",", " ", 
+           
+           RowBox[{"shared", " ", "embeddings", " ", "times", " ", "sqrt", 
+            RowBox[{"(", "d", ")"}]}]}], ")"}]}]}]}]}]}], ",", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+      "trained", " ", "with", " ", "label", " ", "smoothing", " ", "and", " ",
+        "the", "\n", "          ", "warm"}], "-", 
+      RowBox[{"up", " ", "schedule"}]}], ";", "\n", "       ", 
+     RowBox[{"4.", " ", 
+      RowBox[{"decoding", ":", " ", "greedy"}]}]}], ",", " ", 
+    RowBox[{"beam", " ", "search", " ", 
+     RowBox[{"(", 
+      RowBox[{"Lesson", " ", "1"}], ")"}], " ", "with", " ", "a", " ", 
+     "length", " ", "penalty", " ", 
+     RowBox[{"(", 
+      RowBox[{"Lesson", " ", "3"}], ")"}]}], ",", " ", 
+    RowBox[{
+     RowBox[{
+     "with", " ", "and", "\n", "          ", "without", " ", "the", " ", 
+      "prefix", " ", "grammar", " ", "as", " ", "a", " ", "constraint"}], ";",
+      "\n", "       ", 
+     RowBox[{"5.", " ", 
+      RowBox[{"checking", ":", " ", 
+       RowBox[{
+       "every", " ", "answer", " ", "is", " ", "verified", " ", "by", " ", 
+        "the", " ", "oracle"}]}]}]}], ",", " ", 
+    RowBox[{
+    "as", " ", "Lample", " ", "and", " ", "Charton", " ", "verify", "\n", 
+     "          ", "integrals", " ", 
+     RowBox[{"(", 
+      RowBox[{"Lesson", " ", "2"}], ")"}]}], ",", " ", 
+    RowBox[{
+    "so", " ", "a", " ", "correct", " ", "answer", " ", "anywhere", " ", "in",
+      " ", "the", " ", "beam", " ", "can", " ", "be", " ", 
+     RowBox[{"used", ".", "\n", "\n", "   ", "How"}], " ", "to", " ", "use", " ",
+      "it", "\n", "     ", "Evaluate", " ", "this", " ", 
+     RowBox[{"cell", ".", " ", "It"}], " ", "trains", " ", "a", " ", "small", 
+     " ", "net", " ", 
+     RowBox[{"(", 
+      RowBox[{
+      "about", " ", "four", " ", "minutes", " ", "on", " ", "a", " ", 
+       "laptop", " ", "CPU"}], ")"}], " ", "and", " ", "writes", "\n", 
+     "       ", "lesson4_build", "_your", "_own", 
+     RowBox[{"_log", ".", "nb"}], "   ", "explanation"}], ",", " ", 
+    RowBox[{
+     RowBox[{"results", " ", "and", " ", 
+      RowBox[{"PASS", "/", "FAIL"}], " ", "checks"}], ";", "\n", "       ", 
+     RowBox[{"lesson4_build", "_your", "_own", 
+      RowBox[{"_nets", ".", "nb"}], "  ", "the", " ", "trained", " ", 
+      "net"}]}], ",", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"as", "  ", "owNet"}], " ", "=", " ", 
+      RowBox[{"Uncompress", "[", "\"\<...\>\"", "]"}]}], ";", "\n", "     ", 
+     RowBox[{"beside", " ", "this", " ", 
+      RowBox[{"notebook", ".", " ", "Nothing"}], " ", "is", " ", 
+      "printed"}]}], ",", " ", 
+    RowBox[{
+    "nothing", " ", "is", " ", "written", " ", "to", " ", "the", " ", 
+     "Wolfram", " ", "Cloud", " ", "and", "\n", "     ", "nothing", " ", "is",
+      " ", 
+     RowBox[{"deleted", ".", " ", "To"}], " ", "define", " ", "the", " ", 
+     "functions", " ", "only"}], ",", " ", 
+    RowBox[{
+     RowBox[{"evaluate", "  ", "owSkipRun"}], " ", "=", " ", 
+     RowBox[{"True", "  ", 
+      RowBox[{"first", ".", "\n", "     ", "To"}], " ", "make", " ", "the", " ",
+       "net", " ", "bigger", " ", "or", " ", "train", " ", "longer"}]}], ",", 
+    " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"change", " ", "owSettings", " ", 
+       RowBox[{"below", ".", "\n", "\n", "   ", "\[Copyright]"}], " ", 
+       "Computational", " ", 
+       RowBox[{"Classnotes", " ", "\[CenterDot]", " ", "CC"}], " ", "BY"}], "-",
+       "NC", "-", 
+      RowBox[{"SA", " ", "4.0"}]}], "\n", "   ", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "=="}]}], " ", "*)"}], "\n", "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"owSettings", " ", "=", " ", 
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<d\>\"", " ", "->", " ", "32"}], ",", " ", 
+       RowBox[{"\"\<heads\>\"", " ", "->", " ", "4"}], ",", " ", 
+       RowBox[{"\"\<dff\>\"", " ", "->", " ", "128"}], ",", " ", 
+       RowBox[{"\"\<layers\>\"", " ", "->", " ", "2"}], ",", " ", 
+       RowBox[{"\"\<smoothing\>\"", " ", "->", " ", "0.1"}], ",", " ", 
+       RowBox[{"\"\<warmup\>\"", " ", "->", " ", "400"}], ",", "\n", "   ", 
+       RowBox[{"\"\<train\>\"", " ", "->", " ", "12000"}], ",", " ", 
+       RowBox[{"\"\<test\>\"", " ", "->", " ", "100"}], ",", " ", 
+       RowBox[{"\"\<rounds\>\"", " ", "->", " ", "40"}], ",", " ", 
+       RowBox[{"\"\<batch\>\"", " ", "->", " ", "64"}], ",", " ", 
+       RowBox[{"\"\<beam\>\"", " ", "->", " ", "4"}], ",", " ", 
+       RowBox[{"\"\<alpha\>\"", " ", "->", " ", "0.6"}]}], "|>"}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "0."}]}]}]}]}], " ", "The", " ", "log", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"notebook", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owDir", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Quiet", "@", 
+      RowBox[{"Check", "[", 
+       RowBox[{
+        RowBox[{"NotebookDirectory", "[", "]"}], ",", " ", 
+        RowBox[{"Directory", "[", "]"}]}], "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owLogFile", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"owDir", "[", "]"}], ",", 
+        " ", "\"\<lesson4_build_your_own_log.nb\>\""}], "}"}], "]"}]}], ";"}],
+    "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owNetsFile", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"owDir", "[", "]"}], ",", 
+        " ", "\"\<lesson4_build_your_own_nets.nb\>\""}], "}"}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owReset", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"owCells", " ", "=", " ", 
+        RowBox[{"{", "}"}]}], ";", " ", 
+       RowBox[{"owResults", " ", "=", " ", 
+        RowBox[{"<|", "|>"}]}]}], ")"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owSection", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"owCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{"t", ",", " ", "\"\<Section\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owText", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"owCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{"t", ",", " ", "\"\<Text\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owFormula", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"owCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{"t", ",", " ", "\"\<Program\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owShow", "[", "e_", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"owCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{
+         RowBox[{"BoxData", "[", 
+          RowBox[{"ToBoxes", "[", "e", "]"}], "]"}], ",", 
+         " ", "\"\<Output\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owCheck", "[", 
+      RowBox[{"name_String", ",", " ", "test_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"With", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"ok", " ", "=", " ", 
+         RowBox[{"TrueQ", "[", 
+          RowBox[{"Quiet", "@", 
+           RowBox[{"Check", "[", 
+            RowBox[{"test", ",", " ", "False"}], "]"}]}], "]"}]}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"owResults", "[", "name", "]"}], " ", "=", " ", "ok"}], ";", 
+        "\n", "   ", 
+        RowBox[{"AppendTo", "[", 
+         RowBox[{"owCells", ",", " ", 
+          RowBox[{"Cell", "[", 
+           RowBox[{
+            RowBox[{"TextData", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"StyleBox", "[", 
+                RowBox[{
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                  "ok", ",", " ", "\"\<PASS  \>\"", ",", 
+                   " ", "\"\<FAIL  \>\""}], "]"}], ",", " ", 
+                 RowBox[{"FontWeight", " ", "->", " ", "Bold"}], ",", "\n", 
+                 "        ", 
+                 RowBox[{"FontColor", " ", "->", " ", 
+                  RowBox[{"If", "[", 
+                   RowBox[{"ok", ",", " ", 
+                    RowBox[{"RGBColor", "[", 
+                    RowBox[{"0", ",", " ", "0.5", ",", " ", "0"}], "]"}], ",",
+                     " ", 
+                    RowBox[{"RGBColor", "[", 
+                    RowBox[{"0.8", ",", " ", "0", ",", " ", "0"}], "]"}]}], 
+                   "]"}]}]}], "]"}], ",", " ", "name"}], "}"}], "]"}], ",", 
+            " ", "\"\<Text\>\""}], "]"}]}], "]"}], ";", "\n", "   ", "ok"}]}],
+       "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"SetAttributes", "[", 
+     RowBox[{"owCheck", ",", " ", "HoldRest"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owStamp", "[", "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"DateString", "[", 
+       RowBox[{
+        RowBox[{"TimeZoneConvert", "[", 
+         RowBox[{"Now", ",", " ", "0"}], "]"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Year\>\"", ",", " ", "\"\<-\>\"", ",", 
+          " ", "\"\<Month\>\"", ",", " ", "\"\<-\>\"", ",", " ", "\"\<Day\>\"",
+           ",", " ", "\"\< \>\"", ",", " ", "\"\<Hour\>\"", ",", 
+          " ", "\"\<:\>\"", ",", " ", "\"\<Minute\>\""}], "}"}]}], "]"}], " ",
+       "<>", " ", "\"\< UTC\>\""}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owSaveLog", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Export", "[", 
+      RowBox[{
+       RowBox[{"owLogFile", "[", "]"}], ",", " ", 
+       RowBox[{"Notebook", "[", 
+        RowBox[{"Join", "[", "\n", "     ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Cell", "[", 
+             
+             RowBox[{"\"\<Lesson 4 log \[CenterDot] Building our own: a \
+transformer that expands tensor-algebra expressions\>\"", ",", 
+              " ", "\"\<Title\>\""}], "]"}], ",", "\n", "      ", 
+            RowBox[{"Cell", "[", 
+             RowBox[{
+              RowBox[{"\"\<Written \>\"", " ", "<>", " ", 
+               RowBox[{"owStamp", "[", "]"}], " ", "<>", 
+               " ", "\"\< by lesson4_build_your_own.nb. \>\"", " ", "<>", 
+               "\n", "        ", 
+               RowBox[{"ToString", "[", 
+                RowBox[{"Count", "[", 
+                 RowBox[{"owResults", ",", " ", "True"}], "]"}], "]"}], " ", "<>",
+                " ", "\"\< of \>\"", " ", "<>", " ", 
+               RowBox[{"ToString", "[", 
+                RowBox[{"Length", "[", "owResults", "]"}], "]"}], " ", "<>", 
+               " ", "\"\< checks pass.\>\""}], ",", " ", "\"\<Text\>\""}], 
+             "]"}]}], "}"}], ",", "\n", "     ", "owCells", ",", "\n", 
+          "     ", 
+          RowBox[{"{", 
+           RowBox[{"Cell", "[", 
+            
+            RowBox[{"\"\<\[Copyright] Computational Classnotes \[CenterDot] \
+CC BY-NC-SA 4.0\>\"", ",", " ", "\"\<Text\>\""}], "]"}], "}"}]}], "]"}], 
+        "]"}], ",", " ", "\"\<NB\>\""}], "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "the", " ", "trained", " ", "net", " ", "goes", " ", "into", " ", "its", 
+      " ", "own", " ", "notebook"}], ",", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"as", " ", "one", " ", "Input", " ", "cell", "  ", "owNet"}], 
+       " ", "=", " ", 
+       RowBox[{"Uncompress", "[", "\"\<...\>\"", "]"}]}], ";"}]}], " ", 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owSaveNets", "[", "net_", "]"}], " ", ":=", " ", 
+     RowBox[{"Export", "[", 
+      RowBox[{
+       RowBox[{"owNetsFile", "[", "]"}], ",", " ", 
+       RowBox[{"Notebook", "[", 
+        RowBox[{"{", 
+         RowBox[{"Cell", "[", 
+          RowBox[{
+           RowBox[{"BoxData", "[", 
+            RowBox[{"RowBox", "[", 
+             RowBox[{"{", "\n", "         ", 
+              RowBox[{
+               RowBox[{"\"\<(* id: \>\"", " ", "<>", " ", 
+                RowBox[{"CreateUUID", "[", "]"}], " ", "<>", 
+                " ", "\"\< \[CenterDot] lesson4_build_your_own_nets \
+\[CenterDot] cell 1 of 1 \[CenterDot] updated \>\"", " ", "<>", " ", 
+                RowBox[{"owStamp", "[", "]"}], " ", "<>", 
+                " ", "\"\< *)\>\""}], ",", " ", "\"\<\n\>\"", ",", "\n", 
+               "         ", 
+               RowBox[{"RowBox", "[", 
+                RowBox[{"{", 
+                 RowBox[{"\"\<owNet\>\"", ",", " ", "\"\<=\>\"", ",", " ", 
+                  RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    
+                    RowBox[{"\"\<Uncompress\>\"", ",", " ", "\"\<[\>\"", ",", 
+                    " ", 
+                    RowBox[{"\"\<\\\"\>\"", " ", "<>", " ", 
+                    RowBox[{"Compress", "[", "net", "]"}], " ", "<>", 
+                    " ", "\"\<\\\"\>\""}], ",", " ", "\"\<]\>\""}], "}"}], 
+                   "]"}]}], "}"}], "]"}], ",", " ", "\"\<;\>\""}], "}"}], 
+             "]"}], "]"}], ",", " ", "\"\<Input\>\""}], "]"}], "}"}], "]"}], ",",
+        " ", "\"\<NB\>\""}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "1."}]}]}]}]}], " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Data", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], " ", 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"owAtoms", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"\"\<a\>\"", ",", " ", "\"\<b\>\"", ",", " ", "\"\<c\>\"", ",", 
+       " ", "\"\<d\>\""}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"owVocab", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"\"\<<s>\>\"", ",", " ", "\"\<</s>\>\"", ",", " ", "\"\<a\>\"", 
+       ",", " ", "\"\<b\>\"", ",", " ", "\"\<c\>\"", ",", " ", "\"\<d\>\"", ",",
+        " ", "\"\<\:2a02\>\"", ",", " ", "\"\<\:2a01\>\"", ",", 
+       " ", "\"\<(\>\"", ",", " ", "\"\<)\>\""}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"owIndex", " ", "=", " ", 
+     RowBox[{"AssociationThread", "[", 
+      RowBox[{"owVocab", " ", "->", " ", 
+       RowBox[{"Range", "[", 
+        RowBox[{"Length", "[", "owVocab", "]"}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owArity", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"t", " ", "===", " ", "\"\<\:2a02\>\""}], " ", "||", " ", 
+        RowBox[{"t", " ", "===", " ", "\"\<\:2a01\>\""}]}], ",", " ", "2", ",",
+        " ", "0"}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"uniform", " ", "random", " ", "binary", " ", "trees"}], ",", 
+     " ", 
+     RowBox[{"Lesson", " ", "2"}], ",", " ", 
+     RowBox[{"Algorithm", " ", "1"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owDBin", "[", 
+      RowBox[{"_", ",", " ", "0"}], "]"}], " ", "=", " ", "1"}], ";"}], "\n", 
+   
+   RowBox[{
+    RowBox[{
+     RowBox[{"owDBin", "[", 
+      RowBox[{"0", ",", " ", 
+       RowBox[{"n_", " ", "/;", " ", 
+        RowBox[{"n", " ", ">", " ", "0"}]}]}], "]"}], " ", "=", " ", "0"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owDBin", "[", 
+      RowBox[{"e_", ",", " ", "n_"}], "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"owDBin", "[", 
+       RowBox[{"e", ",", " ", "n"}], "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"owDBin", "[", 
+        RowBox[{
+         RowBox[{"e", " ", "-", " ", "1"}], ",", " ", "n"}], "]"}], " ", "+", 
+       " ", 
+       RowBox[{"owDBin", "[", 
+        RowBox[{
+         RowBox[{"e", " ", "+", " ", "1"}], ",", " ", 
+         RowBox[{"n", " ", "-", " ", "1"}]}], "]"}]}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owRandomTree", "[", "n0_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"e", " ", "=", " ", "1"}], ",", " ", 
+         RowBox[{"n", " ", "=", " ", "n0"}], ",", " ", "ks", ",", " ", "k", ",",
+          " ", 
+         RowBox[{"out", " ", "=", " ", 
+          RowBox[{"{", "}"}]}]}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"While", "[", 
+         RowBox[{
+          RowBox[{"n", " ", ">", " ", "0"}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"ks", " ", "=", " ", 
+            RowBox[{"Range", "[", 
+             RowBox[{"0", ",", " ", 
+              RowBox[{"e", " ", "-", " ", "1"}]}], "]"}]}], ";", "\n", "    ", 
+           RowBox[{"k", " ", "=", " ", 
+            RowBox[{"RandomChoice", "[", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"owDBin", "[", 
+                  RowBox[{
+                   RowBox[{"e", " ", "-", " ", "#", " ", "+", " ", "1"}], ",",
+                    " ", 
+                   RowBox[{"n", " ", "-", " ", "1"}]}], "]"}], " ", "&"}], 
+                " ", "/@", " ", "ks"}], ")"}], " ", "->", " ", "ks"}], 
+             "]"}]}], ";", "\n", "    ", 
+           RowBox[{"out", " ", "=", " ", 
+            RowBox[{"Join", "[", 
+             RowBox[{"out", ",", " ", 
+              RowBox[{"ConstantArray", "[", 
+               RowBox[{"0", ",", " ", "k"}], "]"}], ",", " ", 
+              RowBox[{"{", "2", "}"}]}], "]"}]}], ";", "\n", "    ", 
+           RowBox[{"e", " ", "=", " ", 
+            RowBox[{"e", " ", "-", " ", "k", " ", "+", " ", "1"}]}], ";", " ", 
+           RowBox[{"n", "--"}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"Join", "[", 
+         RowBox[{"out", ",", " ", 
+          RowBox[{"ConstantArray", "[", 
+           RowBox[{"0", ",", " ", "e"}], "]"}]}], "]"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owRandomPrefix", "[", "n_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"#", " ", "==", " ", "2"}], ",", " ", 
+         RowBox[{"RandomChoice", "[", 
+          RowBox[{"{", 
+           RowBox[{"\"\<\:2a02\>\"", ",", " ", "\"\<\:2a01\>\""}], "}"}], 
+          "]"}], ",", " ", 
+         RowBox[{"RandomChoice", "[", "owAtoms", "]"}]}], "]"}], " ", "&"}], 
+      " ", "/@", " ", 
+      RowBox[{"owRandomTree", "[", "n", "]"}]}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"prefix", " ", "tokens"}], " ", "->", " ", 
+      RowBox[{"tree", " ", 
+       RowBox[{"{", 
+        RowBox[{"op", ",", " ", "left", ",", " ", "right"}], "}"}], " ", "or",
+        " ", "an", " ", "atom"}]}], ";", " ", 
+     RowBox[{
+     "$Failed", " ", "unless", " ", "exactly", " ", "one", " ", "tree"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owParse", "[", "tokens_List", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"pos", " ", "=", " ", "1"}], ",", " ", "rec", ",", " ", 
+         "r"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"rec", "[", "]"}], " ", ":=", " ", 
+         RowBox[{"Module", "[", 
+          RowBox[{
+           RowBox[{"{", "t", "}"}], ",", "\n", "     ", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"pos", " ", ">", " ", 
+               RowBox[{"Length", "[", "tokens", "]"}]}], ",", " ", 
+              RowBox[{"Throw", "[", 
+               RowBox[{"$Failed", ",", " ", "owTag"}], "]"}]}], "]"}], ";", 
+            "\n", "     ", 
+            RowBox[{"t", " ", "=", " ", 
+             RowBox[{"tokens", "[", 
+              RowBox[{"[", 
+               RowBox[{"pos", "++"}], "]"}], "]"}]}], ";", "\n", "     ", 
+            RowBox[{"Which", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"owArity", "[", "t", "]"}], " ", "==", " ", "2"}], ",",
+               " ", 
+              RowBox[{"{", 
+               RowBox[{"t", ",", " ", 
+                RowBox[{"rec", "[", "]"}], ",", " ", 
+                RowBox[{"rec", "[", "]"}]}], "}"}], ",", " ", 
+              RowBox[{"MemberQ", "[", 
+               RowBox[{"owAtoms", ",", " ", "t"}], "]"}], ",", " ", "t", ",", 
+              " ", "True", ",", " ", 
+              RowBox[{"Throw", "[", 
+               RowBox[{"$Failed", ",", " ", "owTag"}], "]"}]}], "]"}]}]}], 
+          "]"}]}], ";", "\n", "   ", 
+        RowBox[{"r", " ", "=", " ", 
+         RowBox[{"Catch", "[", 
+          RowBox[{
+           RowBox[{"rec", "[", "]"}], ",", " ", "owTag"}], "]"}]}], ";", "\n",
+         "   ", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"r", " ", "===", " ", "$Failed"}], " ", "||", " ", 
+           RowBox[{"pos", " ", "<=", " ", 
+            RowBox[{"Length", "[", "tokens", "]"}]}]}], ",", " ", "$Failed", ",",
+           " ", "r"}], "]"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"infix", " ", "with", " ", "the", " ", "fewest", " ", 
+     RowBox[{"parentheses", ":", " ", 
+      RowBox[{
+      "only", " ", "a", " ", "\:2a01", " ", "under", " ", "a", " ", "\:2a02", 
+       " ", "needs", " ", "them"}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owInfix", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"{", "t", "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owInfix", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<\:2a01\>\"", ",", " ", "l_", ",", " ", "r_"}], "}"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"owInfix", "[", "l", "]"}], ",", " ", 
+       RowBox[{"{", "\"\<\:2a01\>\"", "}"}], ",", " ", 
+       RowBox[{"owInfix", "[", "r", "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owInfix", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<\:2a02\>\"", ",", " ", "l_", ",", " ", "r_"}], "}"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"owParen", "[", "l", "]"}], ",", " ", 
+       RowBox[{"{", "\"\<\:2a02\>\"", "}"}], ",", " ", 
+       RowBox[{"owParen", "[", "r", "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owParen", "[", 
+      RowBox[{"x", " ", ":", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<\:2a01\>\"", ",", " ", "_", ",", " ", "_"}], "}"}]}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", "\"\<(\>\"", "}"}], ",", " ", 
+       RowBox[{"owInfix", "[", "x", "]"}], ",", " ", 
+       RowBox[{"{", "\"\<)\>\"", "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owParen", "[", "x_", "]"}], " ", ":=", " ", 
+     RowBox[{"owInfix", "[", "x", "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "2."}]}]}]}]}], " ", "The", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"oracle", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], " ",
+     "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+      "an", " ", "expression", " ", "is", " ", "a", " ", "list", " ", "of", " ",
+        "words"}], ";", " ", 
+      RowBox[{"\:2a01", " ", "joins", " ", "the", " ", "lists"}]}], ",", " ", 
+     
+     RowBox[{
+     "\:2a02", " ", "multiplies", " ", "every", " ", "word", " ", "by", " ", 
+      "every", " ", "word"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owWords", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"{", 
+      RowBox[{"{", "t", "}"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owWords", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<\:2a01\>\"", ",", " ", "l_", ",", " ", "r_"}], "}"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"owWords", "[", "l", "]"}], ",", " ", 
+       RowBox[{"owWords", "[", "r", "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owWords", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<\:2a02\>\"", ",", " ", "l_", ",", " ", "r_"}], "}"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"Flatten", "[", 
+      RowBox[{
+       RowBox[{"Outer", "[", 
+        RowBox[{"Join", ",", " ", 
+         RowBox[{"owWords", "[", "l", "]"}], ",", " ", 
+         RowBox[{"owWords", "[", "r", "]"}], ",", " ", "1"}], "]"}], ",", " ",
+        "1"}], "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"the", " ", "expansion", " ", "in", " ", 
+     RowBox[{"prefix", ":", " ", 
+      RowBox[{
+       RowBox[{"a", " ", "right"}], "-", 
+       RowBox[{"nested", " ", "\:2a01", " ", "of", " ", "right"}], "-", 
+       RowBox[{"nested", " ", "\:2a02"}], "-", "words"}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owWordTokens", "[", 
+      RowBox[{"{", "w_", "}"}], "]"}], " ", ":=", " ", 
+     RowBox[{"{", "w", "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owWordTokens", "[", "w_List", "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\"\<\:2a02\>\"", ",", " ", 
+         RowBox[{"First", "[", "w", "]"}]}], "}"}], ",", " ", 
+       RowBox[{"owWordTokens", "[", 
+        RowBox[{"Rest", "[", "w", "]"}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owSumTokens", "[", 
+      RowBox[{"{", "w_", "}"}], "]"}], " ", ":=", " ", 
+     RowBox[{"owWordTokens", "[", "w", "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owSumTokens", "[", "ws_List", "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", "\"\<\:2a01\>\"", "}"}], ",", " ", 
+       RowBox[{"owWordTokens", "[", 
+        RowBox[{"First", "[", "ws", "]"}], "]"}], ",", " ", 
+       RowBox[{"owSumTokens", "[", 
+        RowBox[{"Rest", "[", "ws", "]"}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owExpand", "[", "tree_", "]"}], " ", ":=", " ", 
+     RowBox[{"owSumTokens", "[", 
+      RowBox[{"owWords", "[", "tree", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owEquivalentQ", "[", 
+      RowBox[{"tree_", ",", " ", "tokens_List"}], "]"}], " ", ":=", " ", 
+     RowBox[{"With", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"t", " ", "=", " ", 
+         RowBox[{"owParse", "[", "tokens", "]"}]}], "}"}], ",", " ", 
+       RowBox[{
+        RowBox[{"t", " ", "=!=", " ", "$Failed"}], " ", "&&", " ", 
+        RowBox[{
+         RowBox[{"Sort", "[", 
+          RowBox[{"owWords", "[", "t", "]"}], "]"}], " ", "===", " ", 
+         RowBox[{"Sort", "[", 
+          RowBox[{"owWords", "[", "tree", "]"}], "]"}]}]}]}], "]"}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owPair", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"tree", ",", " ", "src", ",", " ", "tgt"}], "}"}], ",", "\n", 
+       "   ", 
+       RowBox[{"While", "[", 
+        RowBox[{"True", ",", "\n", "    ", 
+         RowBox[{
+          RowBox[{"tree", " ", "=", " ", 
+           RowBox[{"owParse", "[", 
+            RowBox[{"owRandomPrefix", "[", 
+             RowBox[{"RandomInteger", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", " ", "5"}], "}"}], "]"}], "]"}], "]"}]}], ";",
+           "\n", "    ", 
+          RowBox[{"src", " ", "=", " ", 
+           RowBox[{"owInfix", "[", "tree", "]"}]}], ";", " ", 
+          RowBox[{"tgt", " ", "=", " ", 
+           RowBox[{"owExpand", "[", "tree", "]"}]}], ";", "\n", "    ", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"Length", "[", "src", "]"}], " ", "<=", " ", "25"}], 
+             " ", "&&", " ", 
+             RowBox[{
+              RowBox[{"Length", "[", "tgt", "]"}], " ", "<=", " ", "40"}]}], ",",
+             " ", 
+            RowBox[{"Return", "[", 
+             RowBox[{"<|", 
+              RowBox[{
+               RowBox[{"\"\<Tree\>\"", " ", "->", " ", "tree"}], ",", " ", 
+               RowBox[{"\"\<Source\>\"", " ", "->", " ", "src"}], ",", " ", 
+               RowBox[{"\"\<Target\>\"", " ", "->", " ", "tgt"}]}], "|>"}], 
+             "]"}]}], "]"}]}]}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owEncode", "[", "tokens_List", "]"}], " ", ":=", " ", 
+     RowBox[{"owIndex", " ", "/@", " ", "tokens"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owDecode", "[", "idx_List", "]"}], " ", ":=", " ", 
+     RowBox[{"owVocab", "[", 
+      RowBox[{"[", "idx", "]"}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owPart1", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"all", ",", " ", "s", ",", " ", "ex"}], "}"}], ",", "\n", 
+       "   ", 
+       RowBox[{
+        RowBox[{"owSection", "[", "\"\<1. The task and the data\>\"", "]"}], ";",
+         "\n", "   ", 
+        RowBox[{
+        "owText", 
+         "[", "\"\<Expand: the source is an expression written as one would \
+type it, the target is its full expansion in prefix notation. Trees are drawn \
+uniformly with Algorithm 1 of Lample and Charton (Lesson 2), with 1 to 5 \
+operators, each \:2a02 or \:2a01, over the atoms a, b, c, d. \:2a02 binds \
+tighter than \:2a01, so only a \:2a01 inside a \:2a02 needs parentheses.\>\"",
+          "]"}], ";", "\n", "   ", 
+        RowBox[{"ex", " ", "=", " ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"owPair", "[", "]"}], ",", " ", "4"}], "]"}]}], ";", "\n", 
+        "   ", 
+        RowBox[{"owShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Row", "[", 
+                  RowBox[{"#Source", ",", " ", "\"\< \>\""}], "]"}], ",", " ", 
+                 RowBox[{"Row", "[", 
+                  RowBox[{"#Target", ",", " ", "\"\< \>\""}], "]"}]}], "}"}], 
+               " ", "&"}], " ", "/@", " ", "ex"}], ",", " ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<source (infix)\>\"", ",", 
+               " ", "\"\<target (expansion, prefix)\>\""}], "}"}]}], "]"}], ",",
+            "\n", "      ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Alignment", " ", "->", " ", "Left"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"all", " ", "=", " ", 
+         RowBox[{"Select", "[", 
+          RowBox[{
+           RowBox[{"Tuples", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"0", ",", " ", "2"}], "}"}], ",", " ", "9"}], "]"}], ",",
+            " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"owParse", "[", 
+              RowBox[{"#", " ", "/.", " ", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"0", " ", "->", " ", "\"\<a\>\""}], ",", " ", 
+                 RowBox[{"2", " ", "->", " ", "\"\<\:2a01\>\""}]}], "}"}]}], 
+              "]"}], " ", "=!=", " ", "$Failed"}], " ", "&"}]}], "]"}]}], ";",
+         "\n", "   ", 
+        RowBox[{"s", " ", "=", " ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"owRandomTree", "[", "4", "]"}], ",", " ", "14000"}], 
+          "]"}]}], ";", "\n", "   ", 
+        RowBox[{"owCheck", "[", 
+         RowBox[{
+          
+          RowBox[{"\"\<the tree sampler reaches all 14 binary trees with 4 \
+operators, about equally often (counts \>\"", " ", "<>", "\n", "     ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"Min", "[", 
+             RowBox[{"Values", "@", 
+              RowBox[{"Counts", "[", "s", "]"}]}], "]"}], "]"}], " ", "<>", 
+           " ", "\"\<\[Ellipsis]\>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"Max", "[", 
+             RowBox[{"Values", "@", 
+              RowBox[{"Counts", "[", "s", "]"}]}], "]"}], "]"}], " ", "<>", 
+           " ", "\"\< out of 14,000)\>\""}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Length", "[", "all", "]"}], " ", "==", " ", "14"}], " ", 
+           "&&", " ", 
+           RowBox[{
+            RowBox[{"Union", "[", "s", "]"}], " ", "==", " ", 
+            RowBox[{"Sort", "[", "all", "]"}]}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"Max", "[", 
+             RowBox[{"Values", "@", 
+              RowBox[{"Counts", "[", "s", "]"}]}], "]"}], " ", "<", " ", 
+            RowBox[{"1.15", "*", "1000"}]}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"Min", "[", 
+             RowBox[{"Values", "@", 
+              RowBox[{"Counts", "[", "s", "]"}]}], "]"}], " ", ">", " ", 
+            RowBox[{"0.85", "*", "1000"}]}]}]}], "]"}]}]}], "]"}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owPart2", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", "pairs", "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"owSection", "[", "\"\<2. The oracle\>\"", "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{
+        "owText", 
+         "[", "\"\<An expression is a list of words, each word an ordered \
+\:2a02-product of atoms. \:2a01 joins two lists; \:2a02 multiplies every word \
+of the left by every word of the right, keeping their order (\:2a02 is not \
+commutative). Two expressions are equal when their lists of words agree up to \
+order (\:2a01 is commutative up to isomorphism). This is the check \
+tnEquivalentQ makes in TensorNets.\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "owFormula", 
+         "[", "\"\<words(x) = {x}     words(A \:2a01 B) = words(A) \[Union] \
+words(B)     words(A \:2a02 B) = { u v : u \[Element] words(A), v \[Element] \
+words(B) }\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"owCheck", "[", 
+         RowBox[{"\"\<(a\:2a01b)\:2a02c expands to a\:2a02c \:2a01 b\:2a02c, \
+i.e. \:2a01 \:2a02 a c \:2a02 b c\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"owExpand", "[", 
+            RowBox[{"{", 
+             RowBox[{"\"\<\:2a02\>\"", ",", " ", 
+              RowBox[{"{", 
+               
+               RowBox[{"\"\<\:2a01\>\"", ",", " ", "\"\<a\>\"", ",", 
+                " ", "\"\<b\>\""}], "}"}], ",", " ", "\"\<c\>\""}], "}"}], 
+            "]"}], " ", "==", " ", 
+           RowBox[{"{", 
+            
+            RowBox[{"\"\<\:2a01\>\"", ",", " ", "\"\<\:2a02\>\"", ",", 
+             " ", "\"\<a\>\"", ",", " ", "\"\<c\>\"", ",", 
+             " ", "\"\<\:2a02\>\"", ",", " ", "\"\<b\>\"", ",", 
+             " ", "\"\<c\>\""}], "}"}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"owCheck", "[", 
+         RowBox[{"\"\<the oracle accepts a\:2a02c \:2a01 b\:2a02c in either \
+order, and rejects c\:2a02a \:2a01 c\:2a02b (the order of factors \
+matters)\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"owEquivalentQ", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"\"\<\:2a02\>\"", ",", " ", 
+               RowBox[{"{", 
+                
+                RowBox[{"\"\<\:2a01\>\"", ",", " ", "\"\<a\>\"", ",", 
+                 " ", "\"\<b\>\""}], "}"}], ",", " ", "\"\<c\>\""}], "}"}], ",",
+              " ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<\:2a01\>\"", ",", " ", "\"\<\:2a02\>\"", ",", 
+               " ", "\"\<b\>\"", ",", " ", "\"\<c\>\"", ",", 
+               " ", "\"\<\:2a02\>\"", ",", " ", "\"\<a\>\"", ",", 
+               " ", "\"\<c\>\""}], "}"}]}], "]"}], " ", "&&", "\n", "     ", 
+           RowBox[{"!", " ", 
+            RowBox[{"owEquivalentQ", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"\"\<\:2a02\>\"", ",", " ", 
+                RowBox[{"{", 
+                 
+                 RowBox[{"\"\<\:2a01\>\"", ",", " ", "\"\<a\>\"", ",", 
+                  " ", "\"\<b\>\""}], "}"}], ",", " ", "\"\<c\>\""}], "}"}], ",",
+               " ", 
+              RowBox[{"{", 
+               
+               RowBox[{"\"\<\:2a01\>\"", ",", " ", "\"\<\:2a02\>\"", ",", 
+                " ", "\"\<c\>\"", ",", " ", "\"\<a\>\"", ",", 
+                " ", "\"\<\:2a02\>\"", ",", " ", "\"\<c\>\"", ",", 
+                " ", "\"\<b\>\""}], "}"}]}], "]"}]}]}]}], "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{"pairs", " ", "=", " ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"owPair", "[", "]"}], ",", " ", "500"}], "]"}]}], ";", 
+        "\n", "   ", 
+        RowBox[{"owCheck", "[", 
+         RowBox[{"\"\<for 500 random pairs the target is a valid prefix tree \
+equivalent to the source\>\"", ",", "\n", "    ", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{"pairs", ",", " ", 
+            RowBox[{
+             RowBox[{"owEquivalentQ", "[", 
+              RowBox[{"#Tree", ",", " ", "#Target"}], "]"}], " ", "&"}]}], 
+           "]"}]}], "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", " ", "3."}]}]}]}]}], " ", "The", " ", "net"}], ",", 
+     " ", 
+     RowBox[{
+     "from", " ", "the", " ", "parts", " ", "of", " ", "Lesson", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"3", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}]}], " ", 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owMHANet", "[", 
+      RowBox[{"d_Integer", ",", " ", "h_Integer", ",", " ", 
+       RowBox[{"causal_", " ", ":", " ", "False"}]}], "]"}], " ", ":=", " ", 
+     RowBox[{"NetGraph", "[", 
+      RowBox[{
+       RowBox[{"<|", "\n", "    ", 
+        RowBox[{
+         RowBox[{"\"\<q\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", "d", "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<k\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", "d", "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<v\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", "d", "]"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<rq\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"ReshapeLayer", "[", 
+            RowBox[{"{", 
+             RowBox[{"h", ",", " ", 
+              RowBox[{"d", "/", "h"}]}], "}"}], "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<rk\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"ReshapeLayer", "[", 
+            RowBox[{"{", 
+             RowBox[{"h", ",", " ", 
+              RowBox[{"d", "/", "h"}]}], "}"}], "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<rv\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"ReshapeLayer", "[", 
+            RowBox[{"{", 
+             RowBox[{"h", ",", " ", 
+              RowBox[{"d", "/", "h"}]}], "}"}], "]"}], "]"}]}], ",", "\n", 
+         "    ", 
+         RowBox[{"\"\<att\>\"", " ", "->", " ", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"TrueQ", "[", "causal", "]"}], ",", "\n", "      ", 
+            RowBox[{"AttentionLayer", "[", 
+             RowBox[{"\"\<Dot\>\"", ",", " ", 
+              RowBox[{"\"\<MultiHead\>\"", " ", "->", " ", "True"}], ",", " ", 
+              
+              RowBox[{"\"\<ScoreRescaling\>\"", " ", "->", 
+               " ", "\"\<DimensionSqrt\>\""}], ",", " ", 
+              RowBox[{"\"\<Mask\>\"", " ", "->", " ", "\"\<Causal\>\""}]}], 
+             "]"}], ",", "\n", "      ", 
+            RowBox[{"AttentionLayer", "[", 
+             RowBox[{"\"\<Dot\>\"", ",", " ", 
+              RowBox[{"\"\<MultiHead\>\"", " ", "->", " ", "True"}], ",", " ", 
+              
+              RowBox[{"\"\<ScoreRescaling\>\"", " ", "->", 
+               " ", "\"\<DimensionSqrt\>\""}]}], "]"}]}], "]"}]}], ",", "\n", 
+         "    ", 
+         RowBox[{"\"\<cat\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"FlattenLayer", "[", "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<o\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", "d", "]"}], "]"}]}]}], "|>"}], ",", 
+       "\n", "   ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Query\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"\"\<q\>\"", " ", "->", " ", 
+           RowBox[{"\"\<rq\>\"", " ", "->", " ", 
+            RowBox[{"NetPort", "[", 
+             RowBox[{"\"\<att\>\"", ",", " ", "\"\<Query\>\""}], "]"}]}]}]}], 
+         ",", " ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Memory\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"\"\<k\>\"", " ", "->", " ", 
+           RowBox[{"\"\<rk\>\"", " ", "->", " ", 
+            RowBox[{"NetPort", "[", 
+             RowBox[{"\"\<att\>\"", ",", " ", "\"\<Key\>\""}], "]"}]}]}]}], ",",
+          "\n", "    ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Memory\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"\"\<v\>\"", " ", "->", " ", 
+           RowBox[{"\"\<rv\>\"", " ", "->", " ", 
+            RowBox[{"NetPort", "[", 
+             RowBox[{"\"\<att\>\"", ",", " ", "\"\<Value\>\""}], "]"}]}]}]}], 
+         ",", " ", 
+         RowBox[{"\"\<att\>\"", " ", "->", " ", 
+          RowBox[{"\"\<cat\>\"", " ", "->", " ", "\"\<o\>\""}]}]}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{"\"\<Query\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}], ",", " ", 
+       RowBox[{"\"\<Memory\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owFFNNet", "[", 
+      RowBox[{"d_Integer", ",", " ", "dff_Integer"}], "]"}], " ", ":=", " ", 
+     RowBox[{"NetMapOperator", "[", 
+      RowBox[{
+       RowBox[{"NetChain", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"LinearLayer", "[", "dff", "]"}], ",", " ", "Ramp", ",", 
+          " ", 
+          RowBox[{"LinearLayer", "[", "d", "]"}]}], "}"}], "]"}], ",", " ", 
+       RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owEncoderLayerNet", "[", 
+      RowBox[{"d_Integer", ",", " ", "h_Integer", ",", " ", "dff_Integer"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"NetGraph", "[", 
+      RowBox[{
+       RowBox[{"<|", "\n", "    ", 
+        RowBox[{
+         RowBox[{"\"\<att\>\"", " ", "->", " ", 
+          RowBox[{"owMHANet", "[", 
+           RowBox[{"d", ",", " ", "h"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<add1\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln1\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<ffn\>\"", " ", "->", " ", 
+          RowBox[{"owFFNNet", "[", 
+           RowBox[{"d", ",", " ", "dff"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<add2\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln2\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}]}], "|>"}], ",", "\n", "   ", 
+       
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<att\>\"", ",", " ", "\"\<Query\>\""}], "]"}]}], ",", 
+         " ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<att\>\"", ",", " ", "\"\<Memory\>\""}], "]"}]}], ",", 
+         "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], ",", 
+            " ", "\"\<att\>\""}], "}"}], " ", "->", " ", 
+          RowBox[{"\"\<add1\>\"", " ", "->", " ", 
+           RowBox[{"\"\<ln1\>\"", " ", "->", " ", "\"\<ffn\>\""}]}]}], ",", 
+         " ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\"\<ln1\>\"", ",", " ", "\"\<ffn\>\""}], "}"}], " ", "->",
+           " ", 
+          RowBox[{"\"\<add2\>\"", " ", "->", " ", "\"\<ln2\>\""}]}]}], "}"}], 
+       ",", "\n", "   ", 
+       RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owDecoderLayerNet", "[", 
+      RowBox[{"d_Integer", ",", " ", "h_Integer", ",", " ", "dff_Integer"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"NetGraph", "[", 
+      RowBox[{
+       RowBox[{"<|", "\n", "    ", 
+        RowBox[{
+         RowBox[{"\"\<self\>\"", " ", "->", " ", 
+          RowBox[{"owMHANet", "[", 
+           RowBox[{"d", ",", " ", "h", ",", " ", "True"}], "]"}]}], ",", " ", 
+         
+         RowBox[{"\"\<add1\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln1\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<cross\>\"", " ", "->", " ", 
+          RowBox[{"owMHANet", "[", 
+           RowBox[{"d", ",", " ", "h"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<add2\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln2\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<ffn\>\"", " ", "->", " ", 
+          RowBox[{"owFFNNet", "[", 
+           RowBox[{"d", ",", " ", "dff"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<add3\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln3\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}]}], "|>"}], ",", "\n", "   ", 
+       
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<self\>\"", ",", " ", "\"\<Query\>\""}], "]"}]}], ",", 
+         " ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<self\>\"", ",", " ", "\"\<Memory\>\""}], "]"}]}], ",",
+          "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], ",", 
+            " ", "\"\<self\>\""}], "}"}], " ", "->", " ", 
+          RowBox[{"\"\<add1\>\"", " ", "->", " ", "\"\<ln1\>\""}]}], ",", 
+         "\n", "    ", 
+         RowBox[{"\"\<ln1\>\"", " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<cross\>\"", ",", " ", "\"\<Query\>\""}], "]"}]}], ",",
+          " ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Memory\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<cross\>\"", ",", " ", "\"\<Memory\>\""}], "]"}]}], ",",
+          "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\"\<ln1\>\"", ",", " ", "\"\<cross\>\""}], "}"}], " ", "->",
+           " ", 
+          RowBox[{"\"\<add2\>\"", " ", "->", " ", 
+           RowBox[{"\"\<ln2\>\"", " ", "->", " ", "\"\<ffn\>\""}]}]}], ",", 
+         " ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\"\<ln2\>\"", ",", " ", "\"\<ffn\>\""}], "}"}], " ", "->",
+           " ", 
+          RowBox[{"\"\<add3\>\"", " ", "->", " ", "\"\<ln3\>\""}]}]}], "}"}], 
+       ",", "\n", "   ", 
+       RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}], ",", " ", 
+       RowBox[{"\"\<Memory\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owFreq", "[", "d_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"Flatten", "@", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1.", ",", " ", "1."}], "}"}], "/", 
+         RowBox[{"10000.", "^", 
+          RowBox[{"(", 
+           RowBox[{"2", " ", 
+            RowBox[{"i", "/", "d"}]}], ")"}]}]}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", " ", "0", ",", " ", 
+          RowBox[{
+           RowBox[{"d", "/", "2"}], " ", "-", " ", "1"}]}], "}"}]}], 
+       "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owPhase", "[", "d_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"EvenQ", "[", "j", "]"}], ",", " ", "0.", ",", " ", 
+         RowBox[{"N", "[", 
+          RowBox[{"Pi", "/", "2"}], "]"}]}], "]"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", " ", "0", ",", " ", 
+         RowBox[{"d", " ", "-", " ", "1"}]}], "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owPENet", "[", "d_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"NetGraph", "[", 
+      RowBox[{
+       RowBox[{"<|", "\n", "    ", 
+        RowBox[{
+         RowBox[{"\"\<idx\>\"", " ", "->", " ", 
+          RowBox[{"SequenceIndicesLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<pos\>\"", " ", "->", " ", 
+          RowBox[{"ElementwiseLayer", "[", 
+           RowBox[{
+            RowBox[{"#", " ", "-", " ", "1."}], " ", "&"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<col\>\"", " ", "->", " ", 
+          RowBox[{"ReplicateLayer", "[", 
+           RowBox[{"1", ",", " ", "2"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<angle\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", 
+            RowBox[{"d", ",", " ", 
+             RowBox[{"\"\<Weights\>\"", " ", "->", " ", 
+              RowBox[{"List", " ", "/@", " ", 
+               RowBox[{"owFreq", "[", "d", "]"}]}]}], ",", " ", 
+             RowBox[{"\"\<Biases\>\"", " ", "->", " ", 
+              RowBox[{"owPhase", "[", "d", "]"}]}], ",", " ", 
+             RowBox[{"LearningRateMultipliers", " ", "->", " ", "0"}]}], 
+            "]"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<sin\>\"", " ", "->", " ", 
+          RowBox[{"ElementwiseLayer", "[", "Sin", "]"}]}], ",", " ", 
+         RowBox[{"\"\<add\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}]}], "|>"}], ",", "\n", "   ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"\"\<idx\>\"", " ", "->", " ", 
+           RowBox[{"\"\<pos\>\"", " ", "->", " ", 
+            RowBox[{"\"\<col\>\"", " ", "->", " ", 
+             RowBox[{"\"\<angle\>\"", " ", "->", " ", "\"\<sin\>\""}]}]}]}]}],
+          ",", " ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], ",", 
+            " ", "\"\<sin\>\""}], "}"}], " ", "->", " ", "\"\<add\>\""}]}], 
+        "}"}], ",", "\n", "   ", 
+       RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"The", " ", "whole", " ", 
+      RowBox[{"model", ".", " ", "Source"}], " ", "and", " ", "target", " ", 
+      "share", " ", "one", " ", "vocabulary"}], ",", " ", 
+     RowBox[{
+     "so", " ", "one", " ", "array", " ", "serves", " ", "the", " ", 
+      "encoder", "\n", "   ", "embedding"}], ",", " ", 
+     RowBox[{
+     "the", " ", "decoder", " ", "embedding", " ", "and", " ", "the", " ", 
+      "output", " ", "projection", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"NetSharedArray", "[", "\"\<W\>\"", "]"}], ")"}], ".", "\n", 
+       "   ", "Teacher"}], " ", 
+      RowBox[{"forcing", ":", " ", 
+       RowBox[{
+       "the", " ", "decoder", " ", "reads", " ", "the", " ", "target", " ", 
+        "without", " ", "its", " ", "last", " ", "token", " ", "and", " ", 
+        "must", " ", "predict", " ", "the", "\n", "   ", "target", " ", 
+        "without", " ", "its", " ", 
+        RowBox[{"first", ".", " ", "Label"}], " ", "smoothing"}], ":", " ", 
+       RowBox[{
+        RowBox[{
+        "a", " ", "frozen", " ", "EmbeddingLayer", " ", "turns", " ", "each", 
+         " ", "target", " ", "index", "\n", "   ", "into", " ", "the", " ", 
+         "smoothed", " ", "distribution", " ", 
+         RowBox[{"(", 
+          RowBox[{"1", " ", "-", " ", "eps"}], ")"}], " ", "onehot"}], " ", "+",
+         " ", 
+        RowBox[{"eps", "/", "V"}]}]}]}], ",", " ", 
+     RowBox[{
+      RowBox[{
+      "and", " ", "the", " ", "loss", " ", "is", " ", "the", " ", "cross"}], "-", 
+      RowBox[{"entropy", "\n", "   ", "against", " ", 
+       RowBox[{"it", ".", " ", "The"}], " ", "port", 
+       " ", "\"\<Probabilities\>\"", " ", "is", " ", "used", " ", "for", " ", 
+       
+       RowBox[{"decoding", "."}]}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owModel", "[", "s_Association", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"d", " ", "=", " ", 
+          RowBox[{"s", "[", "\"\<d\>\"", "]"}]}], ",", " ", 
+         RowBox[{"h", " ", "=", " ", 
+          RowBox[{"s", "[", "\"\<heads\>\"", "]"}]}], ",", " ", 
+         RowBox[{"dff", " ", "=", " ", 
+          RowBox[{"s", "[", "\"\<dff\>\"", "]"}]}], ",", " ", 
+         RowBox[{"n", " ", "=", " ", 
+          RowBox[{"s", "[", "\"\<layers\>\"", "]"}]}], ",", " ", 
+         RowBox[{"V", " ", "=", " ", 
+          RowBox[{"Length", "[", "owVocab", "]"}]}], ",", " ", 
+         RowBox[{"eps", " ", "=", " ", 
+          RowBox[{"s", "[", "\"\<smoothing\>\"", "]"}]}], ",", " ", "layers", 
+         ",", " ", "edges"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"layers", " ", "=", " ", 
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"<|", "\n", "      ", 
+            RowBox[{
+             RowBox[{"\"\<embS\>\"", " ", "->", " ", 
+              RowBox[{"EmbeddingLayer", "[", 
+               RowBox[{"d", ",", " ", "V", ",", " ", 
+                RowBox[{"\"\<Weights\>\"", " ", "->", " ", 
+                 RowBox[{"NetSharedArray", "[", "\"\<W\>\"", "]"}]}]}], 
+               "]"}]}], ",", " ", 
+             RowBox[{"\"\<scaleS\>\"", " ", "->", " ", 
+              RowBox[{"ElementwiseLayer", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Evaluate", "[", 
+                  RowBox[{"Sqrt", "[", 
+                   RowBox[{"N", "@", "d"}], "]"}], "]"}], " ", "#"}], " ", 
+                "&"}], "]"}]}], ",", " ", 
+             RowBox[{"\"\<peS\>\"", " ", "->", " ", 
+              RowBox[{"owPENet", "[", "d", "]"}]}], ",", "\n", "      ", 
+             RowBox[{"\"\<enc\>\"", " ", "->", " ", 
+              RowBox[{"NetChain", "[", 
+               RowBox[{"Table", "[", 
+                RowBox[{
+                 RowBox[{"owEncoderLayerNet", "[", 
+                  RowBox[{"d", ",", " ", "h", ",", " ", "dff"}], "]"}], ",", 
+                 " ", "n"}], "]"}], "]"}]}], ",", "\n", "      ", 
+             RowBox[{"\"\<most\>\"", " ", "->", " ", 
+              RowBox[{"SequenceMostLayer", "[", "]"}]}], ",", "\n", "      ", 
+             
+             RowBox[{"\"\<embT\>\"", " ", "->", " ", 
+              RowBox[{"EmbeddingLayer", "[", 
+               RowBox[{"d", ",", " ", "V", ",", " ", 
+                RowBox[{"\"\<Weights\>\"", " ", "->", " ", 
+                 RowBox[{"NetSharedArray", "[", "\"\<W\>\"", "]"}]}]}], 
+               "]"}]}], ",", " ", 
+             RowBox[{"\"\<scaleT\>\"", " ", "->", " ", 
+              RowBox[{"ElementwiseLayer", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Evaluate", "[", 
+                  RowBox[{"Sqrt", "[", 
+                   RowBox[{"N", "@", "d"}], "]"}], "]"}], " ", "#"}], " ", 
+                "&"}], "]"}]}], ",", " ", 
+             RowBox[{"\"\<peT\>\"", " ", "->", " ", 
+              RowBox[{"owPENet", "[", "d", "]"}]}]}], "|>"}], ",", "\n", 
+           "     ", 
+           RowBox[{"AssociationMap", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"owDecoderLayerNet", "[", 
+               RowBox[{"d", ",", " ", "h", ",", " ", "dff"}], "]"}], " ", 
+              "&"}], ",", " ", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"\"\<dec\>\"", " ", "<>", " ", 
+                RowBox[{"ToString", "[", "i", "]"}]}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", " ", "n"}], "}"}]}], "]"}]}], "]"}], ",", 
+           "\n", "     ", 
+           RowBox[{"<|", 
+            RowBox[{
+             RowBox[{"\"\<out\>\"", " ", "->", " ", 
+              RowBox[{"NetMapOperator", "[", 
+               RowBox[{"LinearLayer", "[", 
+                RowBox[{"V", ",", " ", 
+                 RowBox[{"\"\<Weights\>\"", " ", "->", " ", 
+                  RowBox[{"NetSharedArray", "[", "\"\<W\>\"", "]"}]}]}], 
+                "]"}], "]"}]}], ",", " ", 
+             RowBox[{"\"\<soft\>\"", " ", "->", " ", 
+              RowBox[{"SoftmaxLayer", "[", "]"}]}], ",", "\n", "      ", 
+             RowBox[{"\"\<rest\>\"", " ", "->", " ", 
+              RowBox[{"SequenceRestLayer", "[", "]"}]}], ",", "\n", "      ", 
+             
+             RowBox[{"\"\<smooth\>\"", " ", "->", " ", 
+              RowBox[{"EmbeddingLayer", "[", 
+               RowBox[{"V", ",", " ", "V", ",", " ", 
+                RowBox[{"\"\<Weights\>\"", " ", "->", " ", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{"1", " ", "-", " ", "eps"}], ")"}], " ", 
+                   RowBox[{"IdentityMatrix", "[", "V", "]"}]}], " ", "+", " ", 
+                  RowBox[{"eps", "/", "V"}]}]}], ",", " ", 
+                RowBox[{"LearningRateMultipliers", " ", "->", " ", "0"}]}], 
+               "]"}]}], ",", "\n", "      ", 
+             RowBox[{"\"\<loss\>\"", " ", "->", " ", 
+              RowBox[{
+              "CrossEntropyLossLayer", "[", "\"\<Probabilities\>\"", 
+               "]"}]}]}], "|>"}]}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"edges", " ", "=", " ", 
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"{", "\n", "      ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+              
+              RowBox[{"\"\<embS\>\"", " ", "->", " ", 
+               RowBox[{"\"\<scaleS\>\"", " ", "->", " ", 
+                RowBox[{"\"\<peS\>\"", " ", "->", " ", "\"\<enc\>\""}]}]}]}], 
+             ",", "\n", "      ", 
+             RowBox[{
+              RowBox[{"NetPort", "[", "\"\<Target\>\"", "]"}], " ", "->", " ", 
+              RowBox[{"\"\<most\>\"", " ", "->", " ", 
+               RowBox[{"\"\<embT\>\"", " ", "->", " ", 
+                RowBox[{"\"\<scaleT\>\"", " ", "->", " ", 
+                 RowBox[{"\"\<peT\>\"", " ", "->", " ", 
+                  RowBox[{"NetPort", "[", 
+                   RowBox[{"\"\<dec1\>\"", ",", " ", "\"\<Input\>\""}], 
+                   "]"}]}]}]}]}]}]}], "}"}], ",", "\n", "     ", 
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"\"\<enc\>\"", " ", "->", " ", 
+              RowBox[{"NetPort", "[", 
+               RowBox[{
+                RowBox[{"\"\<dec\>\"", " ", "<>", " ", 
+                 RowBox[{"ToString", "[", "i", "]"}]}], ",", 
+                " ", "\"\<Memory\>\""}], "]"}]}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"i", ",", " ", "n"}], "}"}]}], "]"}], ",", "\n", 
+           "     ", 
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"\"\<dec\>\"", " ", "<>", " ", 
+               RowBox[{"ToString", "[", 
+                RowBox[{"i", " ", "-", " ", "1"}], "]"}]}], " ", "->", " ", 
+              RowBox[{"NetPort", "[", 
+               RowBox[{
+                RowBox[{"\"\<dec\>\"", " ", "<>", " ", 
+                 RowBox[{"ToString", "[", "i", "]"}]}], ",", 
+                " ", "\"\<Input\>\""}], "]"}]}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"i", ",", " ", "2", ",", " ", "n"}], "}"}]}], "]"}], ",",
+            "\n", "     ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"\"\<dec\>\"", " ", "<>", " ", 
+               RowBox[{"ToString", "[", "n", "]"}]}], " ", "->", " ", 
+              RowBox[{"\"\<out\>\"", " ", "->", " ", 
+               RowBox[{"\"\<soft\>\"", " ", "->", " ", 
+                RowBox[{"NetPort", "[", "\"\<Probabilities\>\"", "]"}]}]}]}], 
+             ",", "\n", "      ", 
+             RowBox[{
+              RowBox[{"NetPort", "[", "\"\<Target\>\"", "]"}], " ", "->", " ", 
+              RowBox[{"\"\<rest\>\"", " ", "->", " ", 
+               RowBox[{"\"\<smooth\>\"", " ", "->", " ", 
+                RowBox[{"NetPort", "[", 
+                 RowBox[{"\"\<loss\>\"", ",", " ", "\"\<Target\>\""}], 
+                 "]"}]}]}]}], ",", "\n", "      ", 
+             RowBox[{"\"\<soft\>\"", " ", "->", " ", 
+              RowBox[{"NetPort", "[", 
+               RowBox[{"\"\<loss\>\"", ",", " ", "\"\<Input\>\""}], "]"}]}], ",",
+              " ", 
+             RowBox[{"\"\<loss\>\"", " ", "->", " ", 
+              RowBox[{"NetPort", "[", "\"\<Loss\>\"", "]"}]}]}], "}"}]}], 
+          "]"}]}], ";", "\n", "   ", 
+        RowBox[{"NetGraph", "[", 
+         RowBox[{"layers", ",", " ", "edges", ",", " ", 
+          RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<Varying\>\"", ",", " ", 
+             RowBox[{"Restricted", "[", 
+              RowBox[{"\"\<Integer\>\"", ",", " ", "V"}], "]"}]}], "}"}]}], ",",
+           " ", 
+          RowBox[{"\"\<Target\>\"", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<Varying\>\"", ",", " ", 
+             RowBox[{"Restricted", "[", 
+              RowBox[{"\"\<Integer\>\"", ",", " ", "V"}], "]"}]}], "}"}]}]}], 
+         "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"the", " ", "warm"}], "-", 
+     RowBox[{"up", " ", "schedule", " ", "of", " ", "Lesson", " ", "3"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owRate", "[", 
+      RowBox[{
+       RowBox[{"step_", "?", "NumericQ"}], ",", " ", "s_Association"}], "]"}],
+      " ", ":=", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"s", "[", "\"\<d\>\"", "]"}], "^", 
+       RowBox[{"-", "0.5"}]}], " ", 
+      RowBox[{"Min", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Max", "[", 
+          RowBox[{"step", ",", " ", "1"}], "]"}], "^", 
+         RowBox[{"-", "0.5"}]}], ",", " ", 
+        RowBox[{
+         RowBox[{"Max", "[", 
+          RowBox[{"step", ",", " ", "1"}], "]"}], " ", 
+         RowBox[{
+          RowBox[{"s", "[", "\"\<warmup\>\"", "]"}], "^", 
+          RowBox[{"-", "1.5"}]}]}]}], "]"}]}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owTrain", "[", 
+      RowBox[{"s_Association", ",", " ", "train_List"}], "]"}], " ", ":=", 
+     " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"peak", " ", "=", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"s", "[", "\"\<d\>\"", "]"}], "^", 
+           RowBox[{"-", "0.5"}]}], " ", 
+          RowBox[{
+           RowBox[{"s", "[", "\"\<warmup\>\"", "]"}], "^", 
+           RowBox[{"-", "0.5"}]}]}]}], "}"}], ",", "\n", "   ", 
+       RowBox[{"NetTrain", "[", 
+        RowBox[{
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"owModel", "[", "s", "]"}]}], ",", "\n", "    ", 
+         RowBox[{"<|", 
+          RowBox[{
+           RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"owEncode", "[", "#Source", "]"}], " ", "&"}], " ", "/@",
+               " ", "train"}], ")"}]}], ",", " ", 
+           RowBox[{"\"\<Target\>\"", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"owEncode", "[", 
+                RowBox[{"Join", "[", 
+                 RowBox[{
+                  RowBox[{"{", "\"\<<s>\>\"", "}"}], ",", " ", "#Target", ",",
+                   " ", 
+                  RowBox[{"{", "\"\<</s>\>\"", "}"}]}], "]"}], "]"}], " ", 
+               "&"}], " ", "/@", " ", "train"}], ")"}]}]}], "|>"}], ",", "\n",
+          "    ", "All", ",", " ", 
+         RowBox[{"LossFunction", " ", "->", " ", "\"\<Loss\>\""}], ",", " ", 
+         RowBox[{"BatchSize", " ", "->", " ", 
+          RowBox[{"s", "[", "\"\<batch\>\"", "]"}]}], ",", " ", 
+         RowBox[{"MaxTrainingRounds", " ", "->", " ", 
+          RowBox[{"s", "[", "\"\<rounds\>\"", "]"}]}], ",", "\n", "    ", 
+         RowBox[{"Method", " ", "->", " ", 
+          RowBox[{"{", 
+           RowBox[{"\"\<ADAM\>\"", ",", " ", 
+            RowBox[{"\"\<Beta1\>\"", " ", "->", " ", "0.9"}], ",", " ", 
+            RowBox[{"\"\<Beta2\>\"", " ", "->", " ", "0.98"}], ",", " ", 
+            RowBox[{"\"\<LearningRate\>\"", " ", "->", " ", "peak"}], ",", 
+            "\n", "      ", 
+            RowBox[{"\"\<LearningRateSchedule\>\"", " ", "->", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"owRate", "[", 
+                 RowBox[{"#1", ",", " ", "s"}], "]"}], "/", "peak"}], " ", 
+               "&"}], ")"}]}]}], "}"}]}], ",", "\n", "    ", 
+         RowBox[{"TrainingProgressReporting", " ", "->", " ", "None"}], ",", 
+         " ", 
+         RowBox[{"TargetDevice", " ", "->", " ", "\"\<CPU\>\""}]}], "]"}]}], 
+      "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "4."}]}]}]}]}], " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Decoding", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"log", " ", "p", 
+     RowBox[{"(", 
+      RowBox[{"next", " ", "token"}], ")"}], " ", "for", " ", "several", " ", 
+     "prefixes", " ", "at", " ", "once"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owNextLogProbs", "[", 
+      RowBox[{"net_", ",", " ", "src_List", ",", " ", "prefixes_List"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", "p", "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"p", " ", "=", " ", 
+         RowBox[{"net", "[", 
+          RowBox[{
+           RowBox[{"<|", 
+            RowBox[{
+             RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+              RowBox[{"ConstantArray", "[", 
+               RowBox[{
+                RowBox[{"owEncode", "[", "src", "]"}], ",", " ", 
+                RowBox[{"Length", "[", "prefixes", "]"}]}], "]"}]}], ",", 
+             "\n", "       ", 
+             RowBox[{"\"\<Target\>\"", " ", "->", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Append", "[", 
+                  RowBox[{
+                   RowBox[{"owEncode", "[", "#", "]"}], ",", " ", "1"}], 
+                  "]"}], " ", "&"}], " ", "/@", " ", "prefixes"}], ")"}]}]}], 
+            "|>"}], ",", " ", 
+           RowBox[{"NetPort", "[", "\"\<Probabilities\>\"", "]"}]}], "]"}]}], 
+        ";", "\n", "   ", 
+        RowBox[{"Log", "[", 
+         RowBox[{"Clip", "[", 
+          RowBox[{
+           RowBox[{"Last", " ", "/@", " ", "p"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"10", "^", 
+              RowBox[{"-", "12"}]}], ",", " ", "1"}], "}"}]}], "]"}], 
+         "]"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"the", " ", "prefix", " ", 
+     RowBox[{"grammar", ":", " ", 
+      RowBox[{
+      "how", " ", "many", " ", "subtrees", " ", "are", " ", "still", " ", 
+       "owed", " ", "after", " ", "a", " ", "prefix"}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owNeed", "[", "prefix_List", "]"}], " ", ":=", " ", 
+     RowBox[{"1", " ", "+", " ", 
+      RowBox[{"Total", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"owArity", "[", "#", "]"}], " ", "-", " ", "1"}], " ", 
+         "&"}], " ", "/@", " ", 
+        RowBox[{"Rest", "[", "prefix", "]"}]}], "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owAllowed", "[", 
+      RowBox[{"prefix_List", ",", " ", "constrained_"}], "]"}], " ", ":=", 
+     " ", 
+     RowBox[{"Which", "[", "\n", "   ", 
+      RowBox[{
+       RowBox[{"!", " ", 
+        RowBox[{"TrueQ", "[", "constrained", "]"}]}], ",", " ", 
+       RowBox[{"Rest", "[", "owVocab", "]"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"owNeed", "[", "prefix", "]"}], " ", "==", " ", "0"}], ",", 
+       " ", 
+       RowBox[{"{", "\"\<</s>\>\"", "}"}], ",", "\n", "   ", "True", ",", " ", 
+       RowBox[{"Join", "[", 
+        RowBox[{"owAtoms", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"\"\<\:2a02\>\"", ",", " ", "\"\<\:2a01\>\""}], "}"}]}], 
+        "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"beam", " ", "search", " ", 
+      RowBox[{"(", 
+       RowBox[{"Lesson", " ", "1"}], ")"}], " ", "with", " ", "the", " ", 
+      "length", " ", "penalty", " ", "of", " ", "Lesson", " ", "3"}], ";", 
+     " ", 
+     RowBox[{"width", " ", "1", " ", "is", " ", "greedy"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owBeam", "[", 
+      RowBox[{
+      "net_", ",", " ", "src_List", ",", " ", "width_Integer", ",", " ", 
+       "constrained_", ",", " ", 
+       RowBox[{"alpha_", " ", ":", " ", "0.6"}], ",", " ", 
+       RowBox[{"maxLen_", " ", ":", " ", "42"}]}], "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"beams", " ", "=", " ", 
+          RowBox[{"{", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", "\"\<<s>\>\"", "}"}], ",", " ", "0."}], "}"}], 
+           "}"}]}], ",", " ", 
+         RowBox[{"done", " ", "=", " ", 
+          RowBox[{"{", "}"}]}], ",", " ", "lps", ",", " ", "cands"}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{
+        RowBox[{"Do", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"lps", " ", "=", " ", 
+            RowBox[{"owNextLogProbs", "[", 
+             RowBox[{"net", ",", " ", "src", ",", " ", 
+              RowBox[{"First", " ", "/@", " ", "beams"}]}], "]"}]}], ";", 
+           "\n", "    ", 
+           RowBox[{"cands", " ", "=", " ", 
+            RowBox[{"Flatten", "[", 
+             RowBox[{
+              RowBox[{"Table", "[", "\n", "       ", 
+               RowBox[{
+                RowBox[{"With", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"b", " ", "=", " ", 
+                    RowBox[{"beams", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}]}], ",", " ", 
+                    RowBox[{"lp", " ", "=", " ", 
+                    RowBox[{"AssociationThread", "[", 
+                    RowBox[{"owVocab", " ", "->", " ", 
+                    RowBox[{"lps", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}]}], "}"}], ",", 
+                  "\n", "        ", 
+                  RowBox[{"Table", "[", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Append", "[", 
+                    RowBox[{
+                    RowBox[{"b", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", " ", "t"}], "]"}], ",",
+                     " ", 
+                    RowBox[{
+                    RowBox[{"b", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], " ", "+", " ", 
+                    RowBox[{"lp", "[", "t", "]"}]}]}], "}"}], ",", " ", 
+                    RowBox[{"{", 
+                    RowBox[{"t", ",", " ", 
+                    RowBox[{"owAllowed", "[", 
+                    RowBox[{
+                    RowBox[{"b", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", " ", "constrained"}],
+                     "]"}]}], "}"}]}], "]"}]}], "]"}], ",", " ", 
+                RowBox[{"{", 
+                 RowBox[{"i", ",", " ", 
+                  RowBox[{"Length", "[", "beams", "]"}]}], "}"}]}], "]"}], ",",
+               " ", "1"}], "]"}]}], ";", "\n", "    ", 
+           RowBox[{"cands", " ", "=", " ", 
+            RowBox[{"TakeLargestBy", "[", 
+             RowBox[{"cands", ",", " ", "Last", ",", " ", 
+              RowBox[{"UpTo", "[", "width", "]"}]}], "]"}]}], ";", "\n", 
+           "    ", 
+           RowBox[{"done", " ", "=", " ", 
+            RowBox[{"Join", "[", 
+             RowBox[{"done", ",", " ", 
+              RowBox[{"Select", "[", 
+               RowBox[{"cands", ",", " ", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Last", "[", 
+                   RowBox[{"First", "[", "#", "]"}], "]"}], " ", "===", 
+                  " ", "\"\<</s>\>\""}], " ", "&"}]}], "]"}]}], "]"}]}], ";", 
+           "\n", "    ", 
+           RowBox[{"beams", " ", "=", " ", 
+            RowBox[{"Select", "[", 
+             RowBox[{"cands", ",", " ", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"Last", "[", 
+                 RowBox[{"First", "[", "#", "]"}], "]"}], " ", "=!=", 
+                " ", "\"\<</s>\>\""}], " ", "&"}]}], "]"}]}], ";", "\n", 
+           "    ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"beams", " ", "===", " ", 
+               RowBox[{"{", "}"}]}], " ", "||", " ", 
+              RowBox[{
+               RowBox[{"Length", "[", "done", "]"}], " ", ">=", " ", 
+               "width"}]}], ",", " ", 
+             RowBox[{"Break", "[", "]"}]}], "]"}]}], ",", " ", 
+          RowBox[{"{", "maxLen", "}"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Last", "[", 
+                RowBox[{"First", "[", "#", "]"}], "]"}], " ", "===", 
+               " ", "\"\<</s>\>\""}], ",", " ", 
+              RowBox[{"Most", "@", 
+               RowBox[{"Rest", "@", 
+                RowBox[{"First", "[", "#", "]"}]}]}], ",", " ", 
+              RowBox[{"Rest", "@", 
+               RowBox[{"First", "[", "#", "]"}]}]}], "]"}], ",", " ", 
+            RowBox[{"#", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "}"}], " ", "&"}], " ", "/@", 
+         " ", 
+         RowBox[{"SortBy", "[", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"done", " ", "===", " ", 
+              RowBox[{"{", "}"}]}], ",", " ", "beams", ",", " ", "done"}], 
+            "]"}], ",", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"#", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], "/", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"5", " ", "+", " ", 
+                  RowBox[{"Length", "[", 
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ")"}], "/", 
+                "6."}], ")"}], "^", "alpha"}]}], " ", "&"}]}], "]"}]}]}]}], 
+      "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owPart3", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"s", " ", "=", " ", "owSettings"}], ",", " ", "train", ",", 
+         " ", "test", ",", " ", "testKeys", ",", " ", "res", ",", " ", "net", 
+         ",", " ", "model", ",", " ", "losses"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "owSection", 
+         "[", "\"\<3. The net, assembled from the parts of Lesson 3\>\"", 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{"owText", "[", 
+         RowBox[{"\"\<The encoder\[Dash]decoder of Lesson 3: shared \
+embeddings multiplied by \[Sqrt]d, sinusoidal positions, \>\"", " ", "<>", 
+          " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"s", "[", "\"\<layers\>\"", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< encoder and \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"s", "[", "\"\<layers\>\"", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< decoder layers with \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"s", "[", "\"\<heads\>\"", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< heads, d = \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"s", "[", "\"\<d\>\"", "]"}], "]"}], " ", "<>", 
+          " ", "\"\<, dff = \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"s", "[", "\"\<dff\>\"", "]"}], "]"}], " ", "<>", 
+          " ", "\"\<. Source and target share one vocabulary of \>\"", " ", "<>",
+           " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"Length", "[", "owVocab", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< tokens, so one array serves both embeddings and the \
+output projection. The decoder reads the target without its last token \
+(teacher forcing) and is trained to predict it without its first, against \
+label-smoothed targets (\[Epsilon] = \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"s", "[", "\"\<smoothing\>\"", "]"}], "]"}], " ", "<>", 
+          " ", "\"\<), with Adam (\[Beta]\:2082 = 0.98) and the warm-up \
+schedule (\>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"s", "[", "\"\<warmup\>\"", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< steps).\>\""}], "]"}], ";", "\n", "   ", 
+        RowBox[{"model", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"owModel", "[", "s", "]"}]}]}], ";", "\n", "   ", 
+        RowBox[{"owShow", "[", 
+         RowBox[{"Information", "[", 
+          RowBox[{"model", ",", " ", "\"\<SummaryGraphic\>\""}], "]"}], "]"}],
+         ";", "\n", "   ", 
+        RowBox[{"owCheck", "[", 
+         RowBox[{
+          RowBox[{"\"\<the model has \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"Information", "[", 
+             RowBox[{"model", ",", " ", "\"\<ArraysTotalElementCount\>\""}], 
+             "]"}], "]"}], " ", "<>", 
+           " ", "\"\< parameters, and one shared array of \>\"", " ", "<>", 
+           " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{
+             RowBox[{"Length", "[", "owVocab", "]"}], " ", 
+             RowBox[{"s", "[", "\"\<d\>\"", "]"}]}], "]"}], " ", "<>", 
+           " ", "\"\< for the three embeddings\>\""}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"Normal", "@", 
+            RowBox[{"NetExtract", "[", 
+             RowBox[{"model", ",", " ", 
+              RowBox[{"{", 
+               RowBox[{"\"\<embS\>\"", ",", " ", "\"\<Weights\>\""}], "}"}]}],
+              "]"}]}], " ", "==", " ", 
+           RowBox[{"Normal", "@", 
+            RowBox[{"NetExtract", "[", 
+             RowBox[{"model", ",", " ", 
+              RowBox[{"{", 
+               RowBox[{"\"\<embT\>\"", ",", " ", "\"\<Weights\>\""}], "}"}]}],
+              "]"}]}], " ", "==", " ", 
+           RowBox[{"Normal", "@", 
+            RowBox[{"NetExtract", "[", 
+             RowBox[{"model", ",", " ", 
+              RowBox[{"{", 
+               
+               RowBox[{"\"\<out\>\"", ",", " ", "\"\<Net\>\"", ",", 
+                " ", "\"\<Weights\>\""}], "}"}]}], "]"}]}]}]}], "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{"test", " ", "=", " ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"owPair", "[", "]"}], ",", " ", 
+           RowBox[{"s", "[", "\"\<test\>\"", "]"}]}], "]"}]}], ";", "\n", 
+        "   ", 
+        RowBox[{"testKeys", " ", "=", " ", 
+         RowBox[{"Union", "[", 
+          RowBox[{
+           RowBox[{"#Source", " ", "&"}], " ", "/@", " ", "test"}], "]"}]}], ";",
+         "\n", "   ", 
+        RowBox[{"train", " ", "=", " ", 
+         RowBox[{"{", "}"}]}], ";", "\n", "   ", 
+        RowBox[{"While", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Length", "[", "train", "]"}], " ", "<", " ", 
+           RowBox[{"s", "[", "\"\<train\>\"", "]"}]}], ",", " ", 
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"p", " ", "=", " ", 
+              RowBox[{"owPair", "[", "]"}]}], "}"}], ",", " ", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"!", " ", 
+               RowBox[{"MemberQ", "[", 
+                RowBox[{"testKeys", ",", " ", 
+                 RowBox[{"p", "[", "\"\<Source\>\"", "]"}]}], "]"}]}], ",", 
+              " ", 
+              RowBox[{"AppendTo", "[", 
+               RowBox[{"train", ",", " ", "p"}], "]"}]}], "]"}]}], "]"}]}], 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{"owText", "[", 
+         RowBox[{
+          RowBox[{"ToString", "[", 
+           RowBox[{"Length", "[", "train", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< training pairs and \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"Length", "[", "test", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< test pairs; no test source appears in the training \
+set.\>\""}], "]"}], ";", "\n", "   ", 
+        RowBox[{"res", " ", "=", " ", 
+         RowBox[{"owTrain", "[", 
+          RowBox[{"s", ",", " ", "train"}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"net", " ", "=", " ", 
+         RowBox[{"res", "[", "\"\<TrainedNet\>\"", "]"}]}], ";", "\n", "   ", 
+        
+        RowBox[{"losses", " ", "=", " ", 
+         RowBox[{"res", "[", "\"\<RoundLossList\>\"", "]"}]}], ";", "\n", 
+        "   ", 
+        RowBox[{"owShow", "[", 
+         RowBox[{"ListLinePlot", "[", 
+          RowBox[{"losses", ",", " ", 
+           RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+           RowBox[{"FrameLabel", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"\"\<round\>\"", ",", " ", "\"\<training loss\>\""}], 
+             "}"}]}], ",", " ", 
+           RowBox[{"ImageSize", " ", "->", " ", "420"}], ",", " ", 
+           RowBox[{"PlotRange", " ", "->", " ", "All"}]}], "]"}], "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{"owText", "[", 
+         RowBox[{"\"\<Training took \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"Round", "@", 
+            RowBox[{"With", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"t", " ", "=", " ", 
+                RowBox[{"res", "[", "\"\<TotalTrainingTime\>\"", "]"}]}], 
+               "}"}], ",", " ", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"QuantityQ", "[", "t", "]"}], ",", " ", 
+                RowBox[{"QuantityMagnitude", "[", 
+                 RowBox[{"UnitConvert", "[", 
+                  RowBox[{"t", ",", " ", "\"\<Seconds\>\""}], "]"}], "]"}], ",",
+                 " ", "t"}], "]"}]}], "]"}]}], "]"}], " ", "<>", 
+          " ", "\"\< s for \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"Length", "[", "losses", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< rounds. The loss cannot reach 0: with label smoothing \
+its floor is the entropy of the smoothed target.\>\""}], "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{"owCheck", "[", 
+         RowBox[{
+          RowBox[{"\"\<the training loss fell by more than half (from \>\"", 
+           " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"NumberForm", "[", 
+             RowBox[{
+              RowBox[{"First", "[", "losses", "]"}], ",", " ", "3"}], "]"}], 
+            "]"}], " ", "<>", " ", "\"\< to \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"NumberForm", "[", 
+             RowBox[{
+              RowBox[{"Last", "[", "losses", "]"}], ",", " ", "3"}], "]"}], 
+            "]"}], " ", "<>", " ", "\"\<)\>\""}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"Last", "[", "losses", "]"}], " ", "<", " ", 
+           RowBox[{
+            RowBox[{"First", "[", "losses", "]"}], "/", "2"}]}]}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"owCheck", "[", 
+         RowBox[{"\"\<after training, the three embeddings are still one \
+shared array\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"Normal", "@", 
+            RowBox[{"NetExtract", "[", 
+             RowBox[{"net", ",", " ", 
+              RowBox[{"{", 
+               RowBox[{"\"\<embS\>\"", ",", " ", "\"\<Weights\>\""}], "}"}]}],
+              "]"}]}], " ", "==", " ", 
+           RowBox[{"Normal", "@", 
+            RowBox[{"NetExtract", "[", 
+             RowBox[{"net", ",", " ", 
+              RowBox[{"{", 
+               
+               RowBox[{"\"\<out\>\"", ",", " ", "\"\<Net\>\"", ",", 
+                " ", "\"\<Weights\>\""}], "}"}]}], "]"}]}]}]}], "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{"owSaveNets", "[", "net", "]"}], ";", "\n", "   ", 
+        RowBox[{"owNet", " ", "=", " ", "net"}], ";", "\n", "   ", 
+        RowBox[{"owTest", " ", "=", " ", "test"}], ";", "\n", "   ", 
+        "net"}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owPart4", "[", 
+      RowBox[{"net_", ",", " ", "test_List"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"s", " ", "=", " ", "owSettings"}], ",", " ", "greedy", ",", 
+         " ", "free", ",", " ", "beam", ",", " ", "row", ",", " ", "valid", ",",
+          " ", "exact", ",", " ", "top1", ",", " ", "any", ",", " ", 
+         RowBox[{"n", " ", "=", " ", 
+          RowBox[{"Length", "[", "test", "]"}]}]}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"owSection", "[", "\"\<4. Decoding and checking\>\"", "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"owText", "[", 
+         RowBox[{"\"\<Each test source is decoded three ways: greedy (a beam \
+of width 1) with no constraint; a beam of width \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"s", "[", "\"\<beam\>\"", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< with the length penalty \[Alpha] = \>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", 
+           RowBox[{"s", "[", "\"\<alpha\>\"", "]"}], "]"}], " ", "<>", 
+          " ", "\"\< and no constraint; and the same beam constrained by the \
+prefix grammar, which allows </s> only when the tree is complete and nothing \
+else then. Every answer is checked by the oracle. As in Lample and Charton, \
+'any in beam' counts a source as solved if any hypothesis in the beam passes \
+the check.\>\""}], "]"}], ";", "\n", "   ", 
+        RowBox[{"greedy", " ", "=", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"owBeam", "[", 
+            RowBox[{
+            "net", ",", " ", "#Source", ",", " ", "1", ",", " ", "False", ",",
+              " ", 
+             RowBox[{"s", "[", "\"\<alpha\>\"", "]"}]}], "]"}], " ", "&"}], 
+          " ", "/@", " ", "test"}]}], ";", "\n", "   ", 
+        RowBox[{"free", " ", "=", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"owBeam", "[", 
+            RowBox[{"net", ",", " ", "#Source", ",", " ", 
+             RowBox[{"s", "[", "\"\<beam\>\"", "]"}], ",", " ", "False", ",", 
+             " ", 
+             RowBox[{"s", "[", "\"\<alpha\>\"", "]"}]}], "]"}], " ", "&"}], 
+          " ", "/@", " ", "test"}]}], ";", "\n", "   ", 
+        RowBox[{"beam", " ", "=", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"owBeam", "[", 
+            RowBox[{"net", ",", " ", "#Source", ",", " ", 
+             RowBox[{"s", "[", "\"\<beam\>\"", "]"}], ",", " ", "True", ",", 
+             " ", 
+             RowBox[{"s", "[", "\"\<alpha\>\"", "]"}]}], "]"}], " ", "&"}], 
+          " ", "/@", " ", "test"}]}], ";", "\n", "   ", 
+        RowBox[{
+         RowBox[{"valid", "[", "r_", "]"}], " ", ":=", " ", 
+         RowBox[{"N", "@", 
+          RowBox[{"Mean", "@", 
+           RowBox[{"Boole", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"owParse", "[", 
+                RowBox[{"First", "@", 
+                 RowBox[{"First", "[", "#", "]"}]}], "]"}], " ", "=!=", " ", 
+               "$Failed"}], " ", "&"}], " ", "/@", " ", "r"}], "]"}]}]}]}], ";",
+         "\n", "   ", 
+        RowBox[{
+         RowBox[{"exact", "[", "r_", "]"}], " ", ":=", " ", 
+         RowBox[{"N", "@", 
+          RowBox[{"Mean", "@", 
+           RowBox[{"MapThread", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Boole", "[", 
+               RowBox[{
+                RowBox[{"First", "@", 
+                 RowBox[{"First", "[", "#1", "]"}]}], " ", "===", " ", 
+                RowBox[{"#2", "[", "\"\<Target\>\"", "]"}]}], "]"}], " ", 
+              "&"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"r", ",", " ", "test"}], "}"}]}], "]"}]}]}]}], ";", 
+        "\n", "   ", 
+        RowBox[{
+         RowBox[{"top1", "[", "r_", "]"}], " ", ":=", " ", 
+         RowBox[{"N", "@", 
+          RowBox[{"Mean", "@", 
+           RowBox[{"MapThread", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Boole", "[", 
+               RowBox[{"owEquivalentQ", "[", 
+                RowBox[{
+                 RowBox[{"#2", "[", "\"\<Tree\>\"", "]"}], ",", " ", 
+                 RowBox[{"First", "@", 
+                  RowBox[{"First", "[", "#1", "]"}]}]}], "]"}], "]"}], " ", 
+              "&"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"r", ",", " ", "test"}], "}"}]}], "]"}]}]}]}], ";", 
+        "\n", "   ", 
+        RowBox[{
+         RowBox[{"any", "[", "r_", "]"}], " ", ":=", " ", 
+         RowBox[{"N", "@", 
+          RowBox[{"Mean", "@", 
+           RowBox[{"MapThread", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Boole", "[", 
+               RowBox[{"AnyTrue", "[", 
+                RowBox[{
+                 RowBox[{"First", " ", "/@", " ", "#1"}], ",", " ", 
+                 RowBox[{"Function", "[", 
+                  RowBox[{"h", ",", " ", 
+                   RowBox[{"owEquivalentQ", "[", 
+                    RowBox[{
+                    RowBox[{"#2", "[", "\"\<Tree\>\"", "]"}], ",", " ", "h"}],
+                     "]"}]}], "]"}]}], "]"}], "]"}], " ", "&"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"r", ",", " ", "test"}], "}"}]}], "]"}]}]}]}], ";", 
+        "\n", "   ", 
+        RowBox[{
+         RowBox[{"row", "[", 
+          RowBox[{"name_", ",", " ", "r_"}], "]"}], " ", ":=", " ", 
+         RowBox[{"{", 
+          RowBox[{"name", ",", " ", 
+           RowBox[{"PercentForm", "[", 
+            RowBox[{"valid", "[", "r", "]"}], "]"}], ",", " ", 
+           RowBox[{"PercentForm", "[", 
+            RowBox[{"exact", "[", "r", "]"}], "]"}], ",", " ", 
+           RowBox[{"PercentForm", "[", 
+            RowBox[{"top1", "[", "r", "]"}], "]"}], ",", " ", 
+           RowBox[{"PercentForm", "[", 
+            RowBox[{"any", "[", "r", "]"}], "]"}]}], "}"}]}], ";", "\n", 
+        "   ", 
+        RowBox[{"owShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"\"\<decoding (\>\"", " ", "<>", " ", 
+                RowBox[{"ToString", "[", "n", "]"}], " ", "<>", 
+                " ", "\"\< test sources)\>\""}], ",", 
+               " ", "\"\<valid prefix\>\"", ",", 
+               " ", "\"\<same tokens as the oracle\>\"", ",", 
+               " ", "\"\<top answer verified\>\"", ",", 
+               " ", "\"\<any in beam verified\>\""}], "}"}], ",", "\n", 
+             "      ", 
+             RowBox[{"row", "[", 
+              RowBox[{"\"\<greedy\>\"", ",", " ", "greedy"}], "]"}], ",", " ", 
+             RowBox[{"row", "[", 
+              RowBox[{
+               RowBox[{"\"\<beam \>\"", " ", "<>", " ", 
+                RowBox[{"ToString", "[", 
+                 RowBox[{"s", "[", "\"\<beam\>\"", "]"}], "]"}]}], ",", " ", 
+               "free"}], "]"}], ",", " ", 
+             RowBox[{"row", "[", 
+              RowBox[{
+               RowBox[{"\"\<beam \>\"", " ", "<>", " ", 
+                RowBox[{"ToString", "[", 
+                 RowBox[{"s", "[", "\"\<beam\>\"", "]"}], "]"}], " ", "<>", 
+                " ", "\"\< + grammar\>\""}], ",", " ", "beam"}], "]"}]}], 
+            "}"}], ",", "\n", "     ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"owShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Row", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"test", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], "[", "\"\<Source\>\"", 
+                    "]"}], ",", " ", "\"\< \>\""}], "]"}], ",", " ", 
+                 RowBox[{"Row", "[", 
+                  RowBox[{
+                   RowBox[{"First", "@", 
+                    RowBox[{"First", "[", 
+                    RowBox[{"beam", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], "]"}]}], ",", 
+                   " ", "\"\< \>\""}], "]"}], ",", " ", 
+                 RowBox[{"owEquivalentQ", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"test", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], "[", "\"\<Tree\>\"", 
+                    "]"}], ",", " ", 
+                   RowBox[{"First", "@", 
+                    RowBox[{"First", "[", 
+                    RowBox[{"beam", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], "]"}]}]}], "]"}]}], "}"}],
+                ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", " ", 
+                 RowBox[{"Min", "[", 
+                  RowBox[{"8", ",", " ", "n"}], "]"}]}], "}"}]}], "]"}], ",", 
+             "\n", "      ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<source\>\"", ",", 
+               " ", "\"\<top answer (beam + grammar)\>\"", ",", 
+               " ", "\"\<verified\>\""}], "}"}]}], "]"}], ",", " ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Alignment", " ", "->", " ", "Left"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"owCheck", "[", 
+         RowBox[{"\"\<with the grammar as a constraint every answer is a \
+valid prefix tree\>\"", ",", " ", 
+          RowBox[{
+           RowBox[{"valid", "[", "beam", "]"}], " ", "==", " ", "1."}]}], 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{"owCheck", "[", 
+         RowBox[{"\"\<'any in beam' is never below 'top answer' (it counts \
+the top answer too)\>\"", ",", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"any", "[", "beam", "]"}], " ", ">=", " ", 
+            RowBox[{"top1", "[", "beam", "]"}]}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"any", "[", "free", "]"}], " ", ">=", " ", 
+            RowBox[{"top1", "[", "free", "]"}]}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"owResultsTable", " ", "=", " ", 
+         RowBox[{"<|", 
+          RowBox[{
+           RowBox[{"\"\<greedy\>\"", " ", "->", " ", 
+            RowBox[{"top1", "[", "greedy", "]"}]}], ",", " ", 
+           RowBox[{"\"\<beam\>\"", " ", "->", " ", 
+            RowBox[{"top1", "[", "free", "]"}]}], ",", " ", 
+           RowBox[{"\"\<beam+grammar\>\"", " ", "->", " ", 
+            RowBox[{"top1", "[", "beam", "]"}]}], ",", " ", 
+           RowBox[{"\"\<beam+grammar any\>\"", " ", "->", " ", 
+            RowBox[{"any", "[", "beam", "]"}]}]}], "|>"}]}], ";", "\n", "   ", 
+        RowBox[{
+        "owText", 
+         "[", "\"\<What to try next: more training pairs or rounds \
+(owSettings), a larger d, or a curriculum from short to long expressions. A \
+single wrong token spoils a whole expansion, so longer targets are harder; \
+the oracle shows exactly which answers are wrong.\>\"", "]"}]}]}], "]"}]}], 
+    ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "Running"}]}]}]}]}], " ", "the", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"lesson", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], " ",
+     "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"owRun", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Quiet", "[", "\n", "   ", 
+      RowBox[{
+       RowBox[{"SeedRandom", "[", "2026", "]"}], ";", " ", 
+       RowBox[{"owReset", "[", "]"}], ";", "\n", "   ", 
+       RowBox[{
+       "owText", 
+        "[", "\"\<This lesson assembles Lessons 1\[Dash]3 on our own problem. \
+Lesson 1: encoder\[Dash]decoder and beam search. Lesson 2: uniform tree \
+sampling, prefix notation and verification by an exact oracle. Lesson 3: the \
+transformer parts, shared embeddings, label smoothing and the warm-up \
+schedule.\>\"", "]"}], ";", "\n", "   ", 
+       RowBox[{"owPart1", "[", "]"}], ";", " ", 
+       RowBox[{"owPart2", "[", "]"}], ";", "\n", "   ", 
+       RowBox[{"owPart4", "[", 
+        RowBox[{
+         RowBox[{"owPart3", "[", "]"}], ",", " ", "owTest"}], "]"}], ";", 
+       "\n", "   ", 
+       RowBox[{
+       "owSection", "[", "\"\<Where this goes in TensorNets\>\"", "]"}], ";", 
+       "\n", "   ", 
+       RowBox[{
+       "owText", 
+        "[", "\"\<tnParserNet in ff_tensornets_new.nb is this same kind of \
+encoder\[Dash]decoder, mapping tokens to the prefix tree; tnPolicyNet and \
+tnValueNet reuse the encoder. The difference in the release is that \
+simplification is done by the policy net choosing rewrite rules, which the \
+exact engine applies, so every step is sound, rather than by writing the \
+whole answer at once as here.\>\"", "]"}], ";", "\n", "   ", 
+       RowBox[{"owSaveLog", "[", "]"}], ";", "\n", "   ", 
+       RowBox[{"owAllPassQ", " ", "=", " ", 
+        RowBox[{"AllTrue", "[", 
+         RowBox[{
+          RowBox[{"Values", "[", "owResults", "]"}], ",", " ", "TrueQ"}], 
+         "]"}]}], ";"}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"!", " ", 
+       RowBox[{"TrueQ", "[", "owSkipRun", "]"}]}], ",", " ", 
+      RowBox[{"owRun", "[", "]"}]}], "]"}], ";"}], "\n"}]}]], "Input",Expressi\
+onUUID->"eb95e9ad-efb4-450f-81ba-988736c9693d"]
+},
+FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"b1913177-de91-4372-876c-e5cd05dd68f8"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[1460, 33, 104566, 2475, 70, "Input",ExpressionUUID->"eb95e9ad-efb4-450f-81ba-988736c9693d"]
+}
+]
+*)
+
+(* End of internal cache information *)

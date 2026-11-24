@@ -1,0 +1,2746 @@
+(* Content-type: application/vnd.wolfram.cdf.text *)
+
+(*** Wolfram CDF File ***)
+(* http://www.wolfram.com/cdf *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*************************************************************************)
+(*                                                                       *)
+(*                                                                       *)
+(*  This file was created under the Wolfram Enterprise licensing terms.  *)
+(*                                                                       *)
+(*       For additional information concerning CDF licensing see:        *)
+(*                                                                       *)
+(*        www.wolfram.com/cdf/adopting-cdf/licensing-options.html        *)
+(*                                                                       *)
+(*                                                                       *)
+(*                                                                       *)
+(*************************************************************************)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[      1060,         20]
+NotebookDataLength[    110472,       2724]
+NotebookOptionsPosition[    111100,       2725]
+NotebookOutlinePosition[    111417,       2739]
+CellTagsIndexPosition[    111374,       2736]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"id", ":", " ", 
+    RowBox[{"b7c22476", "-", 
+     RowBox[{"7", "f53"}], "-", 
+     RowBox[{"4", "f79"}], "-", "a6b5", "-", 
+     RowBox[{"582093", 
+      RowBox[{"d8b2a0", " ", "\[CenterDot]", " ", "lesson2_symbolic"}], 
+      RowBox[{"_data", " ", "\[CenterDot]", " ", "cell"}], " ", "1", " ", 
+      "of", " ", 
+      RowBox[{"1", " ", "\[CenterDot]", " ", "updated"}], " ", "2026"}], "-", 
+     "11", "-", 
+     RowBox[{"24", " ", "01"}]}], ":", 
+    RowBox[{"46", " ", "UTC"}]}], " ", "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", 
+     RowBox[{"==", "\n", "   ", 
+      RowBox[{"Lesson", " ", 
+       RowBox[{"2", " ", "\[CenterDot]", " ", "Symbolic"}], " ", 
+       "mathematics", " ", "as", " ", 
+       RowBox[{"translation", ":", " ", 
+        RowBox[{"the", " ", "data", "\n", "   ", "Paper"}], ":", " ", 
+        RowBox[{"G", ".", " ", "Lample"}]}]}]}]}], ",", " ", 
+    RowBox[{"F", ".", " ", "Charton"}], ",", 
+    " ", "\"\<Deep Learning for Symbolic Mathematics\>\"", ",", " ", 
+    RowBox[{"ICLR", " ", "2020"}], ",", "\n", "   ", 
+    RowBox[{"arXiv", ":", 
+     RowBox[{
+      RowBox[{"1912.01412", ".", "\n", "\n", "   ", "What"}], " ", "the", " ",
+       "lesson", " ", "does", "\n", "     ", "The", " ", 
+      RowBox[{"paper", "'"}], "s", " ", "model", " ", "is", " ", "a", " ", 
+      "standard", " ", "transformer", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"Lesson", " ", "3"}], ")"}], ".", " ", "What"}], " ", "is", " ",
+       "new", " ", "is", " ", "the", " ", "data"}]}], ",", " ", 
+    RowBox[{
+    "and", " ", "that", " ", "is", "\n", "     ", "what", " ", "this", " ", 
+     "lesson", " ", "codes", " ", "from", " ", 
+     RowBox[{"scratch", ":", "\n", "       ", 
+      RowBox[{"1.", " ", "expressions", " ", "as", " ", "trees"}]}]}], ",", 
+    " ", 
+    RowBox[{
+     RowBox[{"written", " ", "in", " ", "prefix", " ", 
+      RowBox[{"(", "Polish", ")"}], " ", "notation", " ", "and", " ", "read", 
+      " ", "back"}], ";", " ", 
+     RowBox[{
+     "integers", " ", "as", " ", "a", "\n", "          ", "sign", " ", 
+      "token", " ", "and", " ", "digits"}], ";", "\n", "       ", 
+     RowBox[{"2.", " ", "counting", " ", "trees", " ", "and", " ", 
+      RowBox[{"expressions", ":", " ", 
+       RowBox[{
+       "Catalan", " ", "and", " ", "Schroeder", " ", "numbers"}]}]}]}], ",", 
+    " ", 
+    RowBox[{"and", " ", "the", " ", 
+     RowBox[{"paper", "'"}], "s", "\n", "          ", "Equation", " ", "2"}], 
+    ",", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+      "which", " ", "as", " ", "printed", " ", "needs", " ", "a", " ", 
+       "correction", " ", 
+       RowBox[{"(", 
+        RowBox[{"p1", " ", "->", " ", 
+         RowBox[{"p1", "^", "2"}]}], ")"}], " ", "when", " ", "p1"}], " ", ">",
+       " ", "1"}], ";", "\n", "       ", 
+     RowBox[{"3.", " ", "sampling", " ", "trees", " ", "uniformly", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"Appendix", " ", "C"}], ",", " ", 
+        RowBox[{"Algorithm", " ", "2"}]}], ")"}]}]}], ",", " ", 
+    RowBox[{
+     RowBox[{
+     "compared", " ", "with", " ", "a", " ", "naive", " ", "sampler"}], ";", 
+     "\n", "       ", 
+     RowBox[{
+     "4.", " ", "three", " ", "ways", " ", "of", " ", "making", " ", 
+      "integration", " ", 
+      RowBox[{"data", ":", " ", 
+       RowBox[{"forward", " ", 
+        RowBox[{"(", "FWD", ")"}]}]}]}]}], ",", " ", 
+    RowBox[{
+     RowBox[{"backward", " ", 
+      RowBox[{"(", "BWD", ")"}], " ", "and", "\n", "          ", 
+      "integration", " ", "by", " ", "parts", " ", 
+      RowBox[{"(", "IBP", ")"}]}], ";", "\n", "       ", 
+     RowBox[{
+     "5.", " ", "checking", " ", "a", " ", "hypothesis", " ", "instead", " ", 
+      "of", " ", "trusting", " ", 
+      RowBox[{"it", ":", " ", 
+       RowBox[{
+       "prefix", " ", "validity", " ", "and", " ", "verification", " ", "by", 
+        "\n", "          ", "differentiation"}]}]}]}], ",", " ", 
+    RowBox[{
+    "which", " ", "lets", " ", "beam", " ", "search", " ", "keep", " ", "any",
+      " ", "correct", " ", "answer", " ", "in", " ", "the", " ", 
+     RowBox[{"beam", ".", "\n", "     ", "The"}], " ", "trained", " ", "demo",
+      " ", "net", " ", "for", " ", "this", " ", "paper", " ", "is", " ", "in",
+      " ", "ref2_symbolic", "_math", "_lample", 
+     RowBox[{"_charton2019", ".", "nb", ".", "\n", "\n", "   ", "How"}], " ", 
+     "to", " ", "use", " ", "it", "\n", "     ", "Evaluate", " ", "this", " ", 
+     RowBox[{"cell", ".", " ", "It"}], " ", "writes", " ", "lesson2_symbolic",
+      "_data", 
+     RowBox[{"_log", ".", "nb"}], " ", "beside", " ", "this", " ", 
+     RowBox[{"notebook", ".", "\n", "     ", "Nothing"}], " ", "is", " ", 
+     "printed"}], ",", " ", 
+    RowBox[{
+    "nothing", " ", "is", " ", "written", " ", "to", " ", "the", " ", 
+     "Wolfram", " ", "Cloud", " ", "and", " ", "nothing", " ", "is", " ", 
+     RowBox[{"deleted", ".", "\n", "     ", "To"}], " ", "define", " ", "the",
+      " ", "functions", " ", "without", " ", "running", " ", "the", " ", 
+     "lesson"}], ",", " ", 
+    RowBox[{
+     RowBox[{"evaluate", "  ", "sySkipRun"}], " ", "=", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"True", "  ", 
+        RowBox[{"first", ".", "\n", "\n", "   ", "\[Copyright]"}], " ", 
+        "Computational", " ", 
+        RowBox[{"Classnotes", " ", "\[CenterDot]", " ", "CC"}], " ", "BY"}], "-",
+        "NC", "-", 
+       RowBox[{"SA", " ", "4.0"}]}], "\n", "   ", "===", "===", "===", "===", 
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "=="}]}]}], " ", "*)"}], "\n", "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"--", 
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", " ", "0."}]}]}]}]}], " ", "The", " ", "log", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"notebook", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+   " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"syDir", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Quiet", "@", 
+      RowBox[{"Check", "[", 
+       RowBox[{
+        RowBox[{"NotebookDirectory", "[", "]"}], ",", " ", 
+        RowBox[{"Directory", "[", "]"}]}], "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syLogFile", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"syDir", "[", "]"}], ",", 
+        " ", "\"\<lesson2_symbolic_data_log.nb\>\""}], "}"}], "]"}]}], ";"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syReset", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"syCells", " ", "=", " ", 
+        RowBox[{"{", "}"}]}], ";", " ", 
+       RowBox[{"syResults", " ", "=", " ", 
+        RowBox[{"<|", "|>"}]}]}], ")"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"sySection", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"syCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{"t", ",", " ", "\"\<Section\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syText", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"syCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{"t", ",", " ", "\"\<Text\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syFormula", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"syCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{"t", ",", " ", "\"\<Program\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syShow", "[", "e_", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"syCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{
+         RowBox[{"BoxData", "[", 
+          RowBox[{"ToBoxes", "[", "e", "]"}], "]"}], ",", 
+         " ", "\"\<Output\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syCheck", "[", 
+      RowBox[{"name_String", ",", " ", "test_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"With", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"ok", " ", "=", " ", 
+         RowBox[{"TrueQ", "[", 
+          RowBox[{"Quiet", "@", 
+           RowBox[{"Check", "[", 
+            RowBox[{"test", ",", " ", "False"}], "]"}]}], "]"}]}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"syResults", "[", "name", "]"}], " ", "=", " ", "ok"}], ";", 
+        "\n", "   ", 
+        RowBox[{"AppendTo", "[", 
+         RowBox[{"syCells", ",", " ", 
+          RowBox[{"Cell", "[", 
+           RowBox[{
+            RowBox[{"TextData", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"StyleBox", "[", 
+                RowBox[{
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                  "ok", ",", " ", "\"\<PASS  \>\"", ",", 
+                   " ", "\"\<FAIL  \>\""}], "]"}], ",", " ", 
+                 RowBox[{"FontWeight", " ", "->", " ", "Bold"}], ",", "\n", 
+                 "        ", 
+                 RowBox[{"FontColor", " ", "->", " ", 
+                  RowBox[{"If", "[", 
+                   RowBox[{"ok", ",", " ", 
+                    RowBox[{"RGBColor", "[", 
+                    RowBox[{"0", ",", " ", "0.5", ",", " ", "0"}], "]"}], ",",
+                     " ", 
+                    RowBox[{"RGBColor", "[", 
+                    RowBox[{"0.8", ",", " ", "0", ",", " ", "0"}], "]"}]}], 
+                   "]"}]}]}], "]"}], ",", " ", "name"}], "}"}], "]"}], ",", 
+            " ", "\"\<Text\>\""}], "]"}]}], "]"}], ";", "\n", "   ", "ok"}]}],
+       "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"SetAttributes", "[", 
+     RowBox[{"syCheck", ",", " ", "HoldRest"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syStamp", "[", "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"DateString", "[", 
+       RowBox[{
+        RowBox[{"TimeZoneConvert", "[", 
+         RowBox[{"Now", ",", " ", "0"}], "]"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Year\>\"", ",", " ", "\"\<-\>\"", ",", 
+          " ", "\"\<Month\>\"", ",", " ", "\"\<-\>\"", ",", " ", "\"\<Day\>\"",
+           ",", " ", "\"\< \>\"", ",", " ", "\"\<Hour\>\"", ",", 
+          " ", "\"\<:\>\"", ",", " ", "\"\<Minute\>\""}], "}"}]}], "]"}], " ",
+       "<>", " ", "\"\< UTC\>\""}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"sySaveLog", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Export", "[", 
+      RowBox[{
+       RowBox[{"syLogFile", "[", "]"}], ",", " ", 
+       RowBox[{"Notebook", "[", 
+        RowBox[{"Join", "[", "\n", "     ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Cell", "[", 
+             
+             RowBox[{"\"\<Lesson 2 log \[CenterDot] Symbolic mathematics as \
+translation: the data\>\"", ",", " ", "\"\<Title\>\""}], "]"}], ",", "\n", 
+            "      ", 
+            RowBox[{"Cell", "[", 
+             RowBox[{
+              RowBox[{"\"\<Written \>\"", " ", "<>", " ", 
+               RowBox[{"syStamp", "[", "]"}], " ", "<>", 
+               " ", "\"\< by lesson2_symbolic_data.nb. \>\"", " ", "<>", "\n",
+                "        ", 
+               RowBox[{"ToString", "[", 
+                RowBox[{"Count", "[", 
+                 RowBox[{"syResults", ",", " ", "True"}], "]"}], "]"}], " ", "<>",
+                " ", "\"\< of \>\"", " ", "<>", " ", 
+               RowBox[{"ToString", "[", 
+                RowBox[{"Length", "[", "syResults", "]"}], "]"}], " ", "<>", 
+               " ", "\"\< checks pass.\>\""}], ",", " ", "\"\<Text\>\""}], 
+             "]"}]}], "}"}], ",", "\n", "     ", "syCells", ",", "\n", 
+          "     ", 
+          RowBox[{"{", 
+           RowBox[{"Cell", "[", 
+            
+            RowBox[{"\"\<\[Copyright] Computational Classnotes \[CenterDot] \
+CC BY-NC-SA 4.0\>\"", ",", " ", "\"\<Text\>\""}], "]"}], "}"}]}], "]"}], 
+        "]"}], ",", " ", "\"\<NB\>\""}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "1."}]}]}]}]}], " ", "Trees", " ", "and", " ", 
+     "prefix", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"notation", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "A", " ", "tree", " ", "is", " ", "written", " ", "node", " ", "first"}],
+      ",", " ", 
+     RowBox[{"then", " ", "its", " ", 
+      RowBox[{"children", ":", " ", 
+       RowBox[{"2", " ", "+", " ", 
+        RowBox[{"3", "*", 
+         RowBox[{"(", 
+          RowBox[{"5", " ", "+", " ", "2"}], ")"}], " ", "becomes", "  ", 
+         "add", " ", "2", " ", "mul", " ", "3", " ", "add", " ", "5", " ", 
+         "2.", "\n", "   ", "Because", " ", "every", " ", "symbol", " ", 
+         "has", " ", "a", " ", "fixed", " ", "arity"}]}]}]}], ",", " ", 
+     RowBox[{"prefix", " ", "needs", " ", "no", " ", "parentheses"}], ",", 
+     " ", 
+     RowBox[{
+     "and", " ", "trees", " ", "and", " ", "prefix", "\n", "   ", "sequences",
+       " ", "correspond", " ", "one", " ", "to", " ", 
+      RowBox[{"one", "."}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"syArity", " ", "=", " ", 
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<add\>\"", " ", "->", " ", "2"}], ",", " ", 
+       RowBox[{"\"\<sub\>\"", " ", "->", " ", "2"}], ",", " ", 
+       RowBox[{"\"\<mul\>\"", " ", "->", " ", "2"}], ",", " ", 
+       RowBox[{"\"\<div\>\"", " ", "->", " ", "2"}], ",", " ", 
+       RowBox[{"\"\<pow\>\"", " ", "->", " ", "2"}], ",", "\n", "   ", 
+       RowBox[{"\"\<exp\>\"", " ", "->", " ", "1"}], ",", " ", 
+       RowBox[{"\"\<log\>\"", " ", "->", " ", "1"}], ",", " ", 
+       RowBox[{"\"\<sin\>\"", " ", "->", " ", "1"}], ",", " ", 
+       RowBox[{"\"\<cos\>\"", " ", "->", " ", "1"}]}], "|>"}]}], ";"}], "\n", 
+   
+   RowBox[{
+    RowBox[{"syOps", " ", "=", " ", 
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<add\>\"", " ", "->", " ", "Plus"}], ",", " ", 
+       RowBox[{"\"\<sub\>\"", " ", "->", " ", "Subtract"}], ",", " ", 
+       RowBox[{"\"\<mul\>\"", " ", "->", " ", "Times"}], ",", " ", 
+       RowBox[{"\"\<div\>\"", " ", "->", " ", "Divide"}], ",", " ", 
+       RowBox[{"\"\<pow\>\"", " ", "->", " ", "Power"}], ",", "\n", "   ", 
+       RowBox[{"\"\<exp\>\"", " ", "->", " ", "Exp"}], ",", " ", 
+       RowBox[{"\"\<log\>\"", " ", "->", " ", "Log"}], ",", " ", 
+       RowBox[{"\"\<sin\>\"", " ", "->", " ", "Sin"}], ",", " ", 
+       RowBox[{"\"\<cos\>\"", " ", "->", " ", "Cos"}]}], "|>"}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"integers", ":", " ", 
+      RowBox[{"a", " ", "sign", " ", "token"}]}], ",", " ", 
+     RowBox[{"then", " ", "the", " ", "decimal", " ", "digits"}]}], " ", 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syIntTokens", "[", "n_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"n", " ", ">=", " ", "0"}], ",", " ", "\"\<INT+\>\"", ",", 
+          " ", "\"\<INT-\>\""}], "]"}], "}"}], ",", " ", 
+       RowBox[{"Characters", "@", 
+        RowBox[{"IntegerString", "[", 
+         RowBox[{"Abs", "[", "n", "]"}], "]"}]}]}], "]"}]}], ";"}], "\n", 
+   "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"Wolfram", " ", "expression"}], " ", "->", " ", 
+       RowBox[{
+        RowBox[{"prefix", " ", 
+         RowBox[{"tokens", ".", " ", "Sums"}], " ", "and", " ", "products", " ",
+          "with", " ", "many", " ", "terms", " ", "become", " ", "right"}], "-", 
+        RowBox[{"nested", "\n", "   ", "binary", " ", "nodes"}]}]}], ";", " ", 
+      RowBox[{
+       RowBox[{"Exp", "[", "a", "]"}], " ", "is", " ", 
+       RowBox[{"E", "^", "a"}], " ", "inside", " ", "Wolfram"}]}], ",", " ", 
+     RowBox[{"so", " ", 
+      RowBox[{"Power", "[", 
+       RowBox[{"E", ",", " ", "a"}], "]"}], " ", "is", " ", "written", " ", 
+      "as", " ", "exp", " ", 
+      RowBox[{"a", "."}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", "e_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"syIntTokens", "[", "e", "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", 
+      RowBox[{"Rational", "[", 
+       RowBox[{"p_", ",", " ", "q_"}], "]"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", "\"\<div\>\"", "}"}], ",", " ", 
+       RowBox[{"syIntTokens", "[", "p", "]"}], ",", " ", 
+       RowBox[{"syIntTokens", "[", "q", "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", "\[FormalX]", "]"}], " ", ":=", " ", 
+     RowBox[{"{", "\"\<x\>\"", "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", "E", "]"}], " ", ":=", " ", 
+     RowBox[{"{", "\"\<E\>\"", "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", "Pi", "]"}], " ", ":=", " ", 
+     RowBox[{"{", "\"\<Pi\>\"", "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", 
+      RowBox[{"Power", "[", 
+       RowBox[{"E", ",", " ", "a_"}], "]"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Prepend", "[", 
+      RowBox[{
+       RowBox[{"syPrefix", "[", "a", "]"}], ",", " ", "\"\<exp\>\""}], 
+      "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"h", " ", ":", " ", 
+         RowBox[{"Plus", " ", "|", " ", "Times"}]}], ")"}], "[", 
+       RowBox[{"a_", ",", " ", "b_", ",", " ", "c__"}], "]"}], "]"}], " ", ":=",
+      " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"h", " ", "===", " ", "Plus"}], ",", " ", "\"\<add\>\"", ",",
+           " ", "\"\<mul\>\""}], "]"}], "}"}], ",", " ", 
+       RowBox[{"syPrefix", "[", "a", "]"}], ",", " ", 
+       RowBox[{"syPrefix", "[", 
+        RowBox[{"h", "[", 
+         RowBox[{"b", ",", " ", "c"}], "]"}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", 
+      RowBox[{"Plus", "[", 
+       RowBox[{"a_", ",", " ", "b_"}], "]"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", "\"\<add\>\"", "}"}], ",", " ", 
+       RowBox[{"syPrefix", "[", "a", "]"}], ",", " ", 
+       RowBox[{"syPrefix", "[", "b", "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", 
+      RowBox[{"Times", "[", 
+       RowBox[{"a_", ",", " ", "b_"}], "]"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", "\"\<mul\>\"", "}"}], ",", " ", 
+       RowBox[{"syPrefix", "[", "a", "]"}], ",", " ", 
+       RowBox[{"syPrefix", "[", "b", "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", 
+      RowBox[{"Power", "[", 
+       RowBox[{"a_", ",", " ", "b_"}], "]"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", "\"\<pow\>\"", "}"}], ",", " ", 
+       RowBox[{"syPrefix", "[", "a", "]"}], ",", " ", 
+       RowBox[{"syPrefix", "[", "b", "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"f", " ", ":", " ", 
+         RowBox[{"Log", " ", "|", " ", "Sin", " ", "|", " ", "Cos"}]}], ")"}],
+        "[", "a_", "]"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Prepend", "[", 
+      RowBox[{
+       RowBox[{"syPrefix", "[", "a", "]"}], ",", " ", 
+       RowBox[{"ToLowerCase", "@", 
+        RowBox[{"SymbolName", "[", "f", "]"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPrefix", "[", "_", "]"}], " ", ":=", " ", 
+     RowBox[{"{", "\"\<<unk>\>\"", "}"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"prefix", " ", "tokens"}], " ", "->", " ", 
+      RowBox[{"Wolfram", " ", "expression"}]}], ",", " ", 
+     RowBox[{
+      RowBox[{
+      "by", " ", "reading", " ", "the", " ", "tokens", " ", "left", " ", "to",
+        " ", 
+       RowBox[{"right", ".", " ", "Returns"}], " ", "$Failed", " ", "when", "\n",
+        "   ", "the", " ", "tokens", " ", "are", " ", "not", " ", "exactly", " ",
+        "one", " ", "well"}], "-", 
+      RowBox[{"formed", " ", 
+       RowBox[{"tree", "."}]}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syParse", "[", "tokens_List", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"pos", " ", "=", " ", "1"}], ",", " ", "rec", ",", " ", 
+         "r"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"rec", "[", "]"}], " ", ":=", " ", 
+         RowBox[{"Module", "[", 
+          RowBox[{
+           RowBox[{"{", "t", "}"}], ",", "\n", "     ", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"pos", " ", ">", " ", 
+               RowBox[{"Length", "[", "tokens", "]"}]}], ",", " ", 
+              RowBox[{"Throw", "[", 
+               RowBox[{"$Failed", ",", " ", "syTag"}], "]"}]}], "]"}], ";", 
+            "\n", "     ", 
+            RowBox[{"t", " ", "=", " ", 
+             RowBox[{"tokens", "[", 
+              RowBox[{"[", 
+               RowBox[{"pos", "++"}], "]"}], "]"}]}], ";", "\n", "     ", 
+            RowBox[{"Which", "[", "\n", "      ", 
+             RowBox[{
+              RowBox[{"KeyExistsQ", "[", 
+               RowBox[{"syArity", ",", " ", "t"}], "]"}], ",", " ", 
+              RowBox[{
+               RowBox[{"syOps", "[", "t", "]"}], " ", "@@", " ", 
+               RowBox[{"Table", "[", 
+                RowBox[{
+                 RowBox[{"rec", "[", "]"}], ",", " ", 
+                 RowBox[{"syArity", "[", "t", "]"}]}], "]"}]}], ",", "\n", 
+              "      ", 
+              RowBox[{"t", " ", "===", " ", "\"\<x\>\""}], ",", " ", 
+              "\[FormalX]", ",", " ", 
+              RowBox[{"t", " ", "===", " ", "\"\<E\>\""}], ",", " ", "E", ",",
+               " ", 
+              RowBox[{"t", " ", "===", " ", "\"\<Pi\>\""}], ",", " ", "Pi", ",",
+               "\n", "      ", 
+              RowBox[{
+               RowBox[{"t", " ", "===", " ", "\"\<INT+\>\""}], " ", "||", " ", 
+               RowBox[{"t", " ", "===", " ", "\"\<INT-\>\""}]}], ",", " ", 
+              RowBox[{"Module", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"ds", " ", "=", " ", 
+                  RowBox[{"{", "}"}]}], "}"}], ",", "\n", "       ", 
+                RowBox[{
+                 RowBox[{"While", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"pos", " ", "<=", " ", 
+                    RowBox[{"Length", "[", "tokens", "]"}]}], " ", "&&", " ", 
+                    
+                    RowBox[{"StringMatchQ", "[", 
+                    RowBox[{
+                    RowBox[{"tokens", "[", 
+                    RowBox[{"[", "pos", "]"}], "]"}], ",", " ", 
+                    "DigitCharacter"}], "]"}]}], ",", " ", 
+                   RowBox[{"AppendTo", "[", 
+                    RowBox[{"ds", ",", " ", 
+                    RowBox[{"tokens", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"pos", "++"}], "]"}], "]"}]}], "]"}]}], "]"}], ";",
+                  "\n", "       ", 
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                   RowBox[{"ds", " ", "===", " ", 
+                    RowBox[{"{", "}"}]}], ",", " ", 
+                   RowBox[{"Throw", "[", 
+                    RowBox[{"$Failed", ",", " ", "syTag"}], "]"}]}], "]"}], ";",
+                  "\n", "       ", 
+                 RowBox[{
+                  RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{"t", " ", "===", " ", "\"\<INT-\>\""}], ",", " ", 
+                    
+                    RowBox[{"-", "1"}], ",", " ", "1"}], "]"}], " ", 
+                  RowBox[{"FromDigits", "[", 
+                   RowBox[{"StringJoin", "[", "ds", "]"}], "]"}]}]}]}], "]"}],
+               ",", "\n", "      ", "True", ",", " ", 
+              RowBox[{"Throw", "[", 
+               RowBox[{"$Failed", ",", " ", "syTag"}], "]"}]}], "]"}]}]}], 
+          "]"}]}], ";", "\n", "   ", 
+        RowBox[{"r", " ", "=", " ", 
+         RowBox[{"Quiet", "@", 
+          RowBox[{"Catch", "[", 
+           RowBox[{
+            RowBox[{"rec", "[", "]"}], ",", " ", "syTag"}], "]"}]}]}], ";", 
+        "\n", "   ", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"r", " ", "===", " ", "$Failed"}], " ", "||", " ", 
+           RowBox[{"pos", " ", "<=", " ", 
+            RowBox[{"Length", "[", "tokens", "]"}]}]}], ",", " ", "$Failed", ",",
+           " ", "r"}], "]"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syValidQ", "[", "tokens_List", "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"syParse", "[", "tokens", "]"}], " ", "=!=", " ", "$Failed"}]}],
+     ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPart1", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"infix", ",", " ", "prefix", ",", " ", "exprs"}], "}"}], ",", 
+       "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "sySection", "[", "\"\<1. Trees and prefix notation\>\"", "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<An expression is a tree: operators are internal nodes, \
+numbers and variables are leaves. Prefix (Polish) notation writes each node \
+before its children. Every symbol has a fixed arity, so prefix needs no \
+parentheses, and trees and prefix sequences correspond one to one (Section \
+2.1).\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"infix", " ", "=", " ", 
+         RowBox[{"{", 
+          
+          RowBox[{"\"\<2\>\"", ",", " ", "\"\<+\>\"", ",", " ", "\"\<3\>\"", ",",
+            " ", "\"\<\[Times]\>\"", ",", " ", "\"\<(\>\"", ",", 
+           " ", "\"\<5\>\"", ",", " ", "\"\<+\>\"", ",", " ", "\"\<2\>\"", ",",
+            " ", "\"\<)\>\""}], "}"}]}], ";", "\n", "   ", 
+        RowBox[{"prefix", " ", "=", " ", 
+         RowBox[{"{", 
+          
+          RowBox[{"\"\<add\>\"", ",", " ", "\"\<2\>\"", ",", 
+           " ", "\"\<mul\>\"", ",", " ", "\"\<3\>\"", ",", " ", "\"\<add\>\"",
+            ",", " ", "\"\<5\>\"", ",", " ", "\"\<2\>\""}], "}"}]}], ";", 
+        "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"\"\<infix\>\"", ",", " ", 
+               RowBox[{"Row", "[", 
+                RowBox[{"infix", ",", " ", "\"\< \>\""}], "]"}], ",", " ", 
+               RowBox[{"Length", "[", "infix", "]"}]}], "}"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<prefix\>\"", ",", " ", 
+               RowBox[{"Row", "[", 
+                RowBox[{"prefix", ",", " ", "\"\< \>\""}], "]"}], ",", " ", 
+               RowBox[{"Length", "[", "prefix", "]"}]}], "}"}]}], "}"}], ",", 
+           "\n", "      ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", "LightGray", "}"}], ",", " ", "None"}], "}"}]}]}], 
+          "]"}], "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<the prefix form of 2 + 3\[Times](5 + 2) is 7 tokens, \
+against 9 for the infix form with its parentheses\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Length", "[", "prefix", "]"}], " ", "==", " ", "7"}], 
+           " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"Length", "[", "infix", "]"}], " ", "==", " ", "9"}]}]}], 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<Integers are a sign token followed by their digits: \
+\[Minus]305 is INT\[Minus] 3 0 5. The model therefore never needs a separate \
+token for every number.\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<integers: \[Minus]305 \[RightArrow] INT\[Minus] 3 0 5 \
+\[RightArrow] \[Minus]305, and 12 \[RightArrow] INT+ 1 2\>\"", ",", "\n", 
+          "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"syIntTokens", "[", 
+             RowBox[{"-", "305"}], "]"}], " ", "==", " ", 
+            RowBox[{"{", 
+             
+             RowBox[{"\"\<INT-\>\"", ",", " ", "\"\<3\>\"", ",", 
+              " ", "\"\<0\>\"", ",", " ", "\"\<5\>\""}], "}"}]}], " ", "&&", 
+           " ", 
+           RowBox[{
+            RowBox[{"syParse", "[", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<INT-\>\"", ",", " ", "\"\<3\>\"", ",", 
+               " ", "\"\<0\>\"", ",", " ", "\"\<5\>\""}], "}"}], "]"}], " ", "===",
+             " ", 
+            RowBox[{"-", "305"}]}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"syIntTokens", "[", "12", "]"}], " ", "==", " ", 
+            RowBox[{"{", 
+             
+             RowBox[{"\"\<INT+\>\"", ",", " ", "\"\<1\>\"", ",", 
+              " ", "\"\<2\>\""}], "}"}]}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"exprs", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"3", " ", 
+            RowBox[{"\[FormalX]", "^", "2"}], " ", 
+            RowBox[{"Cos", "[", 
+             RowBox[{"2", " ", "\[FormalX]"}], "]"}]}], ",", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Exp", "[", "\[FormalX]", "]"}], " ", 
+             RowBox[{"Log", "[", 
+              RowBox[{"1", " ", "+", " ", "\[FormalX]"}], "]"}]}], " ", "-", 
+            " ", 
+            RowBox[{"\[FormalX]", "/", "7"}]}], ",", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Sin", "[", "\[FormalX]", "]"}], "^", 
+             RowBox[{"(", 
+              RowBox[{"1", "/", "2"}], ")"}]}], " ", "+", " ", 
+            RowBox[{"2", "^", "\[FormalX]"}]}]}], "}"}]}], ";", "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"TraditionalForm", "[", "#", "]"}], ",", " ", 
+                 RowBox[{"Row", "[", 
+                  RowBox[{
+                   RowBox[{"syPrefix", "[", "#", "]"}], ",", 
+                   " ", "\"\< \>\""}], "]"}]}], "}"}], " ", "&"}], " ", "/@", 
+              " ", "exprs"}], ",", " ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<expression\>\"", ",", 
+               " ", "\"\<prefix tokens\>\""}], "}"}]}], "]"}], ",", "\n", 
+           "      ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Alignment", " ", "->", " ", "Left"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<prefix and back gives the same expression, for these \
+three and for 300 random ones (Section 4)\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"AllTrue", "[", 
+            RowBox[{
+             RowBox[{"Join", "[", 
+              RowBox[{"exprs", ",", " ", 
+               RowBox[{"Table", "[", 
+                RowBox[{
+                 RowBox[{"syRandomExpr", "[", 
+                  RowBox[{"RandomInteger", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"1", ",", " ", "6"}], "}"}], "]"}], "]"}], ",", 
+                 " ", "300"}], "]"}]}], "]"}], ",", "\n", "     ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"MatchQ", "[", 
+                RowBox[{"#", ",", " ", "$Failed"}], "]"}], " ", "||", " ", 
+               RowBox[{"!", " ", 
+                RowBox[{"FreeQ", "[", 
+                 RowBox[{
+                  RowBox[{"syPrefix", "[", "#", "]"}], ",", 
+                  " ", "\"\<<unk>\>\""}], "]"}]}], " ", "||", " ", 
+               RowBox[{
+                RowBox[{"syParse", "[", 
+                 RowBox[{"syPrefix", "[", "#", "]"}], "]"}], " ", "===", " ", 
+                "#"}]}], " ", "&"}]}], "]"}], " ", "&&", "\n", "     ", 
+           RowBox[{"AllTrue", "[", 
+            RowBox[{"exprs", ",", " ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"syParse", "[", 
+                RowBox[{"syPrefix", "[", "#", "]"}], "]"}], " ", "===", " ", 
+               "#"}], " ", "&"}]}], "]"}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<a token list that is not one complete tree is rejected: \
+add x, add x x x, INT+ alone\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"!", " ", 
+            RowBox[{"syValidQ", "[", 
+             RowBox[{"{", 
+              RowBox[{"\"\<add\>\"", ",", " ", "\"\<x\>\""}], "}"}], "]"}]}], 
+           " ", "&&", " ", 
+           RowBox[{"!", " ", 
+            RowBox[{"syValidQ", "[", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<add\>\"", ",", " ", "\"\<x\>\"", ",", 
+               " ", "\"\<x\>\"", ",", " ", "\"\<x\>\""}], "}"}], "]"}]}], " ",
+            "&&", " ", 
+           RowBox[{"!", " ", 
+            RowBox[{"syValidQ", "[", 
+             RowBox[{"{", "\"\<INT+\>\"", "}"}], "]"}]}], " ", "&&", " ", 
+           RowBox[{"syValidQ", "[", 
+            RowBox[{"{", 
+             
+             RowBox[{"\"\<add\>\"", ",", " ", "\"\<x\>\"", ",", 
+              " ", "\"\<INT+\>\"", ",", " ", "\"\<3\>\""}], "}"}], "]"}]}]}], 
+         "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "2."}]}]}]}]}], " ", "Counting", " ", "trees", " ",
+      "and", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"expressions", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}],
+     " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{"e", ",", " ", "n"}], "]"}], ":", " ", 
+      RowBox[{
+      "the", " ", "number", " ", "of", " ", "ways", " ", "to", " ", 
+       "complete", " ", "a", " ", "tree", " ", "that", " ", "still", " ", 
+       "has", " ", "e", " ", "empty", " ", "slots", " ", "and", " ", "n", " ",
+        "internal", "\n", "   ", "nodes", " ", "to", " ", "place", " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"Appendix", " ", "C"}], ")"}], ".", " ", "The"}], " ", 
+       "first", " ", "empty", " ", "slot", " ", "is", " ", "a", " ", 
+       "leaf"}]}], ",", " ", 
+     RowBox[{
+      RowBox[{
+      "a", " ", "unary", " ", "node", " ", "or", " ", "a", " ", "binary", " ", 
+       RowBox[{"node", ":", "\n", "     ", 
+        RowBox[{"D", 
+         RowBox[{"(", 
+          RowBox[{"0", ",", " ", "n"}], ")"}]}]}]}], " ", "=", " ", 
+      RowBox[{"0", " ", 
+       RowBox[{"(", 
+        RowBox[{"n", " ", ">", " ", "0"}], ")"}]}]}], ",", "   ", 
+     RowBox[{
+      RowBox[{"D", 
+       RowBox[{"(", 
+        RowBox[{"e", ",", " ", "0"}], ")"}]}], " ", "=", " ", "1"}], ",", 
+     "   ", 
+     RowBox[{
+      RowBox[{"D", 
+       RowBox[{"(", 
+        RowBox[{"e", ",", " ", "n"}], ")"}]}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"D", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"e", "-", "1"}], ",", " ", "n"}], ")"}]}], " ", "+", " ", 
+       RowBox[{"D", 
+        RowBox[{"(", 
+         RowBox[{"e", ",", " ", 
+          RowBox[{"n", "-", "1"}]}], ")"}]}], " ", "+", " ", 
+       RowBox[{"D", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"e", "+", "1"}], ",", " ", 
+           RowBox[{"n", "-", "1"}]}], ")"}], ".", "\n", "   ", "With"}], " ", 
+        "binary", " ", "nodes", " ", "only"}]}]}], ",", " ", 
+     RowBox[{"the", " ", "middle", " ", "term", " ", "is", " ", 
+      RowBox[{"dropped", ".", " ", "D"}], 
+      RowBox[{"(", 
+       RowBox[{"1", ",", " ", "n"}], ")"}], " ", "counts", " ", "whole", " ", 
+      
+      RowBox[{"trees", "."}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syD", "[", 
+      RowBox[{"_", ",", " ", "0"}], "]"}], " ", "=", " ", "1"}], ";"}], "\n", 
+   
+   RowBox[{
+    RowBox[{
+     RowBox[{"syD", "[", 
+      RowBox[{"0", ",", " ", 
+       RowBox[{"n_", " ", "/;", " ", 
+        RowBox[{"n", " ", ">", " ", "0"}]}]}], "]"}], " ", "=", " ", "0"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syD", "[", 
+      RowBox[{"e_", ",", " ", "n_"}], "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"syD", "[", 
+       RowBox[{"e", ",", " ", "n"}], "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"syD", "[", 
+        RowBox[{
+         RowBox[{"e", " ", "-", " ", "1"}], ",", " ", "n"}], "]"}], " ", "+", 
+       " ", 
+       RowBox[{"syD", "[", 
+        RowBox[{"e", ",", " ", 
+         RowBox[{"n", " ", "-", " ", "1"}]}], "]"}], " ", "+", " ", 
+       RowBox[{"syD", "[", 
+        RowBox[{
+         RowBox[{"e", " ", "+", " ", "1"}], ",", " ", 
+         RowBox[{"n", " ", "-", " ", "1"}]}], "]"}]}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syDBin", "[", 
+      RowBox[{"_", ",", " ", "0"}], "]"}], " ", "=", " ", "1"}], ";"}], "\n", 
+   
+   RowBox[{
+    RowBox[{
+     RowBox[{"syDBin", "[", 
+      RowBox[{"0", ",", " ", 
+       RowBox[{"n_", " ", "/;", " ", 
+        RowBox[{"n", " ", ">", " ", "0"}]}]}], "]"}], " ", "=", " ", "0"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syDBin", "[", 
+      RowBox[{"e_", ",", " ", "n_"}], "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"syDBin", "[", 
+       RowBox[{"e", ",", " ", "n"}], "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"syDBin", "[", 
+        RowBox[{
+         RowBox[{"e", " ", "-", " ", "1"}], ",", " ", "n"}], "]"}], " ", "+", 
+       " ", 
+       RowBox[{"syDBin", "[", 
+        RowBox[{
+         RowBox[{"e", " ", "+", " ", "1"}], ",", " ", 
+         RowBox[{"n", " ", "-", " ", "1"}]}], "]"}]}]}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"weighted", " ", 
+      RowBox[{"version", ":", " ", 
+       RowBox[{"L", " ", "leaf", " ", "values"}]}]}], ",", " ", 
+     RowBox[{
+     "p1", " ", "unary", " ", "and", " ", "p2", " ", "binary", " ", 
+      "operators"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syDW", "[", 
+      RowBox[{"e_", ",", " ", "0", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"L_", ",", " ", "p1_", ",", " ", "p2_"}], "}"}]}], "]"}], " ",
+      ":=", " ", 
+     RowBox[{"L", "^", "e"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syDW", "[", 
+      RowBox[{"0", ",", " ", 
+       RowBox[{"n_", " ", "/;", " ", 
+        RowBox[{"n", " ", ">", " ", "0"}]}], ",", " ", "_"}], "]"}], " ", "=",
+      " ", "0"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syDW", "[", 
+      RowBox[{"e_", ",", " ", "n_", ",", " ", 
+       RowBox[{"w", " ", ":", " ", 
+        RowBox[{"{", 
+         RowBox[{"L_", ",", " ", "p1_", ",", " ", "p2_"}], "}"}]}]}], "]"}], 
+     " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"syDW", "[", 
+       RowBox[{"e", ",", " ", "n", ",", " ", "w"}], "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"L", " ", 
+        RowBox[{"syDW", "[", 
+         RowBox[{
+          RowBox[{"e", " ", "-", " ", "1"}], ",", " ", "n", ",", " ", "w"}], 
+         "]"}]}], " ", "+", " ", 
+       RowBox[{"p1", " ", 
+        RowBox[{"syDW", "[", 
+         RowBox[{"e", ",", " ", 
+          RowBox[{"n", " ", "-", " ", "1"}], ",", " ", "w"}], "]"}]}], " ", "+",
+        " ", 
+       RowBox[{"p2", " ", 
+        RowBox[{"syDW", "[", 
+         RowBox[{
+          RowBox[{"e", " ", "+", " ", "1"}], ",", " ", 
+          RowBox[{"n", " ", "-", " ", "1"}], ",", " ", "w"}], "]"}]}]}]}]}], 
+    ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"every", " ", "unary"}], "-", 
+      RowBox[{
+      "binary", " ", "tree", " ", "with", " ", "n", " ", "internal", " ", 
+       "nodes"}]}], ",", " ", 
+     RowBox[{
+     "as", " ", "its", " ", "list", " ", "of", " ", "arities", " ", "in", " ",
+       "prefix", " ", "order"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syAllTrees", "[", "0", "]"}], " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"{", "0", "}"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syAllTrees", "[", "n_", "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"syAllTrees", "[", "n", "]"}], " ", "=", " ", 
+      RowBox[{"Join", "[", "\n", "    ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"Prepend", "[", 
+           RowBox[{"#", ",", " ", "1"}], "]"}], " ", "&"}], " ", "/@", " ", 
+         RowBox[{"syAllTrees", "[", 
+          RowBox[{"n", " ", "-", " ", "1"}], "]"}]}], ",", "\n", "    ", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"Join", "[", 
+             RowBox[{
+              RowBox[{"{", "2", "}"}], ",", " ", "l", ",", " ", "r"}], "]"}], 
+            ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"i", ",", " ", "0", ",", " ", 
+              RowBox[{"n", " ", "-", " ", "1"}]}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"l", ",", " ", 
+              RowBox[{"syAllTrees", "[", "i", "]"}]}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"r", ",", " ", 
+              RowBox[{"syAllTrees", "[", 
+               RowBox[{"n", " ", "-", " ", "1", " ", "-", " ", "i"}], "]"}]}],
+              "}"}]}], "]"}], ",", " ", "2"}], "]"}]}], "]"}]}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"the", " ", 
+      RowBox[{"paper", "'"}], "s", " ", 
+      RowBox[{"recurrences", ":", " ", 
+       RowBox[{
+        RowBox[{"Schroeder", " ", 
+         RowBox[{"(", 
+          RowBox[{"Equation", " ", "1"}], ")"}], " ", "and", " ", 
+         "expressions", " ", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"Equation", " ", "2"}], ")"}], ".", "\n", "   ", 
+          "Equation"}], " ", "2", " ", "as", " ", "printed", " ", "ends", " ",
+          "in"}], "  ", "-", " ", 
+        RowBox[{"p1", " ", 
+         RowBox[{"(", 
+          RowBox[{"n", "-", "2"}], ")"}], " ", "E", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"n", "-", "2"}], ")"}], ".", " ", "Expanding"}], " ", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", " ", "-", " ", 
+            RowBox[{"p1", " ", "z"}]}], ")"}], "^", "2"}], " ", "in", " ", 
+         "the", " ", "generating", "\n", "   ", "function", " ", "of", " ", 
+         "Appendix", " ", "B", " ", "gives", " ", 
+         RowBox[{"p1", "^", "2"}], " ", "there"}]}]}]}], ",", " ", 
+     RowBox[{
+      RowBox[{"not", " ", "p1"}], ";", " ", 
+      RowBox[{
+      "the", " ", "two", " ", "agree", " ", "only", " ", "when", " ", "p1", " ",
+        "is", " ", "0", " ", "or", " ", "1"}]}], ",", " ", 
+     RowBox[{"the", "\n", "   ", "cases", " ", "the", " ", "paper", " ", 
+      RowBox[{"checks", ".", " ", "syE"}], " ", "is", " ", "the", " ", 
+      "corrected", " ", "form"}], ",", " ", 
+     RowBox[{
+      RowBox[{"syEPrinted", " ", "the", " ", "printed", " ", "one"}], ";", 
+      " ", 
+      RowBox[{
+      "the", " ", "lesson", "\n", "   ", "compares", " ", "both", " ", "with",
+        " ", "a", " ", "count", " ", "of", " ", "every", " ", 
+       RowBox[{"tree", "."}]}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"sySchroeder", "[", "0", "]"}], " ", "=", " ", "1"}], ";", " ", 
+    RowBox[{
+     RowBox[{"sySchroeder", "[", "1", "]"}], " ", "=", " ", "2"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"sySchroeder", "[", "n_", "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"sySchroeder", "[", "n", "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"3", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "n"}], " ", "-", " ", "1"}], ")"}], " ", 
+          RowBox[{"sySchroeder", "[", 
+           RowBox[{"n", " ", "-", " ", "1"}], "]"}]}], " ", "-", " ", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"n", " ", "-", " ", "2"}], ")"}], " ", 
+          RowBox[{"sySchroeder", "[", 
+           RowBox[{"n", " ", "-", " ", "2"}], "]"}]}]}], ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{"n", " ", "+", " ", "1"}], ")"}]}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syE", "[", 
+      RowBox[{"0", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"L_", ",", " ", "p1_", ",", " ", "p2_"}], "}"}]}], "]"}], " ",
+      ":=", " ", "L"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syE", "[", 
+      RowBox[{"1", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"L_", ",", " ", "p1_", ",", " ", "p2_"}], "}"}]}], "]"}], " ",
+      ":=", " ", 
+     RowBox[{
+      RowBox[{"p1", " ", "L"}], " ", "+", " ", 
+      RowBox[{"p2", " ", 
+       RowBox[{"L", "^", "2"}]}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syE", "[", 
+      RowBox[{"n_", ",", " ", 
+       RowBox[{"w", " ", ":", " ", 
+        RowBox[{"{", 
+         RowBox[{"L_", ",", " ", "p1_", ",", " ", "p2_"}], "}"}]}]}], "]"}], 
+     " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"syE", "[", 
+       RowBox[{"n", ",", " ", "w"}], "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"p1", " ", "+", " ", 
+            RowBox[{"2", " ", "L", " ", "p2"}]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "n"}], " ", "-", " ", "1"}], ")"}], " ", 
+          RowBox[{"syE", "[", 
+           RowBox[{
+            RowBox[{"n", " ", "-", " ", "1"}], ",", " ", "w"}], "]"}]}], " ", 
+         "-", " ", 
+         RowBox[{
+          RowBox[{"p1", "^", "2"}], " ", 
+          RowBox[{"(", 
+           RowBox[{"n", " ", "-", " ", "2"}], ")"}], " ", 
+          RowBox[{"syE", "[", 
+           RowBox[{
+            RowBox[{"n", " ", "-", " ", "2"}], ",", " ", "w"}], "]"}]}]}], 
+        ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{"n", " ", "+", " ", "1"}], ")"}]}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syEPrinted", "[", 
+      RowBox[{"0", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"L_", ",", " ", "p1_", ",", " ", "p2_"}], "}"}]}], "]"}], " ",
+      ":=", " ", "L"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syEPrinted", "[", 
+      RowBox[{"1", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"L_", ",", " ", "p1_", ",", " ", "p2_"}], "}"}]}], "]"}], " ",
+      ":=", " ", 
+     RowBox[{
+      RowBox[{"p1", " ", "L"}], " ", "+", " ", 
+      RowBox[{"p2", " ", 
+       RowBox[{"L", "^", "2"}]}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syEPrinted", "[", 
+      RowBox[{"n_", ",", " ", 
+       RowBox[{"w", " ", ":", " ", 
+        RowBox[{"{", 
+         RowBox[{"L_", ",", " ", "p1_", ",", " ", "p2_"}], "}"}]}]}], "]"}], 
+     " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"syEPrinted", "[", 
+       RowBox[{"n", ",", " ", "w"}], "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"p1", " ", "+", " ", 
+            RowBox[{"2", " ", "L", " ", "p2"}]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "n"}], " ", "-", " ", "1"}], ")"}], " ", 
+          RowBox[{"syEPrinted", "[", 
+           RowBox[{
+            RowBox[{"n", " ", "-", " ", "1"}], ",", " ", "w"}], "]"}]}], " ", 
+         "-", " ", 
+         RowBox[{"p1", " ", 
+          RowBox[{"(", 
+           RowBox[{"n", " ", "-", " ", "2"}], ")"}], " ", 
+          RowBox[{"syEPrinted", "[", 
+           RowBox[{
+            RowBox[{"n", " ", "-", " ", "2"}], ",", " ", "w"}], "]"}]}]}], 
+        ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{"n", " ", "+", " ", "1"}], ")"}]}]}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPart2", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"w", " ", "=", " ", 
+          RowBox[{"{", 
+           RowBox[{"4", ",", " ", "3", ",", " ", "2"}], "}"}]}], ",", " ", 
+         RowBox[{"paper", " ", "=", " ", 
+          RowBox[{"{", 
+           RowBox[{"11", ",", " ", "15", ",", " ", "4"}], "}"}]}]}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "sySection", "[", "\"\<2. Counting trees and expressions\>\"", "]"}], 
+        ";", "\n", "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<To sample fairly one must count. D(e, n) is the number of \
+ways to complete a tree that still has e empty slots and n internal nodes to \
+place: the first empty slot is a leaf, a unary node or a binary node \
+(Appendix C).\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "syFormula", 
+         "[", "\"\<D(0, n) = 0  (n > 0),    D(e, 0) = 1,    D(e, n) = D(e\
+\[Minus]1, n) + D(e, n\[Minus]1) + D(e+1, n\[Minus]1)\nbinary trees only:  \
+D(e, n) = D(e\[Minus]1, n) + D(e+1, n\[Minus]1)\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"n", ",", " ", 
+                 RowBox[{"CatalanNumber", "[", "n", "]"}], ",", " ", 
+                 RowBox[{"syDBin", "[", 
+                  RowBox[{"1", ",", " ", "n"}], "]"}], ",", " ", 
+                 RowBox[{"sySchroeder", "[", "n", "]"}], ",", " ", 
+                 RowBox[{"syD", "[", 
+                  RowBox[{"1", ",", " ", "n"}], "]"}], ",", " ", 
+                 RowBox[{"Length", "[", 
+                  RowBox[{"syAllTrees", "[", "n", "]"}], "]"}]}], "}"}], ",", 
+               " ", 
+               RowBox[{"{", 
+                RowBox[{"n", ",", " ", "0", ",", " ", "7"}], "}"}]}], "]"}], ",",
+              "\n", "      ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<n\>\"", ",", " ", "\"\<Catalan C\:2099\>\"", ",", 
+               " ", "\"\<binary D(1,n)\>\"", ",", 
+               " ", "\"\<Schr\[ODoubleDot]der S\:2099 (Eq. 1)\>\"", ",", 
+               " ", "\"\<D(1,n)\>\"", ",", " ", "\"\<listed\>\""}], "}"}]}], 
+            "]"}], ",", " ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<binary D(1, n) equals the Catalan numbers, n = 0\
+\[Ellipsis]12\>\"", ",", "\n", "    ", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{
+            RowBox[{"Range", "[", 
+             RowBox[{"0", ",", " ", "12"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"syDBin", "[", 
+               RowBox[{"1", ",", " ", "#"}], "]"}], " ", "==", " ", 
+              RowBox[{"CatalanNumber", "[", "#", "]"}]}], " ", "&"}]}], 
+           "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<unary-binary D(1, n) equals the large \
+Schr\[ODoubleDot]der numbers of Equation 1, n = 0\[Ellipsis]12\>\"", ",", 
+          "\n", "    ", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{
+            RowBox[{"Range", "[", 
+             RowBox[{"0", ",", " ", "12"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"syD", "[", 
+               RowBox[{"1", ",", " ", "#"}], "]"}], " ", "==", " ", 
+              RowBox[{"sySchroeder", "[", "#", "]"}]}], " ", "&"}]}], "]"}]}],
+          "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<and both equal the number of trees listed one by one, n \
+= 0\[Ellipsis]7\>\"", ",", "\n", "    ", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{
+            RowBox[{"Range", "[", 
+             RowBox[{"0", ",", " ", "7"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Length", "[", 
+               RowBox[{"syAllTrees", "[", "#", "]"}], "]"}], " ", "==", " ", 
+              RowBox[{"syD", "[", 
+               RowBox[{"1", ",", " ", "#"}], "]"}]}], " ", "&"}]}], "]"}]}], 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<Counting expressions rather than shapes: each leaf takes \
+one of L values, each unary node one of p1 operators, each binary node one of \
+p2. Weighting every listed tree by L^leaves p1^unary p2^binary gives the \
+exact count, which the weighted D(e, n) also computes (start from D(e, 0) = \
+L^e and multiply the three terms by L, p1 and p2).\>\"", "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<Equation 2 of the paper, as printed, ends in \[Minus]p1(n\
+\[Minus]2)E\:2099\:208b\:2082. Expanding (1 \[Minus] p1 z)\.b2 in the \
+generating function of Appendix B gives p1\.b2 there. The two agree only when \
+p1 is 0 or 1, the cases the paper checks against Equation 1 and the Catalan \
+numbers. A count of every tree settles it:\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "syFormula", 
+         "[", "\"\<corrected:  (n+1) E\:2099 = (p1 + 2 L p2)(2n\[Minus]1) E\
+\:2099\:208b\:2081 \[Minus] p1\.b2 (n\[Minus]2) E\:2099\:208b\:2082,    E\
+\:2080 = L,  E\:2081 = p1 L + p2 L\.b2\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"n", ",", " ", 
+                 RowBox[{"Total", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"w", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "^", 
+                    RowBox[{"Count", "[", 
+                    RowBox[{"#", ",", " ", "0"}], "]"}]}], " ", 
+                    RowBox[{
+                    RowBox[{"w", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "^", 
+                    RowBox[{"Count", "[", 
+                    RowBox[{"#", ",", " ", "1"}], "]"}]}], " ", 
+                    RowBox[{
+                    RowBox[{"w", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], "^", 
+                    RowBox[{"Count", "[", 
+                    RowBox[{"#", ",", " ", "2"}], "]"}]}]}], ")"}], " ", 
+                    "&"}], " ", "/@", " ", 
+                   RowBox[{"syAllTrees", "[", "n", "]"}]}], "]"}], ",", " ", 
+                 RowBox[{"syE", "[", 
+                  RowBox[{"n", ",", " ", "w"}], "]"}], ",", " ", 
+                 RowBox[{"syEPrinted", "[", 
+                  RowBox[{"n", ",", " ", "w"}], "]"}]}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"n", ",", " ", "0", ",", " ", "6"}], "}"}]}], "]"}], ",",
+              "\n", "      ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<n\>\"", ",", 
+               " ", "\"\<counted (L=4, p1=3, p2=2)\>\"", ",", 
+               " ", "\"\<corrected Eq. 2\>\"", ",", 
+               " ", "\"\<Eq. 2 as printed\>\""}], "}"}]}], "]"}], ",", " ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<the corrected Equation 2 equals the count of every \
+tree, for L = 4, p1 = 3, p2 = 2 and n = 0\[Ellipsis]6\>\"", ",", "\n", "    ", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{
+            RowBox[{"Range", "[", 
+             RowBox[{"0", ",", " ", "6"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"syE", "[", 
+               RowBox[{"#", ",", " ", "w"}], "]"}], " ", "==", " ", 
+              RowBox[{"Total", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"w", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "^", 
+                    RowBox[{"Count", "[", 
+                    RowBox[{"#", ",", " ", "0"}], "]"}]}], " ", 
+                   RowBox[{
+                    RowBox[{"w", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "^", 
+                    RowBox[{"Count", "[", 
+                    RowBox[{"#", ",", " ", "1"}], "]"}]}], " ", 
+                   RowBox[{
+                    RowBox[{"w", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], "^", 
+                    RowBox[{"Count", "[", 
+                    RowBox[{"#", ",", " ", "2"}], "]"}]}]}], ")"}], " ", 
+                 "&"}], " ", "/@", " ", 
+                RowBox[{"syAllTrees", "[", "#", "]"}]}], "]"}], " ", "==", 
+              " ", 
+              RowBox[{"syDW", "[", 
+               RowBox[{"1", ",", " ", "#", ",", " ", "w"}], "]"}]}], " ", 
+             "&"}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<the printed form differs from the count when p1 = 3 \
+(from n = 3 on)\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"syEPrinted", "[", 
+             RowBox[{"3", ",", " ", "w"}], "]"}], " ", "!=", " ", 
+            RowBox[{"syE", "[", 
+             RowBox[{"3", ",", " ", "w"}], "]"}]}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"syEPrinted", "[", 
+             RowBox[{"2", ",", " ", "w"}], "]"}], " ", "==", " ", 
+            RowBox[{"syE", "[", 
+             RowBox[{"2", ",", " ", "w"}], "]"}]}]}]}], "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<and the printed form is right when p1 = 1 (here L = 5, \
+p2 = 3, n = 0\[Ellipsis]10)\>\"", ",", "\n", "    ", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{
+            RowBox[{"Range", "[", 
+             RowBox[{"0", ",", " ", "10"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"syEPrinted", "[", 
+               RowBox[{"#", ",", " ", 
+                RowBox[{"{", 
+                 RowBox[{"5", ",", " ", "1", ",", " ", "3"}], "}"}]}], "]"}], 
+              " ", "==", " ", 
+              RowBox[{"syE", "[", 
+               RowBox[{"#", ",", " ", 
+                RowBox[{"{", 
+                 RowBox[{"5", ",", " ", "1", ",", " ", "3"}], "}"}]}], "]"}], 
+              " ", "==", " ", 
+              RowBox[{"syDW", "[", 
+               RowBox[{"1", ",", " ", "#", ",", " ", 
+                RowBox[{"{", 
+                 RowBox[{"5", ",", " ", "1", ",", " ", "3"}], "}"}]}], 
+               "]"}]}], " ", "&"}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<With the paper's settings (L = 11 leaves, p1 = 15 unary \
+and p2 = 4 binary operators) the number of expressions grows very fast \
+(corrected formula):\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"n", ",", " ", 
+                 RowBox[{"ScientificForm", "[", 
+                  RowBox[{
+                   RowBox[{"N", "[", 
+                    RowBox[{"syE", "[", 
+                    RowBox[{"n", ",", " ", "paper"}], "]"}], "]"}], ",", " ", 
+                   "3"}], "]"}]}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"n", ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"5", ",", " ", "10", ",", " ", "15"}], "}"}]}], 
+                "}"}]}], "]"}], ",", " ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<internal nodes n\>\"", ",", 
+               " ", "\"\<expressions E\:2099\>\""}], "}"}]}], "]"}], ",", 
+           "\n", "      ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<with those settings there are about 5.4 \[Times] 10\.b3\
+\.b3 expressions with 15 internal nodes\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"syE", "[", 
+             RowBox[{"15", ",", " ", "paper"}], "]"}], " ", "==", " ", 
+            RowBox[{"syDW", "[", 
+             RowBox[{"1", ",", " ", "15", ",", " ", "paper"}], "]"}]}], " ", "&&",
+            " ", 
+           RowBox[{
+            RowBox[{"Floor", "[", 
+             RowBox[{"Log10", "[", 
+              RowBox[{"syE", "[", 
+               RowBox[{"15", ",", " ", "paper"}], "]"}], "]"}], "]"}], " ", "==",
+             " ", "33"}]}]}], "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "3."}]}]}]}]}], " ", "Sampling", " ", "trees", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"uniformly", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"Appendix", " ", "C"}], ",", " ", 
+     RowBox[{
+      RowBox[{
+      "Algorithm", " ", "2.", " ", "Start", " ", "with", " ", "one", " ", 
+       "empty", " ", "slot", " ", 
+       RowBox[{"(", 
+        RowBox[{"e", " ", "=", " ", "1"}], ")"}], " ", "and", " ", "n", " ", 
+       "internal", " ", "nodes", " ", "to", " ", 
+       RowBox[{"place", ".", "\n", "   ", "Choose"}], " ", "the", " ", 
+       "position", " ", "k", " ", "and", " ", "arity", " ", "a", " ", "of", " ",
+        "the", " ", "next", " ", "internal", " ", "node", " ", "with", " ", 
+       "probability", "\n", "     ", "P", 
+       RowBox[{"(", 
+        RowBox[{"k", ",", " ", "1"}], ")"}]}], " ", "=", " ", 
+      RowBox[{"D", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"e", "-", "k"}], ",", " ", 
+          RowBox[{"n", "-", "1"}]}], ")"}], "/", "D"}], 
+       RowBox[{"(", 
+        RowBox[{"e", ",", " ", "n"}], ")"}]}]}], ",", "   ", 
+     RowBox[{
+      RowBox[{"P", 
+       RowBox[{"(", 
+        RowBox[{"k", ",", " ", "2"}], ")"}]}], " ", "=", " ", 
+      RowBox[{"D", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"e", "-", "k", "+", "1"}], ",", " ", 
+          RowBox[{"n", "-", "1"}]}], ")"}], "/", "D"}], 
+       RowBox[{"(", 
+        RowBox[{"e", ",", " ", "n"}], ")"}]}]}], ",", "   ", 
+     RowBox[{
+      RowBox[{"k", " ", "=", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"0", ".."}], "e"}], "-", "1"}]}], ";", "\n", "   ", 
+      RowBox[{
+       RowBox[{
+       "the", " ", "k", " ", "slots", " ", "before", " ", "it", " ", "become",
+         " ", 
+        RowBox[{"leaves", ".", " ", "Then"}], " ", "e", " ", "becomes", " ", 
+        "e"}], "-", 
+       RowBox[{"k", " ", 
+        RowBox[{"(", "unary", ")"}], " ", "or", " ", "e"}], "-", "k", "+", 
+       RowBox[{"1", " ", 
+        RowBox[{
+         RowBox[{"(", "binary", ")"}], ".", "\n", "   ", "The"}], " ", "tree",
+         " ", "comes", " ", "out", " ", "in", " ", "prefix", " ", 
+        "order"}]}]}], ",", " ", 
+     RowBox[{"as", " ", "its", " ", "list", " ", "of", " ", 
+      RowBox[{"arities", "."}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syRandomTree", "[", "n0_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"e", " ", "=", " ", "1"}], ",", " ", 
+         RowBox[{"n", " ", "=", " ", "n0"}], ",", " ", "choices", ",", " ", 
+         "k", ",", " ", "a", ",", " ", 
+         RowBox[{"out", " ", "=", " ", 
+          RowBox[{"{", "}"}]}]}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"While", "[", 
+         RowBox[{
+          RowBox[{"n", " ", ">", " ", "0"}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"choices", " ", "=", " ", 
+            RowBox[{"Flatten", "[", 
+             RowBox[{
+              RowBox[{"Table", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{"k1", ",", " ", "1"}], "}"}], " ", "->", " ", 
+                   RowBox[{"syD", "[", 
+                    RowBox[{
+                    RowBox[{"e", " ", "-", " ", "k1"}], ",", " ", 
+                    RowBox[{"n", " ", "-", " ", "1"}]}], "]"}]}], ",", " ", 
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{"k1", ",", " ", "2"}], "}"}], " ", "->", " ", 
+                   RowBox[{"syD", "[", 
+                    RowBox[{
+                    RowBox[{"e", " ", "-", " ", "k1", " ", "+", " ", "1"}], ",",
+                     " ", 
+                    RowBox[{"n", " ", "-", " ", "1"}]}], "]"}]}]}], "}"}], ",",
+                 " ", 
+                RowBox[{"{", 
+                 RowBox[{"k1", ",", " ", "0", ",", " ", 
+                  RowBox[{"e", " ", "-", " ", "1"}]}], "}"}]}], "]"}], ",", 
+              " ", "1"}], "]"}]}], ";", "\n", "    ", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"k", ",", " ", "a"}], "}"}], " ", "=", " ", 
+            RowBox[{"RandomChoice", "[", 
+             RowBox[{
+              RowBox[{"Values", "[", "choices", "]"}], " ", "->", " ", 
+              RowBox[{"Keys", "[", "choices", "]"}]}], "]"}]}], ";", "\n", 
+           "    ", 
+           RowBox[{"out", " ", "=", " ", 
+            RowBox[{"Join", "[", 
+             RowBox[{"out", ",", " ", 
+              RowBox[{"ConstantArray", "[", 
+               RowBox[{"0", ",", " ", "k"}], "]"}], ",", " ", 
+              RowBox[{"{", "a", "}"}]}], "]"}]}], ";", "\n", "    ", 
+           RowBox[{"e", " ", "=", " ", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"a", " ", "==", " ", "1"}], ",", " ", 
+              RowBox[{"e", " ", "-", " ", "k"}], ",", " ", 
+              RowBox[{"e", " ", "-", " ", "k", " ", "+", " ", "1"}]}], 
+             "]"}]}], ";", " ", 
+           RowBox[{"n", "--"}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"Join", "[", 
+         RowBox[{"out", ",", " ", 
+          RowBox[{"ConstantArray", "[", 
+           RowBox[{"0", ",", " ", "e"}], "]"}]}], "]"}]}]}], "]"}]}], ";"}], 
+   "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"the", " ", "binary"}], "-", 
+      RowBox[{"only", " ", "version", " ", 
+       RowBox[{"(", 
+        RowBox[{"Algorithm", " ", "1"}], ")"}]}]}], ",", " ", 
+     RowBox[{
+      RowBox[{
+      "used", " ", "in", " ", "Lesson", " ", "4", " ", "for", " ", "tensor"}],
+       "-", 
+      RowBox[{"algebra", " ", "trees"}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syRandomBinaryTree", "[", "n0_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"e", " ", "=", " ", "1"}], ",", " ", 
+         RowBox[{"n", " ", "=", " ", "n0"}], ",", " ", "ks", ",", " ", "k", ",",
+          " ", 
+         RowBox[{"out", " ", "=", " ", 
+          RowBox[{"{", "}"}]}]}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"While", "[", 
+         RowBox[{
+          RowBox[{"n", " ", ">", " ", "0"}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"ks", " ", "=", " ", 
+            RowBox[{"Range", "[", 
+             RowBox[{"0", ",", " ", 
+              RowBox[{"e", " ", "-", " ", "1"}]}], "]"}]}], ";", "\n", "    ", 
+           RowBox[{"k", " ", "=", " ", 
+            RowBox[{"RandomChoice", "[", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"syDBin", "[", 
+                  RowBox[{
+                   RowBox[{"e", " ", "-", " ", "#", " ", "+", " ", "1"}], ",",
+                    " ", 
+                   RowBox[{"n", " ", "-", " ", "1"}]}], "]"}], " ", "&"}], 
+                " ", "/@", " ", "ks"}], ")"}], " ", "->", " ", "ks"}], 
+             "]"}]}], ";", "\n", "    ", 
+           RowBox[{"out", " ", "=", " ", 
+            RowBox[{"Join", "[", 
+             RowBox[{"out", ",", " ", 
+              RowBox[{"ConstantArray", "[", 
+               RowBox[{"0", ",", " ", "k"}], "]"}], ",", " ", 
+              RowBox[{"{", "2", "}"}]}], "]"}]}], ";", "\n", "    ", 
+           RowBox[{"e", " ", "=", " ", 
+            RowBox[{"e", " ", "-", " ", "k", " ", "+", " ", "1"}]}], ";", " ", 
+           RowBox[{"n", "--"}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"Join", "[", 
+         RowBox[{"out", ",", " ", 
+          RowBox[{"ConstantArray", "[", 
+           RowBox[{"0", ",", " ", "e"}], "]"}]}], "]"}]}]}], "]"}]}], ";"}], 
+   "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"a", " ", "naive", " ", "recursive", " ", 
+      RowBox[{"sampler", ":", " ", 
+       RowBox[{
+       "binary", " ", "with", " ", "probability", " ", "0.45", " ", "and", " ",
+         "a", " ", "uniform", " ", "split"}]}]}], ",", " ", 
+     RowBox[{"else", " ", "unary"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syNaiveTree", "[", "0", "]"}], " ", ":=", " ", 
+     RowBox[{"{", "0", "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syNaiveTree", "[", "n_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"RandomReal", "[", "]"}], " ", "<", " ", "0.45"}], ",", "\n", 
+       "   ", 
+       RowBox[{"With", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"m", " ", "=", " ", 
+           RowBox[{"RandomInteger", "[", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", " ", 
+              RowBox[{"n", " ", "-", " ", "1"}]}], "}"}], "]"}]}], "}"}], ",",
+          " ", 
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"{", "2", "}"}], ",", " ", 
+           RowBox[{"syNaiveTree", "[", "m", "]"}], ",", " ", 
+           RowBox[{"syNaiveTree", "[", 
+            RowBox[{"n", " ", "-", " ", "1", " ", "-", " ", "m"}], "]"}]}], 
+          "]"}]}], "]"}], ",", "\n", "   ", 
+       RowBox[{"Prepend", "[", 
+        RowBox[{
+         RowBox[{"syNaiveTree", "[", 
+          RowBox[{"n", " ", "-", " ", "1"}], "]"}], ",", " ", "1"}], "]"}]}], 
+      "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"chi", "-", 
+     RowBox[{"square", " ", "p"}], "-", 
+     RowBox[{
+     "value", " ", "of", " ", "the", " ", "sample", " ", "counts", " ", 
+      "against", " ", "the", " ", "uniform", " ", "distribution", " ", "over",
+       " ", "all", " ", "trees"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syUniformP", "[", 
+      RowBox[{"samples_", ",", " ", "all_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"c", " ", "=", " ", 
+          RowBox[{"Lookup", "[", 
+           RowBox[{
+            RowBox[{"Counts", "[", "samples", "]"}], ",", " ", "all", ",", 
+            " ", "0"}], "]"}]}], ",", " ", 
+         RowBox[{"ex", " ", "=", " ", 
+          RowBox[{
+           RowBox[{"Length", "[", "samples", "]"}], "/", 
+           RowBox[{"Length", "[", "all", "]"}]}]}]}], "}"}], ",", "\n", "   ", 
+       RowBox[{"1", " ", "-", " ", 
+        RowBox[{"CDF", "[", 
+         RowBox[{
+          RowBox[{"ChiSquareDistribution", "[", 
+           RowBox[{
+            RowBox[{"Length", "[", "all", "]"}], " ", "-", " ", "1"}], "]"}], 
+          ",", " ", 
+          RowBox[{"Total", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"c", " ", "-", " ", "ex"}], ")"}], "^", "2"}], "/", 
+            "ex"}], "]"}]}], "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"decorate", " ", "a", " ", 
+      RowBox[{"tree", ":", " ", 
+       RowBox[{"operators", " ", "for", " ", "the", " ", "nodes"}]}]}], ",", 
+     " ", 
+     RowBox[{
+     "x", " ", "or", " ", "an", " ", "integer", " ", "for", " ", "the", " ", 
+      "leaves"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"syBinary", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"\"\<add\>\"", ",", " ", "\"\<sub\>\"", ",", " ", "\"\<mul\>\"",
+        ",", " ", "\"\<div\>\""}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"syUnary", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"\"\<exp\>\"", ",", " ", "\"\<log\>\"", ",", " ", "\"\<sin\>\"",
+        ",", " ", "\"\<cos\>\""}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syDecorate", "[", "arities_List", "]"}], " ", ":=", " ", 
+     RowBox[{"Flatten", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Switch", "[", 
+         RowBox[{"#", ",", "\n", "      ", "2", ",", " ", 
+          RowBox[{"RandomChoice", "[", "syBinary", "]"}], ",", "\n", "      ",
+           "1", ",", " ", 
+          RowBox[{"RandomChoice", "[", "syUnary", "]"}], ",", "\n", "      ", 
+          "0", ",", " ", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"RandomReal", "[", "]"}], " ", "<", " ", "0.5"}], ",", 
+            " ", "\"\<x\>\"", ",", " ", 
+            RowBox[{"syIntTokens", "[", 
+             RowBox[{"RandomChoice", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "5"}], ",", " ", 
+                RowBox[{"-", "4"}], ",", " ", 
+                RowBox[{"-", "3"}], ",", " ", 
+                RowBox[{"-", "2"}], ",", " ", 
+                RowBox[{"-", "1"}], ",", " ", "1", ",", " ", "2", ",", " ", 
+                "3", ",", " ", "4", ",", " ", "5"}], "}"}], "]"}], "]"}]}], 
+           "]"}]}], "]"}], " ", "&"}], " ", "/@", " ", "arities"}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syRandomExpr", "[", "n_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"syParse", "[", 
+      RowBox[{"syDecorate", "[", 
+       RowBox[{"syRandomTree", "[", "n", "]"}], "]"}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPart3", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"n", " ", "=", " ", "3"}], ",", " ", "all", ",", " ", "good",
+          ",", " ", "naive", ",", " ", "pg", ",", " ", "pn", ",", " ", 
+         "freq"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "sySection", "[", "\"\<3. Sampling trees uniformly\>\"", "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<A naive recursive generator (choose binary or unary with \
+fixed probabilities, then split the remaining nodes at random) favours some \
+shapes. The paper samples every tree with n internal nodes equally often, \
+using D(e, n) (Appendix C, Algorithm 2):\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "syFormula", 
+         "[", "\"\<P(next node at position k, unary)  = D(e\[Minus]k, n\
+\[Minus]1) / D(e, n)\nP(next node at position k, binary) = D(e\[Minus]k+1, n\
+\[Minus]1) / D(e, n),     k = 0 \[Ellipsis] e\[Minus]1\nthe k slots before it \
+become leaves;  e \[LeftArrow] e\[Minus]k (unary)  or  e\[Minus]k+1 (binary); \
+ n \[LeftArrow] n\[Minus]1\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"all", " ", "=", " ", 
+         RowBox[{"syAllTrees", "[", "n", "]"}]}], ";", "\n", "   ", 
+        RowBox[{"good", " ", "=", " ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"syRandomTree", "[", "n", "]"}], ",", " ", "22000"}], 
+          "]"}]}], ";", "\n", "   ", 
+        RowBox[{"naive", " ", "=", " ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"syNaiveTree", "[", "n", "]"}], ",", " ", "22000"}], 
+          "]"}]}], ";", "\n", "   ", 
+        RowBox[{"pg", " ", "=", " ", 
+         RowBox[{"syUniformP", "[", 
+          RowBox[{"good", ",", " ", "all"}], "]"}]}], ";", " ", 
+        RowBox[{"pn", " ", "=", " ", 
+         RowBox[{"syUniformP", "[", 
+          RowBox[{"naive", ",", " ", "all"}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{
+         RowBox[{"freq", "[", "s_", "]"}], " ", ":=", " ", 
+         RowBox[{"Lookup", "[", 
+          RowBox[{
+           RowBox[{"Counts", "[", "s", "]"}], ",", " ", "all", ",", " ", 
+           "0"}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"BarChart", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"freq", "[", "good", "]"}], ",", " ", 
+             RowBox[{"freq", "[", "naive", "]"}]}], "}"}], ",", " ", 
+           RowBox[{"ChartLayout", " ", "->", " ", "\"\<Column\>\""}], ",", 
+           " ", 
+           RowBox[{"ImageSize", " ", "->", " ", "420"}], ",", "\n", "      ", 
+           
+           RowBox[{"ChartLabels", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"\"\<Algorithm 2\>\"", ",", " ", "\"\<naive\>\""}], 
+               "}"}], ",", " ", "None"}], "}"}]}], ",", " ", 
+           RowBox[{
+           "PlotLabel", " ", "->", 
+            " ", "\"\<22,000 samples of the 22 trees with 3 internal \
+nodes\>\""}], ",", " ", 
+           RowBox[{"Frame", " ", "->", " ", "True"}]}], "]"}], "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<Algorithm 2 produces only real trees, and all 22 of \
+them\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"AllTrue", "[", 
+            RowBox[{"good", ",", " ", 
+             RowBox[{
+              RowBox[{"syValidQ", "[", 
+               RowBox[{"#", " ", "/.", " ", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"0", " ", "->", " ", "\"\<x\>\""}], ",", " ", 
+                  RowBox[{"1", " ", "->", " ", "\"\<sin\>\""}], ",", " ", 
+                  RowBox[{"2", " ", "->", " ", "\"\<add\>\""}]}], "}"}]}], 
+               "]"}], " ", "&"}]}], "]"}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"Union", "[", "good", "]"}], " ", "==", " ", 
+            RowBox[{"Sort", "[", "all", "]"}]}]}]}], "]"}], ";", "\n", "   ", 
+        
+        RowBox[{"syCheck", "[", 
+         RowBox[{
+          
+          RowBox[{"\"\<its counts are consistent with uniform (chi-square p = \
+\>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"NumberForm", "[", 
+             RowBox[{"pg", ",", " ", "3"}], "]"}], "]"}], " ", "<>", 
+           " ", "\"\<)\>\""}], ",", " ", 
+          RowBox[{"pg", " ", ">", " ", "0.001"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{
+          
+          RowBox[{"\"\<the naive sampler is far from uniform (p = \>\"", " ", 
+           "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"ScientificForm", "[", 
+             RowBox[{"pn", ",", " ", "2"}], "]"}], "]"}], " ", "<>", 
+           " ", "\"\<)\>\""}], ",", " ", 
+          RowBox[{"pn", " ", "<", " ", 
+           RowBox[{"10", "^", 
+            RowBox[{"-", "6"}]}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<the binary version (Algorithm 1) is uniform over the 14 \
+binary trees with 4 nodes\>\"", ",", "\n", "    ", 
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"s", " ", "=", " ", 
+               RowBox[{"Table", "[", 
+                RowBox[{
+                 RowBox[{"syRandomBinaryTree", "[", "4", "]"}], ",", " ", 
+                 "14000"}], "]"}]}], ",", " ", 
+              RowBox[{"b", " ", "=", " ", 
+               RowBox[{"Select", "[", 
+                RowBox[{
+                 RowBox[{"syAllTrees", "[", "4", "]"}], ",", " ", 
+                 RowBox[{
+                  RowBox[{"FreeQ", "[", 
+                   RowBox[{"#", ",", " ", "1"}], "]"}], " ", "&"}]}], 
+                "]"}]}]}], "}"}], ",", "\n", "     ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Length", "[", "b", "]"}], " ", "==", " ", "14"}], " ", 
+             "&&", " ", 
+             RowBox[{
+              RowBox[{"Union", "[", "s", "]"}], " ", "==", " ", 
+              RowBox[{"Sort", "[", "b", "]"}]}], " ", "&&", " ", 
+             RowBox[{
+              RowBox[{"syUniformP", "[", 
+               RowBox[{"s", ",", " ", "b"}], "]"}], " ", ">", " ", 
+              "0.001"}]}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<Decorating a tree means choosing an operator for every \
+node and x or an integer for every leaf. Three random expressions with 4 \
+internal nodes:\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"Column", "[", 
+          RowBox[{"TraditionalForm", " ", "/@", " ", 
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"syRandomExpr", "[", "4", "]"}], ",", " ", "3"}], 
+            "]"}]}], "]"}], "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "4."}]}]}]}]}], " ", "Making", " ", "integration",
+      " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"data", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], " ", 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syGoodQ", "[", "e_", "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"FreeQ", "[", 
+       RowBox[{"e", ",", " ", 
+        RowBox[{
+        "Complex", " ", "|", " ", "DirectedInfinity", " ", "|", " ", 
+         "Indeterminate", " ", "|", " ", "$Failed", " ", "|", " ", 
+         "Integrate"}]}], "]"}], " ", "&&", " ", 
+      RowBox[{"!", " ", 
+       RowBox[{"FreeQ", "[", 
+        RowBox[{"e", ",", " ", "\[FormalX]"}], "]"}]}], " ", "&&", "\n", 
+      "   ", 
+      RowBox[{"With", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"t", " ", "=", " ", 
+          RowBox[{"syPrefix", "[", "e", "]"}]}], "}"}], ",", " ", 
+        RowBox[{
+         RowBox[{"FreeQ", "[", 
+          RowBox[{"t", ",", " ", "\"\<<unk>\>\""}], "]"}], " ", "&&", " ", 
+         RowBox[{
+          RowBox[{"Length", "[", "t", "]"}], " ", "<=", " ", "40"}]}]}], 
+       "]"}]}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"BWD", ":", " ", 
+      RowBox[{"draw", " ", "f"}]}], ",", " ", 
+     RowBox[{"differentiate", ":", " ", 
+      RowBox[{"the", " ", "pair", " ", "is", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"f", "'"}], ",", " ", "f"}], ")"}]}]}]}], " ", "*)"}], "\n", 
+   
+   RowBox[{
+    RowBox[{
+     RowBox[{"syBWD", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"f", ",", " ", "df"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"f", " ", "=", " ", 
+            RowBox[{"syRandomExpr", "[", 
+             RowBox[{"RandomInteger", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", " ", "4"}], "}"}], "]"}], "]"}]}], ";", "\n",
+            "    ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"syGoodQ", "[", "f", "]"}], ",", " ", 
+             RowBox[{
+              RowBox[{"df", " ", "=", " ", 
+               RowBox[{"TimeConstrained", "[", 
+                RowBox[{
+                 RowBox[{"Quiet", "@", 
+                  RowBox[{"Simplify", "[", 
+                   RowBox[{"D", "[", 
+                    RowBox[{"f", ",", " ", "\[FormalX]"}], "]"}], "]"}]}], ",",
+                  " ", "1", ",", " ", "$Failed"}], "]"}]}], ";", "\n", 
+              "     ", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"syGoodQ", "[", "df", "]"}], ",", " ", 
+                RowBox[{"Return", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{"df", ",", " ", "f"}], "}"}], ",", " ", "Module"}],
+                  "]"}]}], "]"}]}]}], "]"}]}], ",", " ", 
+          RowBox[{"{", "300", "}"}]}], "]"}], ";", " ", "$Failed"}]}], 
+      "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"FWD", ":", " ", 
+      RowBox[{"draw", " ", "f"}]}], ",", " ", 
+     RowBox[{
+     "ask", " ", "a", " ", "computer", " ", "algebra", " ", "system", " ", 
+      "for", " ", "its", " ", 
+      RowBox[{"integral", ":", " ", 
+       RowBox[{"the", " ", "pair", " ", "is", " ", 
+        RowBox[{"(", 
+         RowBox[{"f", ",", " ", "F"}], ")"}]}]}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syFWD", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"f", ",", " ", "F"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"f", " ", "=", " ", 
+            RowBox[{"syRandomExpr", "[", 
+             RowBox[{"RandomInteger", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", " ", "4"}], "}"}], "]"}], "]"}]}], ";", "\n",
+            "    ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"syGoodQ", "[", "f", "]"}], ",", " ", 
+             RowBox[{
+              RowBox[{"F", " ", "=", " ", 
+               RowBox[{"TimeConstrained", "[", 
+                RowBox[{
+                 RowBox[{"Quiet", "@", 
+                  RowBox[{"Integrate", "[", 
+                   RowBox[{"f", ",", " ", "\[FormalX]"}], "]"}]}], ",", " ", 
+                 "1", ",", " ", "$Failed"}], "]"}]}], ";", "\n", "     ", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"syGoodQ", "[", "F", "]"}], ",", " ", 
+                RowBox[{"Return", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{"f", ",", " ", "F"}], "}"}], ",", " ", "Module"}], 
+                 "]"}]}], "]"}]}]}], "]"}]}], ",", " ", 
+          RowBox[{"{", "300", "}"}]}], "]"}], ";", " ", "$Failed"}]}], 
+      "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"IBP", ":", " ", 
+      RowBox[{"if", " ", "the", " ", "integral", " ", "of", " ", 
+       RowBox[{"F", "'"}], " ", "G", " ", "is", " ", "known"}]}], ",", " ", 
+     RowBox[{"the", " ", "integral", " ", "of", " ", "F", " ", 
+      RowBox[{"G", "'"}], " ", "is", " ", "F", " ", "G", " ", "minus", " ", 
+      RowBox[{"it", ".", "\n", "   ", "\"\<Known\>\""}], " ", 
+      RowBox[{"means", ":", " ", 
+       RowBox[{"in", " ", "the", " ", "table"}]}]}], ",", " ", 
+     RowBox[{"up", " ", "to", " ", "a", " ", "constant", " ", 
+      RowBox[{"factor", "."}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syLookup", "[", 
+      RowBox[{"table_", ",", " ", "p_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", "r", "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"r", " ", "=", " ", 
+            RowBox[{"Quiet", "@", 
+             RowBox[{"Simplify", "[", 
+              RowBox[{"p", "/", 
+               RowBox[{"q", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}]}], ";", " ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"FreeQ", "[", 
+               RowBox[{"r", ",", " ", "\[FormalX]"}], "]"}], " ", "&&", " ", 
+              RowBox[{"FreeQ", "[", 
+               RowBox[{"r", ",", " ", 
+                RowBox[{
+                "Indeterminate", " ", "|", " ", "DirectedInfinity"}]}], 
+               "]"}]}], ",", " ", 
+             RowBox[{"Return", "[", 
+              RowBox[{
+               RowBox[{"r", " ", 
+                RowBox[{"q", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}]}], ",", " ", "Module"}], 
+              "]"}]}], "]"}]}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"q", ",", " ", "table"}], "}"}]}], "]"}], ";", "\n", "   ",
+         "$Failed"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syIBPRound", "[", 
+      RowBox[{"table_", ",", " ", "pool_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"new", " ", "=", " ", "table"}], ",", " ", "known"}], "}"}], 
+       ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"F", " ", "=!=", " ", "G"}], ",", "\n", "     ", 
+            RowBox[{
+             RowBox[{"known", " ", "=", " ", 
+              RowBox[{"syLookup", "[", 
+               RowBox[{"new", ",", " ", 
+                RowBox[{"Simplify", "[", 
+                 RowBox[{
+                  RowBox[{"D", "[", 
+                   RowBox[{"F", ",", " ", "\[FormalX]"}], "]"}], " ", "G"}], 
+                 "]"}]}], "]"}]}], ";", "\n", "     ", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"known", " ", "=!=", " ", "$Failed"}], ",", "\n", 
+               "      ", 
+               RowBox[{"With", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"p", " ", "=", " ", 
+                    RowBox[{"Simplify", "[", 
+                    RowBox[{"F", " ", 
+                    RowBox[{"D", "[", 
+                    RowBox[{"G", ",", " ", "\[FormalX]"}], "]"}]}], "]"}]}], ",",
+                    " ", 
+                   RowBox[{"s", " ", "=", " ", 
+                    RowBox[{"Simplify", "[", 
+                    RowBox[{
+                    RowBox[{"F", " ", "G"}], " ", "-", " ", "known"}], 
+                    "]"}]}]}], "}"}], ",", "\n", "       ", 
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"syLookup", "[", 
+                    RowBox[{"new", ",", " ", "p"}], "]"}], " ", "===", " ", 
+                    "$Failed"}], ",", " ", 
+                   RowBox[{"AppendTo", "[", 
+                    RowBox[{"new", ",", " ", 
+                    RowBox[{"{", 
+                    RowBox[{"p", ",", " ", "s"}], "}"}]}], "]"}]}], "]"}]}], 
+                "]"}]}], "]"}]}]}], "]"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"F", ",", " ", "pool"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"G", ",", " ", "pool"}], "}"}]}], "]"}], ";", "\n", "   ", 
+        "new"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syVerifiedQ", "[", 
+      RowBox[{"problem_", ",", " ", "tokens_List"}], "]"}], " ", ":=", " ", 
+     RowBox[{"With", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"F", " ", "=", " ", 
+         RowBox[{"syParse", "[", "tokens", "]"}]}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"F", " ", "=!=", " ", "$Failed"}], " ", "&&", " ", 
+        RowBox[{"TrueQ", "[", 
+         RowBox[{
+          RowBox[{"Quiet", "@", 
+           RowBox[{"Simplify", "[", 
+            RowBox[{
+             RowBox[{"D", "[", 
+              RowBox[{"F", ",", " ", "\[FormalX]"}], "]"}], " ", "-", " ", 
+             "problem"}], "]"}]}], " ", "===", " ", "0"}], "]"}]}]}], "]"}]}],
+     ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPart4", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "bwd", ",", " ", "fwd", ",", " ", "len", ",", " ", "pool", ",", " ", 
+         "k0", ",", " ", "k3", ",", " ", "ibp"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "sySection", 
+         "[", "\"\<4. Making integration data: FWD, BWD and IBP\>\"", "]"}], ";",
+         "\n", "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<Forward (FWD): draw a function and ask a computer algebra \
+system for its integral. It is slow, and it only contains integrals that \
+system can find. Backward (BWD): draw a function F and differentiate it; the \
+pair (F', F) is always available and fast. Integration by parts (IBP): if the \
+integral of F'G is already known, the integral of FG' is FG minus it, with no \
+computer algebra system (Section 3).\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "syFormula", 
+         "[", "\"\<\[Integral] F G' dx = F G \[Minus] \[Integral] F' G dx\>\"",
+          "]"}], ";", "\n", "   ", 
+        RowBox[{"bwd", " ", "=", " ", 
+         RowBox[{"DeleteCases", "[", 
+          RowBox[{
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"syBWD", "[", "]"}], ",", " ", "60"}], "]"}], ",", " ", 
+           "$Failed"}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"fwd", " ", "=", " ", 
+         RowBox[{"DeleteCases", "[", 
+          RowBox[{
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"syFWD", "[", "]"}], ",", " ", "30"}], "]"}], ",", " ", 
+           "$Failed"}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{
+         RowBox[{"len", "[", 
+          RowBox[{"set_", ",", " ", "i_"}], "]"}], " ", ":=", " ", 
+         RowBox[{"N", "@", 
+          RowBox[{"Mean", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Length", "[", 
+              RowBox[{"syPrefix", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], "]"}], "]"}], " ", "&"}], " ",
+             "/@", " ", "set"}], "]"}]}]}], ";", "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<method\>\"", ",", " ", "\"\<pairs\>\"", ",", 
+               " ", "\"\<mean problem length\>\"", ",", 
+               " ", "\"\<mean solution length\>\""}], "}"}], ",", "\n", 
+             "      ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<FWD\>\"", ",", " ", 
+               RowBox[{"Length", "[", "fwd", "]"}], ",", " ", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{
+                 RowBox[{"len", "[", 
+                  RowBox[{"fwd", ",", " ", "1"}], "]"}], ",", " ", "3"}], 
+                "]"}], ",", " ", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{
+                 RowBox[{"len", "[", 
+                  RowBox[{"fwd", ",", " ", "2"}], "]"}], ",", " ", "3"}], 
+                "]"}]}], "}"}], ",", "\n", "      ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<BWD\>\"", ",", " ", 
+               RowBox[{"Length", "[", "bwd", "]"}], ",", " ", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{
+                 RowBox[{"len", "[", 
+                  RowBox[{"bwd", ",", " ", "1"}], "]"}], ",", " ", "3"}], 
+                "]"}], ",", " ", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{
+                 RowBox[{"len", "[", 
+                  RowBox[{"bwd", ",", " ", "2"}], "]"}], ",", " ", "3"}], 
+                "]"}]}], "}"}]}], "}"}], ",", " ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<every BWD pair is correct: differentiating the solution \
+gives the problem\>\"", ",", " ", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{"bwd", ",", " ", 
+            RowBox[{
+             RowBox[{"syVerifiedQ", "[", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+               RowBox[{"syPrefix", "[", 
+                RowBox[{"#", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "]"}]}], "]"}], " ", "&"}]}],
+            "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<every FWD pair is correct as well\>\"", ",", " ", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{"fwd", ",", " ", 
+            RowBox[{
+             RowBox[{"syVerifiedQ", "[", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+               RowBox[{"syPrefix", "[", 
+                RowBox[{"#", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "]"}]}], "]"}], " ", "&"}]}],
+            "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<BWD problems are longer than their solutions on \
+average, as the paper observes (Table 1)\>\"", ",", " ", 
+          RowBox[{
+           RowBox[{"len", "[", 
+            RowBox[{"bwd", ",", " ", "1"}], "]"}], " ", ">", " ", 
+           RowBox[{"len", "[", 
+            RowBox[{"bwd", ",", " ", "2"}], "]"}]}]}], "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<IBP from a small table. Start with the BWD pairs of a few \
+functions, then apply integration by parts to every pair (F, G) of them, \
+three times; each round can use what the previous round found.\>\"", "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"pool", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{"\[FormalX]", ",", " ", 
+           RowBox[{"\[FormalX]", "^", "2"}], ",", " ", 
+           RowBox[{"\[FormalX]", "^", "3"}], ",", " ", 
+           RowBox[{"Sin", "[", "\[FormalX]", "]"}], ",", " ", 
+           RowBox[{"Cos", "[", "\[FormalX]", "]"}], ",", " ", 
+           RowBox[{"Exp", "[", "\[FormalX]", "]"}]}], "}"}]}], ";", "\n", 
+        "   ", 
+        RowBox[{"k0", " ", "=", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"D", "[", 
+              RowBox[{"#", ",", " ", "\[FormalX]"}], "]"}], ",", " ", "#"}], 
+            "}"}], " ", "&"}], " ", "/@", " ", "pool"}]}], ";", "\n", "   ", 
+        RowBox[{"k3", " ", "=", " ", 
+         RowBox[{"Nest", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"syIBPRound", "[", 
+             RowBox[{"#", ",", " ", "pool"}], "]"}], " ", "&"}], ",", " ", 
+           "k0", ",", " ", "3"}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"ibp", " ", "=", " ", 
+         RowBox[{"Drop", "[", 
+          RowBox[{"k3", ",", " ", 
+           RowBox[{"Length", "[", "k0", "]"}]}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"TraditionalForm", "[", 
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}], "]"}], ",", " ", 
+                 RowBox[{"TraditionalForm", "[", 
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}], "]"}]}], "}"}], " ", "&"}],
+               " ", "/@", " ", 
+              RowBox[{"Take", "[", 
+               RowBox[{"ibp", ",", " ", 
+                RowBox[{"UpTo", "[", "10", "]"}]}], "]"}]}], ",", " ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<problem\>\"", ",", 
+               " ", "\"\<solution found by IBP\>\""}], "}"}]}], "]"}], ",", 
+           "\n", "      ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Alignment", " ", "->", " ", "Left"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{
+          RowBox[{"\"\<IBP found \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"Length", "[", "ibp", "]"}], "]"}], " ", "<>", 
+           " ", "\"\< new pairs, all correct, without calling \
+Integrate\>\""}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Length", "[", "ibp", "]"}], " ", ">", " ", "0"}], " ", "&&",
+            " ", 
+           RowBox[{"AllTrue", "[", 
+            RowBox[{"ibp", ",", " ", 
+             RowBox[{
+              RowBox[{"syVerifiedQ", "[", 
+               RowBox[{
+                RowBox[{"#", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+                RowBox[{"syPrefix", "[", 
+                 RowBox[{"#", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}], "]"}]}], "]"}], " ", 
+              "&"}]}], "]"}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<among them the integral of x\.b3 sin x (up to sign), \
+whose solution \[Minus]x\.b3 cos x + 3x\.b2 sin x + 6x cos x \[Minus] 6 sin x \
+is the example in Section 3 of the paper\>\"", ",", "\n", "    ", 
+          RowBox[{"AnyTrue", "[", 
+           RowBox[{"ibp", ",", " ", 
+            RowBox[{
+             RowBox[{"FreeQ", "[", 
+              RowBox[{
+               RowBox[{"Quiet", "@", 
+                RowBox[{"Simplify", "[", 
+                 RowBox[{
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}], "/", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"\[FormalX]", "^", "3"}], " ", 
+                    RowBox[{"Sin", "[", "\[FormalX]", "]"}]}], ")"}]}], 
+                 "]"}]}], ",", " ", "\[FormalX]"}], "]"}], " ", "&"}]}], 
+           "]"}]}], "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "5."}]}]}]}]}], " ", "Checking", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"hypotheses", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syPart5", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"problem", " ", "=", " ", 
+          RowBox[{"\[FormalX]", " ", 
+           RowBox[{"Cos", "[", "\[FormalX]", "]"}]}]}], ",", " ", "hyps", ",",
+          " ", "ok"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "sySection", 
+         "[", "\"\<5. Checking a hypothesis instead of trusting it\>\"", 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "syText", 
+         "[", "\"\<Nothing stops the decoder from writing an invalid prefix \
+sequence; such hypotheses are simply discarded. And an integral can be \
+checked by differentiating it. So the paper verifies every hypothesis in the \
+beam, not only the most likely one: 'beam size 10' means at least one of the \
+10 was correct (Section 4.4). A constant of integration does not matter.\>\"",
+          "]"}], ";", "\n", "   ", 
+        RowBox[{"hyps", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            
+            RowBox[{"\"\<add\>\"", ",", " ", "\"\<mul\>\"", ",", 
+             " ", "\"\<x\>\"", ",", " ", "\"\<sin\>\"", ",", " ", "\"\<x\>\"",
+              ",", " ", "\"\<cos\>\"", ",", " ", "\"\<x\>\""}], "}"}], ",", 
+           "\n", "     ", 
+           RowBox[{"{", 
+            
+            RowBox[{"\"\<add\>\"", ",", " ", "\"\<mul\>\"", ",", 
+             " ", "\"\<x\>\"", ",", " ", "\"\<sin\>\"", ",", " ", "\"\<x\>\"",
+              ",", " ", "\"\<add\>\"", ",", " ", "\"\<cos\>\"", ",", 
+             " ", "\"\<x\>\"", ",", " ", "\"\<INT+\>\"", ",", 
+             " ", "\"\<3\>\""}], "}"}], ",", "\n", "     ", 
+           RowBox[{"{", 
+            
+            RowBox[{"\"\<mul\>\"", ",", " ", "\"\<x\>\"", ",", 
+             " ", "\"\<sin\>\"", ",", " ", "\"\<x\>\""}], "}"}], ",", "\n", 
+           "     ", 
+           RowBox[{"{", 
+            
+            RowBox[{"\"\<add\>\"", ",", " ", "\"\<mul\>\"", ",", 
+             " ", "\"\<x\>\"", ",", " ", "\"\<sin\>\""}], "}"}]}], "}"}]}], ";",
+         "\n", "   ", 
+        RowBox[{"ok", " ", "=", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"syVerifiedQ", "[", 
+            RowBox[{"problem", ",", " ", "#"}], "]"}], " ", "&"}], " ", "/@", 
+          " ", "hyps"}]}], ";", "\n", "   ", 
+        RowBox[{"syShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{"Transpose", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Row", "[", 
+                   RowBox[{"#", ",", " ", "\"\< \>\""}], "]"}], " ", "&"}], 
+                 " ", "/@", " ", "hyps"}], ",", " ", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{"syValidQ", "[", "#", "]"}], ",", " ", 
+                    RowBox[{"TraditionalForm", "[", 
+                    RowBox[{"syParse", "[", "#", "]"}], "]"}], ",", 
+                    " ", "\"\<invalid prefix\>\""}], "]"}], " ", "&"}], " ", "/@",
+                  " ", "hyps"}], ",", " ", "ok"}], "}"}], "]"}], ",", "\n", 
+             "      ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<hypothesis\>\"", ",", " ", "\"\<expression\>\"", ",",
+                " ", "\"\<verified\>\""}], "}"}]}], "]"}], ",", " ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Alignment", " ", "->", " ", "Left"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"syCheck", "[", 
+         RowBox[{"\"\<for \[Integral] x cos x dx: x sin x + cos x and x sin x \
++ cos x + 3 are accepted; x sin x and an invalid sequence are rejected\>\"", ",",
+           "\n", "    ", 
+          RowBox[{"ok", " ", "===", " ", 
+           RowBox[{"{", 
+            RowBox[{
+            "True", ",", " ", "True", ",", " ", "False", ",", " ", "False"}], 
+            "}"}]}]}], "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "Running"}]}]}]}]}], " ", "the", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"lesson", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], " ",
+     "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"syRun", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Quiet", "[", "\n", "   ", 
+      RowBox[{
+       RowBox[{"SeedRandom", "[", "2019", "]"}], ";", " ", 
+       RowBox[{"syReset", "[", "]"}], ";", "\n", "   ", 
+       RowBox[{
+       "syText", 
+        "[", "\"\<Paper: G. Lample, F. Charton, Deep Learning for Symbolic \
+Mathematics, ICLR 2020, arXiv:1912.01412. The model itself is a transformer \
+(Lesson 3); the trained demo net is in \
+ref2_symbolic_math_lample_charton2019.nb. This lesson codes the data \
+side.\>\"", "]"}], ";", "\n", "   ", 
+       RowBox[{"syPart1", "[", "]"}], ";", " ", 
+       RowBox[{"syPart2", "[", "]"}], ";", " ", 
+       RowBox[{"syPart3", "[", "]"}], ";", " ", 
+       RowBox[{"syPart4", "[", "]"}], ";", " ", 
+       RowBox[{"syPart5", "[", "]"}], ";", "\n", "   ", 
+       RowBox[{
+       "sySection", "[", "\"\<Where this is used in TensorNets\>\"", "]"}], ";",
+        "\n", "   ", 
+       RowBox[{
+       "syText", 
+        "[", "\"\<TensorNets writes trees in the same prefix notation (tnS, \
+tnP, tnE, atoms), samples \:2a02/\:2a01 trees with the binary Algorithm 1 \
+(Lesson 4), and checks every answer against an exact oracle (tnEquivalentQ), \
+exactly as this paper checks integrals by differentiation.\>\"", "]"}], ";", 
+       "\n", "   ", 
+       RowBox[{"sySaveLog", "[", "]"}], ";", "\n", "   ", 
+       RowBox[{"syAllPassQ", " ", "=", " ", 
+        RowBox[{"AllTrue", "[", 
+         RowBox[{
+          RowBox[{"Values", "[", "syResults", "]"}], ",", " ", "TrueQ"}], 
+         "]"}]}], ";"}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"!", " ", 
+       RowBox[{"TrueQ", "[", "sySkipRun", "]"}]}], ",", " ", 
+      RowBox[{"syRun", "[", "]"}]}], "]"}], ";"}], "\n"}]}]], "Input",Expressi\
+onUUID->"39abd71d-d393-4660-8308-cb50c999ad80"]
+},
+FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d8ad2c43-a349-44aa-84be-26d53fdc61ab"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[1460, 33, 109636, 2690, 70, "Input",ExpressionUUID->"39abd71d-d393-4660-8308-cb50c999ad80"]
+}
+]
+*)
+
+(* End of internal cache information *)

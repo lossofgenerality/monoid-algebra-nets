@@ -1,6 +1,6 @@
 # tensor-algebra-nets
 
-*Updated 23 November 2026 · Computational Classnotes*
+*Updated 24 November 2026 · Computational Classnotes*
 
 These are neural nets that **parse, evaluate and simplify** tensor-algebra expressions written with ⨂ (tensor product) and ⨁ (direct sum), for example `(a⨁b)⨂c`. Everything is in Wolfram Language, as notebooks with one Input cell each. The move to Python comes later.
 
@@ -52,6 +52,36 @@ The nets saved are `s2sNetReversed` and `s2sNetForward` (ref1), `lcNet` (ref2) a
 The paper-sized models are defined and their sizes counted, but not trained: 384.1M parameters for ref1 (the paper reports 384M) and 63.3M for ref3 (the paper reports 65M).
 
 The papers themselves are not included; they are freely available on arXiv (1409.3215, 1912.01412, 1706.03762).
+
+## Lessons: how the nets work, part by part
+
+Four teaching notebooks code the important parts of references [1]–[3] from plain arrays, check each part against Wolfram's own layers, and then put them together on our own problem. Each has one Input cell; evaluating it writes a log notebook with the explanation, the formulas, the results and a PASS/FAIL line for every check. Nothing is printed and nothing is written to the Wolfram Cloud.
+
+| Notebook | Covers | Checks |
+|---|---|---|
+| `lesson1_lstm_seq2seq.nb` | [1] The LSTM cell, the deep encoder and its thought vector, the decoder step, why reversing the source helps, uniform initialisation, gradient-norm clipping, the learning-rate schedule, beam search, the 384M parameter count | 19 of 19 pass |
+| `lesson2_symbolic_data.nb` | [2] Prefix notation and integers, counting trees and expressions, uniform tree sampling (Algorithms 1 and 2) against a naive sampler, FWD/BWD/IBP data, verified hypotheses | 21 of 21 pass |
+| `lesson3_transformer_parts.nb` | [3] Scaled dot-product attention, why √dk, masks, multi-head attention built from primitive layers, sinusoidal positions as a net, feed-forward, LayerNorm(x + Sublayer(x)), encoder and decoder layers, shared embeddings, label smoothing, warm-up, length penalty, the parameter count | 27 of 27 pass |
+| `lesson4_build_your_own.nb` | Our own: a transformer assembled from Lesson 3's parts that expands ⨂/⨁ expressions, trained with label smoothing and warm-up, decoded with beam search and the prefix grammar, every answer checked by an exact oracle | 9 of 9 pass |
+| `lesson*_log.nb` | The results of each lesson | |
+| `lesson4_build_your_own_nets.nb` | The trained net of Lesson 4, as `owNet = Uncompress["…"];` | restored and checked in a fresh process |
+
+**Lesson 4 results** (d = 32, 4 heads, 2 + 2 layers, 12,000 training pairs, 40 rounds, 211 s on the CPU; 100 held-out sources):
+
+| Decoding | Valid prefix | Top answer verified | Any in beam verified |
+|---|---|---|---|
+| greedy | 99 % | 93 % | 93 % |
+| beam 4, α = 0.6 | 100 % | 94 % | 99 % |
+| beam 4 + prefix grammar | 100 % | 94 % | 99 % |
+
+**A finding from Lesson 2.** Equation 2 of Lample and Charton, as printed, ends in −p₁(n−2)E₍ₙ₋₂₎. Expanding (1 − p₁z)² in their generating function (Appendix B) gives p₁² there. The printed form is right only when p₁ is 0 or 1, the cases the paper checks; Lesson 2 shows the difference against a count of every tree.
+
+To use the trained net of Lesson 4:
+```
+owSkipRun = True
+(* evaluate lesson4_build_your_own.nb, then lesson4_build_your_own_nets.nb *)
+First@First@owBeam[owNet, {"(", "a", "⨁", "b", ")", "⨂", "c"}, 4, True]   (* {"⨁", "⨂", "a", "c", "⨂", "b", "c"} *)
+```
 
 ## Related
 

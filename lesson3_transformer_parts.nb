@@ -1,0 +1,3117 @@
+(* Content-type: application/vnd.wolfram.cdf.text *)
+
+(*** Wolfram CDF File ***)
+(* http://www.wolfram.com/cdf *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*************************************************************************)
+(*                                                                       *)
+(*                                                                       *)
+(*  This file was created under the Wolfram Enterprise licensing terms.  *)
+(*                                                                       *)
+(*       For additional information concerning CDF licensing see:        *)
+(*                                                                       *)
+(*        www.wolfram.com/cdf/adopting-cdf/licensing-options.html        *)
+(*                                                                       *)
+(*                                                                       *)
+(*                                                                       *)
+(*************************************************************************)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[      1060,         20]
+NotebookDataLength[    125496,       3095]
+NotebookOptionsPosition[    126124,       3096]
+NotebookOutlinePosition[    126441,       3110]
+CellTagsIndexPosition[    126398,       3107]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"id", ":", " ", 
+    RowBox[{
+     RowBox[{"48444", "ad7"}], "-", 
+     RowBox[{"52", "c0"}], "-", 
+     RowBox[{"45", "df"}], "-", "becc", "-", 
+     RowBox[{"140", 
+      RowBox[{"dabe2960d", " ", "\[CenterDot]", " ", "lesson3_transformer"}], 
+      
+      RowBox[{"_parts", " ", "\[CenterDot]", " ", "cell"}], " ", "1", " ", 
+      "of", " ", 
+      RowBox[{"1", " ", "\[CenterDot]", " ", "updated"}], " ", "2026"}], "-", 
+     "11", "-", 
+     RowBox[{"24", " ", "01"}]}], ":", 
+    RowBox[{"50", " ", "UTC"}]}], " ", "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", 
+     RowBox[{"==", "\n", "   ", 
+      RowBox[{"Lesson", " ", 
+       RowBox[{"3", " ", "\[CenterDot]", " ", "The"}], " ", 
+       "transformer"}]}]}], ",", " ", 
+    RowBox[{"part", " ", "by", " ", "part", "\n", "   ", 
+     RowBox[{"Paper", ":", " ", 
+      RowBox[{"A", ".", " ", "Vaswani"}]}]}], ",", " ", 
+    RowBox[{"N", ".", " ", "Shazeer"}], ",", " ", 
+    RowBox[{"N", ".", " ", "Parmar"}], ",", " ", 
+    RowBox[{"J", ".", " ", "Uszkoreit"}], ",", " ", 
+    RowBox[{"L", ".", " ", "Jones"}], ",", " ", 
+    RowBox[{"A", ".", " ", "N", ".", " ", "Gomez"}], ",", " ", 
+    RowBox[{"L", ".", " ", "Kaiser"}], ",", "\n", "   ", 
+    RowBox[{"I", ".", " ", "Polosukhin"}], ",", 
+    " ", "\"\<Attention Is All You Need\>\"", ",", " ", 
+    RowBox[{"NeurIPS", " ", "2017"}], ",", " ", 
+    RowBox[{"arXiv", ":", 
+     RowBox[{
+      RowBox[{"1706.03762", ".", "\n", "\n", "   ", "What"}], " ", "the", " ",
+       "lesson", " ", "does", "\n", "     ", "It", " ", "codes", " ", "every",
+       " ", "part", " ", "of", " ", "the", " ", "transformer", " ", "twice"}],
+      ":", " ", 
+     RowBox[{"once", " ", "from", " ", "plain", " ", "arrays", " ", 
+      RowBox[{"(", 
+       RowBox[{"to", " ", "see", " ", "the", "\n", "     ", "mathematics"}], 
+       ")"}], " ", "and", " ", "once", " ", "as", " ", "a", " ", "Wolfram", " ",
+       "net", " ", "built", " ", "from", " ", "primitive", " ", "layers", " ", 
+      RowBox[{"(", 
+       RowBox[{"to", " ", "train", " ", "it"}], ")"}]}]}], ",", " ", 
+    RowBox[{
+     RowBox[{
+     "and", " ", "checks", "\n", "     ", "that", " ", "the", " ", "two", " ", 
+      RowBox[{"agree", ":", "\n", "        ", 
+       RowBox[{
+        RowBox[{"1.", " ", "scaled", " ", "dot"}], "-", 
+        RowBox[{"product", " ", "attention"}]}]}]}], ";", "\n", "        ", 
+     RowBox[{
+     "2.", " ", "why", " ", "the", " ", "scores", " ", "are", " ", "divided", 
+      " ", "by", " ", "sqrt", 
+      RowBox[{"(", "dk", ")"}]}], ";", "\n", "        ", 
+     RowBox[{"3.", " ", 
+      RowBox[{"masks", ":", " ", 
+       RowBox[{"padding", " ", "and", " ", "causal"}]}]}], ";", "\n", 
+     "        ", 
+     RowBox[{
+      RowBox[{"4.", " ", "multi"}], "-", 
+      RowBox[{"head", " ", "attention"}]}]}], ",", " ", 
+    RowBox[{"built", " ", "from", " ", "LinearLayer"}], ",", " ", 
+    RowBox[{
+     RowBox[{"ReshapeLayer", " ", "and", " ", "AttentionLayer"}], ";", "\n", 
+     "        ", 
+     RowBox[{"5.", " ", "sinusoidal", " ", "positional", " ", "encoding"}]}], 
+    ",", " ", 
+    RowBox[{
+     RowBox[{"also", " ", "as", " ", "a", " ", "net", " ", 
+      RowBox[{"(", 
+       RowBox[{"SequenceIndicesLayer", ",", " ", 
+        RowBox[{
+        "a", " ", "fixed", "\n", "           ", "LinearLayer", " ", "and", " ",
+          "Sin"}]}], ")"}]}], ";", "\n", "        ", 
+     RowBox[{
+      RowBox[{"6.", " ", "the", " ", "position"}], "-", 
+      RowBox[{"wise", " ", "feed"}], "-", 
+      RowBox[{"forward", " ", "network"}]}], ";", "\n", "        ", 
+     RowBox[{
+     "7.", " ", "residual", " ", "connection", " ", "and", " ", "layer", " ", 
+      "normalisation"}]}], ",", " ", 
+    RowBox[{
+     RowBox[{"LayerNorm", 
+      RowBox[{"(", 
+       RowBox[{"x", " ", "+", " ", 
+        RowBox[{"Sublayer", 
+         RowBox[{"(", "x", ")"}]}]}], ")"}]}], ";", "\n", "        ", 
+     RowBox[{
+     "8.", " ", "one", " ", "encoder", " ", "layer", " ", "and", " ", "one", " ",
+       "decoder", " ", "layer"}], ";", "\n", "        ", 
+     RowBox[{"9.", " ", "shared", " ", "embeddings"}]}], ",", " ", 
+    RowBox[{
+     RowBox[{"multiplied", " ", "by", " ", "sqrt", 
+      RowBox[{"(", "dmodel", ")"}]}], ";", "\n", "       ", 
+     RowBox[{"10.", " ", "label", " ", "smoothing"}], ";", "\n", "       ", 
+     RowBox[{
+      RowBox[{"11.", " ", "the", " ", "warm"}], "-", 
+      RowBox[{"up", " ", "learning"}], "-", 
+      RowBox[{"rate", " ", "schedule"}]}], ";", "\n", "       ", 
+     RowBox[{
+     "12.", " ", "beam", " ", "search", " ", "with", " ", "a", " ", "length", 
+      " ", "penalty"}], ";", "\n", "       ", 
+     RowBox[{
+      RowBox[{
+      "13.", " ", "the", " ", "parameter", " ", "count", " ", "of", " ", 
+       "the", " ", "base", " ", 
+       RowBox[{"model", ".", "\n", "     ", "Lesson"}], " ", "4", " ", 
+       "assembles", " ", "these", " ", "nets", " ", "into", " ", "a", " ", 
+       "tensor"}], "-", 
+      RowBox[{"algebra", " ", "transformer", " ", "and", " ", "trains", " ", 
+       RowBox[{"it", ".", "\n", "     ", "The"}], " ", "trained", " ", "demo",
+        " ", "net", " ", "for", " ", "this", " ", "paper", " ", "is", " ", 
+       "in", " ", "ref3_transformer", 
+       RowBox[{"_vaswani2017", ".", "nb", ".", "\n", "\n", "   ", "How"}], " ",
+        "to", " ", "use", " ", "it", "\n", "     ", "Evaluate", " ", "this", " ", 
+       RowBox[{"cell", ".", " ", "It"}], " ", "writes", " ", 
+       "lesson3_transformer", "_parts", 
+       RowBox[{"_log", ".", "nb"}], " ", "beside", " ", "this", " ", 
+       RowBox[{"notebook", ".", "\n", "     ", "Nothing"}], " ", "is", " ", 
+       "printed"}]}]}], ",", " ", 
+    RowBox[{
+    "nothing", " ", "is", " ", "written", " ", "to", " ", "the", " ", 
+     "Wolfram", " ", "Cloud", " ", "and", " ", "nothing", " ", "is", " ", 
+     RowBox[{"deleted", ".", "\n", "     ", "To"}], " ", "define", " ", "the",
+      " ", "functions", " ", "without", " ", "running", " ", "the", " ", 
+     "lesson"}], ",", " ", 
+    RowBox[{
+     RowBox[{"evaluate", "  ", "atSkipRun"}], " ", "=", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"True", "  ", 
+        RowBox[{"first", ".", "\n", "\n", "   ", "\[Copyright]"}], " ", 
+        "Computational", " ", 
+        RowBox[{"Classnotes", " ", "\[CenterDot]", " ", "CC"}], " ", "BY"}], "-",
+        "NC", "-", 
+       RowBox[{"SA", " ", "4.0"}]}], "\n", "   ", "===", "===", "===", "===", 
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "=="}]}]}], " ", "*)"}], "\n", "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"--", 
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", " ", "0."}]}]}]}]}], " ", "The", " ", "log", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"notebook", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+   " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"atDir", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Quiet", "@", 
+      RowBox[{"Check", "[", 
+       RowBox[{
+        RowBox[{"NotebookDirectory", "[", "]"}], ",", " ", 
+        RowBox[{"Directory", "[", "]"}]}], "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atLogFile", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"atDir", "[", "]"}], ",", 
+        " ", "\"\<lesson3_transformer_parts_log.nb\>\""}], "}"}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atReset", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"atCells", " ", "=", " ", 
+        RowBox[{"{", "}"}]}], ";", " ", 
+       RowBox[{"atResults", " ", "=", " ", 
+        RowBox[{"<|", "|>"}]}]}], ")"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atSection", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"atCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{"t", ",", " ", "\"\<Section\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atText", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"atCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{"t", ",", " ", "\"\<Text\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atFormula", "[", "t_String", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"atCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{"t", ",", " ", "\"\<Program\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atShow", "[", "e_", "]"}], " ", ":=", " ", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"atCells", ",", " ", 
+       RowBox[{"Cell", "[", 
+        RowBox[{
+         RowBox[{"BoxData", "[", 
+          RowBox[{"ToBoxes", "[", "e", "]"}], "]"}], ",", 
+         " ", "\"\<Output\>\""}], "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atCheck", "[", 
+      RowBox[{"name_String", ",", " ", "test_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"With", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"ok", " ", "=", " ", 
+         RowBox[{"TrueQ", "[", 
+          RowBox[{"Quiet", "@", 
+           RowBox[{"Check", "[", 
+            RowBox[{"test", ",", " ", "False"}], "]"}]}], "]"}]}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"atResults", "[", "name", "]"}], " ", "=", " ", "ok"}], ";", 
+        "\n", "   ", 
+        RowBox[{"AppendTo", "[", 
+         RowBox[{"atCells", ",", " ", 
+          RowBox[{"Cell", "[", 
+           RowBox[{
+            RowBox[{"TextData", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"StyleBox", "[", 
+                RowBox[{
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                  "ok", ",", " ", "\"\<PASS  \>\"", ",", 
+                   " ", "\"\<FAIL  \>\""}], "]"}], ",", " ", 
+                 RowBox[{"FontWeight", " ", "->", " ", "Bold"}], ",", "\n", 
+                 "        ", 
+                 RowBox[{"FontColor", " ", "->", " ", 
+                  RowBox[{"If", "[", 
+                   RowBox[{"ok", ",", " ", 
+                    RowBox[{"RGBColor", "[", 
+                    RowBox[{"0", ",", " ", "0.5", ",", " ", "0"}], "]"}], ",",
+                     " ", 
+                    RowBox[{"RGBColor", "[", 
+                    RowBox[{"0.8", ",", " ", "0", ",", " ", "0"}], "]"}]}], 
+                   "]"}]}]}], "]"}], ",", " ", "name"}], "}"}], "]"}], ",", 
+            " ", "\"\<Text\>\""}], "]"}]}], "]"}], ";", "\n", "   ", "ok"}]}],
+       "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"SetAttributes", "[", 
+     RowBox[{"atCheck", ",", " ", "HoldRest"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atStamp", "[", "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"DateString", "[", 
+       RowBox[{
+        RowBox[{"TimeZoneConvert", "[", 
+         RowBox[{"Now", ",", " ", "0"}], "]"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Year\>\"", ",", " ", "\"\<-\>\"", ",", 
+          " ", "\"\<Month\>\"", ",", " ", "\"\<-\>\"", ",", " ", "\"\<Day\>\"",
+           ",", " ", "\"\< \>\"", ",", " ", "\"\<Hour\>\"", ",", 
+          " ", "\"\<:\>\"", ",", " ", "\"\<Minute\>\""}], "}"}]}], "]"}], " ",
+       "<>", " ", "\"\< UTC\>\""}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atSaveLog", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Export", "[", 
+      RowBox[{
+       RowBox[{"atLogFile", "[", "]"}], ",", " ", 
+       RowBox[{"Notebook", "[", 
+        RowBox[{"Join", "[", "\n", "     ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Cell", "[", 
+             
+             RowBox[{"\"\<Lesson 3 log \[CenterDot] The transformer, part by \
+part\>\"", ",", " ", "\"\<Title\>\""}], "]"}], ",", "\n", "      ", 
+            RowBox[{"Cell", "[", 
+             RowBox[{
+              RowBox[{"\"\<Written \>\"", " ", "<>", " ", 
+               RowBox[{"atStamp", "[", "]"}], " ", "<>", 
+               " ", "\"\< by lesson3_transformer_parts.nb. \>\"", " ", "<>", 
+               "\n", "        ", 
+               RowBox[{"ToString", "[", 
+                RowBox[{"Count", "[", 
+                 RowBox[{"atResults", ",", " ", "True"}], "]"}], "]"}], " ", "<>",
+                " ", "\"\< of \>\"", " ", "<>", " ", 
+               RowBox[{"ToString", "[", 
+                RowBox[{"Length", "[", "atResults", "]"}], "]"}], " ", "<>", 
+               " ", "\"\< checks pass.\>\""}], ",", " ", "\"\<Text\>\""}], 
+             "]"}]}], "}"}], ",", "\n", "     ", "atCells", ",", "\n", 
+          "     ", 
+          RowBox[{"{", 
+           RowBox[{"Cell", "[", 
+            
+            RowBox[{"\"\<\[Copyright] Computational Classnotes \[CenterDot] \
+CC BY-NC-SA 4.0\>\"", ",", " ", "\"\<Text\>\""}], "]"}], "}"}]}], "]"}], 
+        "]"}], ",", " ", "\"\<NB\>\""}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atClose", "[", 
+      RowBox[{"a_", ",", " ", "b_", ",", " ", 
+       RowBox[{"tol_", " ", ":", " ", 
+        RowBox[{"10", "^", 
+         RowBox[{"-", "5"}]}]}]}], "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"Max", "[", 
+       RowBox[{"Abs", "[", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"{", 
+          RowBox[{"a", " ", "-", " ", "b"}], "}"}], "]"}], "]"}], "]"}], " ", 
+      "<", " ", "tol"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", " ", "1."}]}]}]}]}], " ", "Scaled", " ", "dot"}], "-", 
+     RowBox[{"product", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"attention", " ", "--"}], "--"}], "--"}], "--"}], 
+       "--"}]}]}], " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+      "Every", " ", "query", " ", "is", " ", "compared", " ", "with", " ", 
+       "every", " ", "key"}], ";", " ", 
+      RowBox[{
+       RowBox[{
+       "the", " ", "softmax", " ", "of", " ", "the", " ", "scores", " ", 
+        "weights", " ", "the", " ", 
+        RowBox[{"values", ":", "\n", "     ", 
+         RowBox[{"Attention", 
+          RowBox[{"(", 
+           RowBox[{"Q", ",", " ", "K", ",", " ", "V"}], ")"}]}]}]}], " ", "=",
+        " ", 
+       RowBox[{"softmax", 
+        RowBox[{"(", 
+         RowBox[{"Q", " ", 
+          RowBox[{
+           RowBox[{"K", "^", "T"}], " ", "/", " ", "sqrt"}], 
+          RowBox[{"(", "dk", ")"}]}], ")"}], " ", "V", "\n", "   ", "A", " ", 
+        "mask", " ", "is", " ", "added", " ", "to", " ", "the", " ", "scores",
+         " ", "before", " ", "the", " ", 
+        RowBox[{"softmax", ":", " ", 
+         RowBox[{"0", " ", "where", " ", "allowed"}]}]}]}]}], ",", " ", 
+     RowBox[{
+     "a", " ", "very", " ", "negative", " ", "number", "\n", "   ", "where", " ", 
+      RowBox[{"not", "."}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atSoftmaxRows", "[", "m_", "]"}], " ", ":=", " ", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"With", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"e", " ", "=", " ", 
+            RowBox[{"Exp", "[", 
+             RowBox[{"#", " ", "-", " ", 
+              RowBox[{"Max", "[", "#", "]"}]}], "]"}]}], "}"}], ",", " ", 
+          RowBox[{"e", "/", 
+           RowBox[{"Total", "[", "e", "]"}]}]}], "]"}], " ", "&"}], ",", " ", 
+       "m"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atSDPA", "[", 
+      RowBox[{"q_", ",", " ", "k_", ",", " ", "v_", ",", " ", 
+       RowBox[{"mask_", " ", ":", " ", "None"}]}], "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"s", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"q", " ", ".", " ", 
+           RowBox[{"Transpose", "[", "k", "]"}]}], "/", 
+          RowBox[{"Sqrt", "[", 
+           RowBox[{"N", "@", 
+            RowBox[{"Last", "@", 
+             RowBox[{"Dimensions", "[", "k", "]"}]}]}], "]"}]}]}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"mask", " ", "=!=", " ", "None"}], ",", " ", 
+          RowBox[{"s", " ", "=", " ", 
+           RowBox[{"s", " ", "+", " ", "mask"}]}]}], "]"}], ";", "\n", "   ", 
+        
+        RowBox[{
+         RowBox[{"atSoftmaxRows", "[", "s", "]"}], " ", ".", " ", "v"}]}]}], 
+      "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atCausalMask", "[", "n_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"j", " ", ">", " ", "i"}], ",", " ", 
+         RowBox[{"-", 
+          RowBox[{"10.", "^", "9"}]}], ",", " ", "0."}], "]"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", " ", "n"}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", " ", "n"}], "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPadMask", "[", 
+      RowBox[{
+      "nq_Integer", ",", " ", "nk_Integer", ",", " ", "valid_Integer"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"j", " ", ">", " ", "valid"}], ",", " ", 
+         RowBox[{"-", 
+          RowBox[{"10.", "^", "9"}]}], ",", " ", "0."}], "]"}], ",", " ", 
+       RowBox[{"{", "nq", "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", " ", "nk"}], "}"}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart1", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"q", ",", " ", "k", ",", " ", "v", ",", " ", "a"}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", "[", "\"\<1. Scaled dot-product attention\>\"", "]"}], ";",
+         "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<Each query is compared with every key by a dot product; \
+the softmax of the scores gives weights that sum to 1, and the output is the \
+weighted average of the values (Section 3.2.1).\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atFormula", 
+         "[", "\"\<Attention(Q, K, V) = softmax( Q K\[Transpose] / \[Sqrt]dk \
+) V\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"q", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"4", ",", " ", "6"}], "}"}]}], "]"}]}], ";", " ", 
+        RowBox[{"k", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"7", ",", " ", "6"}], "}"}]}], "]"}]}], ";", " ", 
+        RowBox[{"v", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"7", ",", " ", "3"}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        
+        RowBox[{"a", " ", "=", " ", 
+         RowBox[{"AttentionLayer", "[", 
+          RowBox[{"\"\<Dot\>\"", ",", " ", 
+           
+           RowBox[{"\"\<ScoreRescaling\>\"", " ", "->", 
+            " ", "\"\<DimensionSqrt\>\""}]}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the formula coded from arrays equals \
+AttentionLayer[\\\"Dot\\\", \\\"ScoreRescaling\\\" -> \\\"DimensionSqrt\\\"] \
+(4 queries, 7 keys)\>\"", ",", "\n", "    ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{
+            RowBox[{"atSDPA", "[", 
+             RowBox[{"q", ",", " ", "k", ",", " ", "v"}], "]"}], ",", " ", 
+            RowBox[{"a", "[", 
+             RowBox[{"<|", 
+              RowBox[{
+               RowBox[{"\"\<Query\>\"", " ", "->", " ", "q"}], ",", " ", 
+               RowBox[{"\"\<Key\>\"", " ", "->", " ", "k"}], ",", " ", 
+               RowBox[{"\"\<Value\>\"", " ", "->", " ", "v"}]}], "|>"}], 
+             "]"}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<every row of attention weights sums to 1\>\"", ",", 
+          "\n", "    ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{
+            RowBox[{"Total", "[", 
+             RowBox[{
+              RowBox[{"atSoftmaxRows", "[", 
+               RowBox[{
+                RowBox[{"q", " ", ".", " ", 
+                 RowBox[{"Transpose", "[", "k", "]"}]}], "/", 
+                RowBox[{"Sqrt", "[", "6.", "]"}]}], "]"}], ",", " ", 
+              RowBox[{"{", "2", "}"}]}], "]"}], ",", " ", 
+            RowBox[{"ConstantArray", "[", 
+             RowBox[{"1.", ",", " ", "4"}], "]"}], ",", " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "12"}]}]}], "]"}]}], "]"}]}]}], "]"}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "2."}]}]}]}]}], " ", "Why", " ", "divide", " ", 
+     "by", " ", "sqrt", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", "dk", ")"}], " ", "--"}], "--"}], "--"}], "--"}], 
+      "--"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart2", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"dk", " ", "=", " ", "64"}], ",", " ", "q", ",", " ", "k", ",",
+          " ", "dots", ",", " ", "sat", ",", " ", "unscaled", ",", " ", 
+         "scaled"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", "[", "\"\<2. Why the scores are divided by \[Sqrt]dk\>\"",
+          "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<If the components of q and k are independent with mean 0 \
+and variance 1, their dot product has mean 0 and variance dk (footnote 4 of \
+the paper). For dk = 64 the scores are then about \[PlusMinus]8, the softmax \
+is close to one-hot, and its gradients are tiny. Dividing by \[Sqrt]dk brings \
+the variance back to 1.\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"q", " ", "=", " ", 
+         RowBox[{"RandomVariate", "[", 
+          RowBox[{
+           RowBox[{"NormalDistribution", "[", "]"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"20000", ",", " ", "dk"}], "}"}]}], "]"}]}], ";", " ", 
+        RowBox[{"k", " ", "=", " ", 
+         RowBox[{"RandomVariate", "[", 
+          RowBox[{
+           RowBox[{"NormalDistribution", "[", "]"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"20000", ",", " ", "dk"}], "}"}]}], "]"}]}], ";", "\n", 
+        "   ", 
+        RowBox[{"dots", " ", "=", " ", 
+         RowBox[{"Total", "[", 
+          RowBox[{
+           RowBox[{"q", " ", "k"}], ",", " ", 
+           RowBox[{"{", "2", "}"}]}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{
+         RowBox[{"sat", "[", "scale_", "]"}], " ", ":=", " ", 
+         RowBox[{"Mean", "@", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"Max", "@", 
+             RowBox[{"atSoftmaxRows", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"RandomVariate", "[", 
+                  RowBox[{
+                   RowBox[{"NormalDistribution", "[", "]"}], ",", " ", "dk"}],
+                   "]"}], " ", ".", " ", 
+                 RowBox[{"Transpose", "[", 
+                  RowBox[{"RandomVariate", "[", 
+                   RowBox[{
+                    RowBox[{"NormalDistribution", "[", "]"}], ",", " ", 
+                    RowBox[{"{", 
+                    RowBox[{"10", ",", " ", "dk"}], "}"}]}], "]"}], "]"}]}], "/",
+                 "scale"}], "}"}], "]"}]}], ",", " ", 
+            RowBox[{"{", "2000", "}"}]}], "]"}]}]}], ";", "\n", "   ", 
+        RowBox[{"unscaled", " ", "=", " ", 
+         RowBox[{"sat", "[", "1.", "]"}]}], ";", " ", 
+        RowBox[{"scaled", " ", "=", " ", 
+         RowBox[{"sat", "[", 
+          RowBox[{"Sqrt", "[", 
+           RowBox[{"N", "@", "dk"}], "]"}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"atShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<\>\"", ",", 
+               " ", "\"\<variance of q\[CenterDot]k\>\"", ",", 
+               " ", "\"\<mean largest softmax weight (10 keys)\>\""}], "}"}], 
+             ",", "\n", "      ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<unscaled\>\"", ",", " ", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{
+                 RowBox[{"Variance", "[", "dots", "]"}], ",", " ", "3"}], 
+                "]"}], ",", " ", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{"unscaled", ",", " ", "3"}], "]"}]}], "}"}], ",", 
+             "\n", "      ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<divided by \[Sqrt]64\>\"", ",", " ", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{
+                 RowBox[{"Variance", "[", 
+                  RowBox[{"dots", "/", "8."}], "]"}], ",", " ", "3"}], "]"}], 
+               ",", " ", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{"scaled", ",", " ", "3"}], "]"}]}], "}"}]}], "}"}], ",",
+            " ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{
+          
+          RowBox[{"\"\<the variance of q\[CenterDot]k is about dk = 64 \
+(measured \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"NumberForm", "[", 
+             RowBox[{
+              RowBox[{"Variance", "[", "dots", "]"}], ",", " ", "3"}], "]"}], 
+            "]"}], " ", "<>", " ", "\"\<)\>\""}], ",", " ", 
+          RowBox[{
+           RowBox[{"Abs", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Variance", "[", "dots", "]"}], "/", "64"}], " ", "-", 
+             " ", "1"}], "]"}], " ", "<", " ", "0.05"}]}], "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<after dividing by \[Sqrt]dk it is about 1\>\"", ",", 
+          " ", 
+          RowBox[{
+           RowBox[{"Abs", "[", 
+            RowBox[{
+             RowBox[{"Variance", "[", 
+              RowBox[{"dots", "/", "8."}], "]"}], " ", "-", " ", "1"}], "]"}],
+            " ", "<", " ", "0.05"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{
+          
+          RowBox[{"\"\<unscaled, the softmax is nearly one-hot (largest \
+weight \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"NumberForm", "[", 
+             RowBox[{"unscaled", ",", " ", "2"}], "]"}], "]"}], " ", "<>", 
+           " ", "\"\<); scaled it is not (\>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"NumberForm", "[", 
+             RowBox[{"scaled", ",", " ", "2"}], "]"}], "]"}], " ", "<>", 
+           " ", "\"\<)\>\""}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"unscaled", " ", ">", " ", "0.75"}], " ", "&&", " ", 
+           RowBox[{"scaled", " ", "<", " ", "0.6"}]}]}], "]"}]}]}], "]"}]}], 
+    ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "3."}]}]}]}]}], " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Masks", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], " ", 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart3", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"n", " ", "=", " ", "6"}], ",", " ", "q", ",", " ", "k", ",",
+          " ", "v", ",", " ", "out", ",", " ", "k2", ",", " ", "v2", ",", " ",
+          "causal"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", "[", "\"\<3. Masks: padding and causal\>\"", "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<A mask is added to the scores before the softmax: 0 where \
+attention is allowed, a very large negative number where it is not, so those \
+weights become 0. A padding mask hides the padding at the end of short \
+sequences. A causal mask stops position i of the decoder from seeing \
+positions after i, so that it cannot read the word it is asked to predict \
+(Section 3.2.3).\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"atShow", "[", 
+         RowBox[{"MatrixForm", "[", 
+          RowBox[{
+           RowBox[{"atCausalMask", "[", "5", "]"}], " ", "/.", " ", 
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"10.", "^", "9"}]}], " ", "->", 
+            " ", "\"\<\[Minus]\[Infinity]\>\""}]}], "]"}], "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{"q", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"n", ",", " ", "4"}], "}"}]}], "]"}]}], ";", " ", 
+        RowBox[{"k", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"n", ",", " ", "4"}], "}"}]}], "]"}]}], ";", " ", 
+        RowBox[{"v", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"n", ",", " ", "3"}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        
+        RowBox[{"out", " ", "=", " ", 
+         RowBox[{"atSDPA", "[", 
+          RowBox[{"q", ",", " ", "k", ",", " ", "v", ",", " ", 
+           RowBox[{"atCausalMask", "[", "n", "]"}]}], "]"}]}], ";", "\n", 
+        "   ", 
+        RowBox[{"k2", " ", "=", " ", "k"}], ";", " ", 
+        RowBox[{"v2", " ", "=", " ", "v"}], ";", " ", 
+        RowBox[{
+         RowBox[{"k2", "[", 
+          RowBox[{"[", 
+           RowBox[{"5", " ", ";;"}], "]"}], "]"}], " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"2", ",", " ", "4"}], "}"}]}], "]"}]}], ";", " ", 
+        RowBox[{
+         RowBox[{"v2", "[", 
+          RowBox[{"[", 
+           RowBox[{"5", " ", ";;"}], "]"}], "]"}], " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"2", ",", " ", "3"}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<causal: changing positions 5 and 6 leaves outputs 1\
+\[Ellipsis]4 unchanged\>\"", ",", "\n", "    ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"atSDPA", "[", 
+              RowBox[{"q", ",", " ", "k2", ",", " ", "v2", ",", " ", 
+               RowBox[{"atCausalMask", "[", "n", "]"}]}], "]"}], "[", 
+             RowBox[{"[", 
+              RowBox[{";;", " ", "4"}], "]"}], "]"}], ",", " ", 
+            RowBox[{"out", "[", 
+             RowBox[{"[", 
+              RowBox[{";;", " ", "4"}], "]"}], "]"}], ",", " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "12"}]}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"causal", " ", "=", " ", 
+         RowBox[{"AttentionLayer", "[", 
+          RowBox[{"\"\<Dot\>\"", ",", " ", 
+           
+           RowBox[{"\"\<ScoreRescaling\>\"", " ", "->", 
+            " ", "\"\<DimensionSqrt\>\""}], ",", " ", 
+           RowBox[{"\"\<Mask\>\"", " ", "->", " ", "\"\<Causal\>\""}]}], 
+          "]"}]}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the causal mask coded from arrays equals AttentionLayer \
+with \\\"Mask\\\" -> \\\"Causal\\\"\>\"", ",", "\n", "    ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{"out", ",", " ", 
+            RowBox[{"causal", "[", 
+             RowBox[{"<|", 
+              RowBox[{
+               RowBox[{"\"\<Query\>\"", " ", "->", " ", "q"}], ",", " ", 
+               RowBox[{"\"\<Key\>\"", " ", "->", " ", "k"}], ",", " ", 
+               RowBox[{"\"\<Value\>\"", " ", "->", " ", "v"}]}], "|>"}], 
+             "]"}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<padding: with 4 real keys, changing the 2 padding keys \
+changes nothing\>\"", ",", "\n", "    ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{
+            RowBox[{"atSDPA", "[", 
+             RowBox[{"q", ",", " ", "k", ",", " ", "v", ",", " ", 
+              RowBox[{"atPadMask", "[", 
+               RowBox[{"n", ",", " ", "n", ",", " ", "4"}], "]"}]}], "]"}], ",",
+             " ", 
+            RowBox[{"atSDPA", "[", 
+             RowBox[{"q", ",", " ", "k2", ",", " ", "v2", ",", " ", 
+              RowBox[{"atPadMask", "[", 
+               RowBox[{"n", ",", " ", "n", ",", " ", "4"}], "]"}]}], "]"}], ",",
+             " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "12"}]}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<In Wolfram, padding needs no mask: sequences of different \
+lengths are \\\"Varying\\\" dimensions, and NetTrain pads and masks them \
+itself.\>\"", "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", " ", "4."}]}]}]}]}], " ", "Multi"}], "-", 
+     RowBox[{"head", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"attention", " ", "--"}], "--"}], "--"}], "--"}], 
+       "--"}]}]}], " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"h", " ", "heads"}], ",", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+       "each", " ", "with", " ", "its", " ", "own", " ", "projections", " ", 
+        "to", " ", "dk"}], " ", "=", " ", 
+       RowBox[{
+        RowBox[{"dmodel", "/", "h"}], " ", "dimensions"}]}], ";", " ", 
+      RowBox[{
+       RowBox[{"the", " ", 
+        RowBox[{"heads", "'"}], " ", "outputs", " ", "are", "\n", "   ", 
+        "joined", " ", "and", " ", "projected", " ", "once", " ", 
+        RowBox[{"more", ":", "\n", "     ", 
+         RowBox[{"MultiHead", 
+          RowBox[{"(", 
+           RowBox[{"Q", ",", " ", "K", ",", " ", "V"}], ")"}]}]}]}], " ", "=",
+        " ", 
+       RowBox[{"Concat", 
+        RowBox[{"(", 
+         RowBox[{"head1", ",", " ", "...", ",", " ", "headh"}], ")"}], " ", 
+        RowBox[{"W", "^", "O"}]}]}]}], ",", "   ", 
+     RowBox[{"headi", " ", "=", " ", 
+      RowBox[{"Attention", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Q", " ", 
+          RowBox[{"Wi", "^", "Q"}]}], ",", " ", 
+         RowBox[{"K", " ", 
+          RowBox[{"Wi", "^", "K"}]}], ",", " ", 
+         RowBox[{"V", " ", 
+          RowBox[{"Wi", "^", "V"}]}]}], ")"}], "\n", "   ", "As", " ", "a", " ", 
+       RowBox[{"net", ":", " ", 
+        RowBox[{"one", " ", "LinearLayer", " ", "for", " ", "all", " ", 
+         RowBox[{"heads", "'"}], " ", "queries", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"and", " ", "keys"}], ",", " ", "values"}], ")"}]}]}]}]}], 
+     ",", " ", 
+     RowBox[{
+     "ReshapeLayer", " ", "to", " ", "split", " ", "the", "\n", "   ", 
+      "dmodel", " ", "features", " ", "into", " ", "h", " ", "groups", " ", 
+      "of", " ", "dk"}], ",", " ", 
+     RowBox[{
+      RowBox[{"AttentionLayer", " ", "with", " ", "\"\<MultiHead\>\""}], " ", 
+      "->", " ", "True"}], ",", " ", "flatten", ",", " ", 
+     RowBox[{"and", " ", "a", "\n", "   ", "last", " ", 
+      RowBox[{"LinearLayer", "."}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atMHANet", "[", 
+      RowBox[{"d_Integer", ",", " ", "h_Integer", ",", " ", 
+       RowBox[{"causal_", " ", ":", " ", "False"}]}], "]"}], " ", ":=", " ", 
+     RowBox[{"NetGraph", "[", 
+      RowBox[{
+       RowBox[{"<|", "\n", "    ", 
+        RowBox[{
+         RowBox[{"\"\<q\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", "d", "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<k\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", "d", "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<v\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", "d", "]"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<rq\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"ReshapeLayer", "[", 
+            RowBox[{"{", 
+             RowBox[{"h", ",", " ", 
+              RowBox[{"d", "/", "h"}]}], "}"}], "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<rk\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"ReshapeLayer", "[", 
+            RowBox[{"{", 
+             RowBox[{"h", ",", " ", 
+              RowBox[{"d", "/", "h"}]}], "}"}], "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<rv\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"ReshapeLayer", "[", 
+            RowBox[{"{", 
+             RowBox[{"h", ",", " ", 
+              RowBox[{"d", "/", "h"}]}], "}"}], "]"}], "]"}]}], ",", "\n", 
+         "    ", 
+         RowBox[{"\"\<att\>\"", " ", "->", " ", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"TrueQ", "[", "causal", "]"}], ",", "\n", "      ", 
+            RowBox[{"AttentionLayer", "[", 
+             RowBox[{"\"\<Dot\>\"", ",", " ", 
+              RowBox[{"\"\<MultiHead\>\"", " ", "->", " ", "True"}], ",", " ", 
+              
+              RowBox[{"\"\<ScoreRescaling\>\"", " ", "->", 
+               " ", "\"\<DimensionSqrt\>\""}], ",", " ", 
+              RowBox[{"\"\<Mask\>\"", " ", "->", " ", "\"\<Causal\>\""}]}], 
+             "]"}], ",", "\n", "      ", 
+            RowBox[{"AttentionLayer", "[", 
+             RowBox[{"\"\<Dot\>\"", ",", " ", 
+              RowBox[{"\"\<MultiHead\>\"", " ", "->", " ", "True"}], ",", " ", 
+              
+              RowBox[{"\"\<ScoreRescaling\>\"", " ", "->", 
+               " ", "\"\<DimensionSqrt\>\""}]}], "]"}]}], "]"}]}], ",", "\n", 
+         "    ", 
+         RowBox[{"\"\<cat\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"FlattenLayer", "[", "]"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<o\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", "d", "]"}], "]"}]}]}], "|>"}], ",", 
+       "\n", "   ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Query\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"\"\<q\>\"", " ", "->", " ", 
+           RowBox[{"\"\<rq\>\"", " ", "->", " ", 
+            RowBox[{"NetPort", "[", 
+             RowBox[{"\"\<att\>\"", ",", " ", "\"\<Query\>\""}], "]"}]}]}]}], 
+         ",", "\n", "    ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Memory\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"\"\<k\>\"", " ", "->", " ", 
+           RowBox[{"\"\<rk\>\"", " ", "->", " ", 
+            RowBox[{"NetPort", "[", 
+             RowBox[{"\"\<att\>\"", ",", " ", "\"\<Key\>\""}], "]"}]}]}]}], ",",
+          "\n", "    ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Memory\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"\"\<v\>\"", " ", "->", " ", 
+           RowBox[{"\"\<rv\>\"", " ", "->", " ", 
+            RowBox[{"NetPort", "[", 
+             RowBox[{"\"\<att\>\"", ",", " ", "\"\<Value\>\""}], "]"}]}]}]}], 
+         ",", "\n", "    ", 
+         RowBox[{"\"\<att\>\"", " ", "->", " ", 
+          RowBox[{"\"\<cat\>\"", " ", "->", " ", "\"\<o\>\""}]}]}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{"\"\<Query\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}], ",", " ", 
+       RowBox[{"\"\<Memory\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "the", " ", "same", " ", "computation", " ", "from", " ", "arrays"}], ",",
+      " ", 
+     RowBox[{
+     "reading", " ", "the", " ", "weights", " ", "out", " ", "of", " ", "the",
+       " ", "net"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"atLinear", "[", 
+       RowBox[{"net_", ",", " ", "path_List"}], "]"}], "[", "x_", "]"}], " ", 
+     ":=", " ", 
+     RowBox[{"With", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"w", " ", "=", " ", 
+          RowBox[{"Normal", "@", 
+           RowBox[{"NetExtract", "[", 
+            RowBox[{"net", ",", " ", 
+             RowBox[{"Join", "[", 
+              RowBox[{"path", ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"\"\<Net\>\"", ",", " ", "\"\<Weights\>\""}], "}"}]}],
+               "]"}]}], "]"}]}]}], ",", " ", 
+         RowBox[{"b", " ", "=", " ", 
+          RowBox[{"Normal", "@", 
+           RowBox[{"NetExtract", "[", 
+            RowBox[{"net", ",", " ", 
+             RowBox[{"Join", "[", 
+              RowBox[{"path", ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"\"\<Net\>\"", ",", " ", "\"\<Biases\>\""}], "}"}]}], 
+              "]"}]}], "]"}]}]}]}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"x", " ", ".", " ", 
+         RowBox[{"Transpose", "[", "w", "]"}]}], " ", "+", " ", 
+        RowBox[{"ConstantArray", "[", 
+         RowBox[{"b", ",", " ", 
+          RowBox[{"Length", "[", "x", "]"}]}], "]"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"atMHA", "[", 
+       RowBox[{"net_", ",", " ", "path_List", ",", " ", "h_Integer", ",", " ", 
+        RowBox[{"causal_", " ", ":", " ", "False"}]}], "]"}], "[", 
+      RowBox[{"x_", ",", " ", "m_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "q", ",", " ", "k", ",", " ", "v", ",", " ", "d", ",", " ", "heads"}],
+         "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"q", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"atLinear", "[", 
+           RowBox[{"net", ",", " ", 
+            RowBox[{"Append", "[", 
+             RowBox[{"path", ",", " ", "\"\<q\>\""}], "]"}]}], "]"}], "[", 
+          "x", "]"}]}], ";", " ", 
+        RowBox[{"k", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"atLinear", "[", 
+           RowBox[{"net", ",", " ", 
+            RowBox[{"Append", "[", 
+             RowBox[{"path", ",", " ", "\"\<k\>\""}], "]"}]}], "]"}], "[", 
+          "m", "]"}]}], ";", " ", 
+        RowBox[{"v", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"atLinear", "[", 
+           RowBox[{"net", ",", " ", 
+            RowBox[{"Append", "[", 
+             RowBox[{"path", ",", " ", "\"\<v\>\""}], "]"}]}], "]"}], "[", 
+          "m", "]"}]}], ";", "\n", "   ", 
+        RowBox[{"d", " ", "=", " ", 
+         RowBox[{"Last", "@", 
+          RowBox[{"Dimensions", "[", "q", "]"}]}]}], ";", "\n", "   ", 
+        RowBox[{"heads", " ", "=", " ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"atSDPA", "[", 
+            RowBox[{
+             RowBox[{"q", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", " ", "idx"}], "]"}], "]"}], ",", " ", 
+             RowBox[{"k", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", " ", "idx"}], "]"}], "]"}], ",", " ", 
+             RowBox[{"v", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", " ", "idx"}], "]"}], "]"}], ",", " ", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"TrueQ", "[", "causal", "]"}], ",", " ", 
+               RowBox[{"atCausalMask", "[", 
+                RowBox[{"Length", "[", "x", "]"}], "]"}], ",", " ", "None"}], 
+              "]"}]}], "]"}], ",", "\n", "     ", 
+           RowBox[{"{", 
+            RowBox[{"idx", ",", " ", 
+             RowBox[{"Partition", "[", 
+              RowBox[{
+               RowBox[{"Range", "[", "d", "]"}], ",", " ", 
+               RowBox[{"d", "/", "h"}]}], "]"}]}], "}"}]}], "]"}]}], ";", 
+        "\n", "   ", 
+        RowBox[{
+         RowBox[{"atLinear", "[", 
+          RowBox[{"net", ",", " ", 
+           RowBox[{"Append", "[", 
+            RowBox[{"path", ",", " ", "\"\<o\>\""}], "]"}]}], "]"}], "[", 
+         RowBox[{"Flatten", " ", "/@", " ", 
+          RowBox[{"Transpose", "[", 
+           RowBox[{"heads", ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"2", ",", " ", "1", ",", " ", "3"}], "}"}]}], "]"}]}], 
+         "]"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atMHAParams", "[", "d_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"4", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"d", " ", "d"}], " ", "+", " ", "d"}], ")"}]}]}], ";"}], "\n",
+    "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart4", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"d", " ", "=", " ", "16"}], ",", " ", 
+         RowBox[{"h", " ", "=", " ", "4"}], ",", " ", "net", ",", " ", "netc",
+          ",", " ", "x", ",", " ", "m"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"atSection", "[", "\"\<4. Multi-head attention\>\"", "]"}], ";",
+         "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<One attention with dmodel-dimensional queries is replaced \
+by h attentions with dk = dmodel/h dimensions each, on different learned \
+projections; their outputs are joined and projected again. The total cost is \
+about that of one full-size attention, but each head can attend to different \
+things (Section 3.2.2).\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atFormula", 
+         "[", "\"\<MultiHead(Q, K, V) = Concat(head_1, \[Ellipsis], head_h) \
+W^O\nhead_i = Attention(Q W_i^Q, K W_i^K, V W_i^V)\>\"", "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<As a Wolfram net, built from primitive layers: LinearLayer \
+for the projections (all heads at once), ReshapeLayer to split dmodel \
+features into h groups of dk, AttentionLayer with \\\"MultiHead\\\" -> True \
+for the h scaled dot-product attentions, FlattenLayer to join the heads, and \
+a last LinearLayer for W^O.\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"net", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"atMHANet", "[", 
+           RowBox[{"d", ",", " ", "h"}], "]"}]}]}], ";", "\n", "   ", 
+        RowBox[{"atShow", "[", 
+         RowBox[{"Information", "[", 
+          RowBox[{"net", ",", " ", "\"\<SummaryGraphic\>\""}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"x", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"5", ",", " ", "d"}], "}"}]}], "]"}]}], ";", " ", 
+        RowBox[{"m", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"7", ",", " ", "d"}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the net built from primitive layers equals multi-head \
+attention coded from arrays (d = 16, h = 4)\>\"", ",", "\n", "    ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{
+            RowBox[{"net", "[", 
+             RowBox[{"<|", 
+              RowBox[{
+               RowBox[{"\"\<Query\>\"", " ", "->", " ", "x"}], ",", " ", 
+               RowBox[{"\"\<Memory\>\"", " ", "->", " ", "m"}]}], "|>"}], 
+             "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"atMHA", "[", 
+              RowBox[{"net", ",", " ", 
+               RowBox[{"{", "}"}], ",", " ", "h"}], "]"}], "[", 
+             RowBox[{"x", ",", " ", "m"}], "]"}]}], "]"}]}], "]"}], ";", "\n",
+         "   ", 
+        RowBox[{"netc", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"atMHANet", "[", 
+           RowBox[{"d", ",", " ", "h", ",", " ", "True"}], "]"}]}]}], ";", 
+        "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<and so does its causal version, used for decoder \
+self-attention\>\"", ",", "\n", "    ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{
+            RowBox[{"netc", "[", 
+             RowBox[{"<|", 
+              RowBox[{
+               RowBox[{"\"\<Query\>\"", " ", "->", " ", "x"}], ",", " ", 
+               RowBox[{"\"\<Memory\>\"", " ", "->", " ", "x"}]}], "|>"}], 
+             "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"atMHA", "[", 
+              RowBox[{"netc", ",", " ", 
+               RowBox[{"{", "}"}], ",", " ", "h", ",", " ", "True"}], "]"}], "[", 
+             RowBox[{"x", ",", " ", "x"}], "]"}]}], "]"}]}], "]"}], ";", "\n",
+         "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{
+          RowBox[{"\"\<it has 4(d\.b2 + d) = \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"atMHAParams", "[", "d", "]"}], "]"}], " ", "<>", 
+           " ", "\"\< parameters, whatever the number of heads\>\""}], ",", 
+          "\n", "    ", 
+          RowBox[{
+           RowBox[{"Information", "[", 
+            RowBox[{"net", ",", " ", "\"\<ArraysTotalElementCount\>\""}], 
+            "]"}], " ", "==", " ", 
+           RowBox[{"atMHAParams", "[", "d", "]"}], " ", "==", " ", 
+           RowBox[{"Information", "[", 
+            RowBox[{
+             RowBox[{"NetInitialize", "@", 
+              RowBox[{"atMHANet", "[", 
+               RowBox[{"d", ",", " ", "1"}], "]"}]}], ",", 
+             " ", "\"\<ArraysTotalElementCount\>\""}], "]"}]}]}], "]"}]}]}], 
+      "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "5."}]}]}]}]}], " ", "Positional", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"encoding", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"Attention", " ", "ignores", " ", "order"}], ",", " ", 
+     RowBox[{
+      RowBox[{
+      "so", " ", "position", " ", "is", " ", "added", " ", "to", " ", "the", " ", 
+       RowBox[{"embeddings", ":", "\n", "     ", 
+        RowBox[{"PE", 
+         RowBox[{"(", 
+          RowBox[{"pos", ",", " ", 
+           RowBox[{"2", "i"}]}], ")"}]}]}]}], " ", "=", " ", 
+      RowBox[{"sin", 
+       RowBox[{"(", 
+        RowBox[{"pos", " ", "/", " ", 
+         RowBox[{"10000", "^", 
+          RowBox[{"(", 
+           RowBox[{"2", 
+            RowBox[{"i", "/", "d"}]}], ")"}]}]}], ")"}]}]}], ",", "   ", 
+     RowBox[{
+      RowBox[{"PE", 
+       RowBox[{"(", 
+        RowBox[{"pos", ",", " ", 
+         RowBox[{
+          RowBox[{"2", "i"}], "+", "1"}]}], ")"}]}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"cos", 
+        RowBox[{"(", 
+         RowBox[{"pos", " ", "/", " ", 
+          RowBox[{"10000", "^", 
+           RowBox[{"(", 
+            RowBox[{"2", 
+             RowBox[{"i", "/", "d"}]}], ")"}]}]}], ")"}], "\n", "   ", 
+        "Writing", " ", "cos", " ", "x"}], " ", "=", " ", 
+       RowBox[{"sin", 
+        RowBox[{"(", 
+         RowBox[{"x", " ", "+", " ", 
+          RowBox[{"pi", "/", "2"}]}], ")"}]}]}]}], ",", " ", 
+     RowBox[{
+      RowBox[{"every", " ", "component", " ", "is", " ", "sin", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"pos", " ", "w_j"}], " ", "+", " ", "phi_j"}], ")"}]}], ":", 
+      " ", 
+      RowBox[{
+      "a", " ", "fixed", " ", "LinearLayer", "\n", "   ", "from", " ", "the", 
+       " ", "position", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"weights", " ", "w_j"}], ",", " ", 
+         RowBox[{"biases", " ", "phi_j"}]}], ")"}], " ", "followed", " ", 
+       "by", " ", 
+       RowBox[{"Sin", "."}]}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atFreq", "[", "d_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"Flatten", "@", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1.", ",", " ", "1."}], "}"}], "/", 
+         RowBox[{"10000.", "^", 
+          RowBox[{"(", 
+           RowBox[{"2", " ", 
+            RowBox[{"i", "/", "d"}]}], ")"}]}]}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", " ", "0", ",", " ", 
+          RowBox[{
+           RowBox[{"d", "/", "2"}], " ", "-", " ", "1"}]}], "}"}]}], 
+       "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPhase", "[", "d_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"EvenQ", "[", "j", "]"}], ",", " ", "0.", ",", " ", 
+         RowBox[{"N", "[", 
+          RowBox[{"Pi", "/", "2"}], "]"}]}], "]"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", " ", "0", ",", " ", 
+         RowBox[{"d", " ", "-", " ", "1"}]}], "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPE", "[", 
+      RowBox[{"n_Integer", ",", " ", "d_Integer"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"Sin", "[", 
+        RowBox[{
+         RowBox[{"pos", " ", 
+          RowBox[{"atFreq", "[", "d", "]"}]}], " ", "+", " ", 
+         RowBox[{"atPhase", "[", "d", "]"}]}], "]"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"pos", ",", " ", "0", ",", " ", 
+         RowBox[{"n", " ", "-", " ", "1"}]}], "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPENet", "[", "d_Integer", "]"}], " ", ":=", " ", 
+     RowBox[{"NetGraph", "[", 
+      RowBox[{
+       RowBox[{"<|", "\n", "    ", 
+        RowBox[{
+         RowBox[{"\"\<idx\>\"", " ", "->", " ", 
+          RowBox[{"SequenceIndicesLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<pos\>\"", " ", "->", " ", 
+          RowBox[{"ElementwiseLayer", "[", 
+           RowBox[{
+            RowBox[{"#", " ", "-", " ", "1."}], " ", "&"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<col\>\"", " ", "->", " ", 
+          RowBox[{"ReplicateLayer", "[", 
+           RowBox[{"1", ",", " ", "2"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<angle\>\"", " ", "->", " ", 
+          RowBox[{"NetMapOperator", "[", 
+           RowBox[{"LinearLayer", "[", 
+            RowBox[{"d", ",", " ", 
+             RowBox[{"\"\<Weights\>\"", " ", "->", " ", 
+              RowBox[{"List", " ", "/@", " ", 
+               RowBox[{"atFreq", "[", "d", "]"}]}]}], ",", " ", 
+             RowBox[{"\"\<Biases\>\"", " ", "->", " ", 
+              RowBox[{"atPhase", "[", "d", "]"}]}], ",", " ", 
+             RowBox[{"LearningRateMultipliers", " ", "->", " ", "0"}]}], 
+            "]"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<sin\>\"", " ", "->", " ", 
+          RowBox[{"ElementwiseLayer", "[", "Sin", "]"}]}], ",", " ", 
+         RowBox[{"\"\<add\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}]}], "|>"}], ",", "\n", "   ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"\"\<idx\>\"", " ", "->", " ", 
+           RowBox[{"\"\<pos\>\"", " ", "->", " ", 
+            RowBox[{"\"\<col\>\"", " ", "->", " ", 
+             RowBox[{"\"\<angle\>\"", " ", "->", " ", "\"\<sin\>\""}]}]}]}]}],
+          ",", " ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], ",", 
+            " ", "\"\<sin\>\""}], "}"}], " ", "->", " ", "\"\<add\>\""}]}], 
+        "}"}], ",", "\n", "   ", 
+       RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "the", " ", "matrix", " ", "that", " ", "moves", " ", "every", " ", 
+     "pair", " ", "of", " ", "components", " ", "k", " ", "positions", " ", 
+     RowBox[{"on", ":", " ", 
+      RowBox[{"one", " ", "rotation", " ", "per", " ", "pair"}]}]}], " ", 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atShiftMatrix", "[", 
+      RowBox[{"k_", ",", " ", "d_Integer"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"w", " ", "=", " ", 
+          RowBox[{
+           RowBox[{"atFreq", "[", "d", "]"}], "[", 
+           RowBox[{"[", 
+            RowBox[{"1", " ", ";;", " ", ";;", " ", "2"}], "]"}], "]"}]}], ",",
+          " ", 
+         RowBox[{"m", " ", "=", " ", 
+          RowBox[{"ConstantArray", "[", 
+           RowBox[{"0.", ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"d", ",", " ", "d"}], "}"}]}], "]"}]}]}], "}"}], ",", 
+       "\n", "   ", 
+       RowBox[{
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"m", "[", 
+            RowBox[{"[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"2", " ", "i"}], " ", "-", " ", "1"}], " ", ";;", " ", 
+               RowBox[{"2", " ", "i"}]}], ",", " ", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"2", " ", "i"}], " ", "-", " ", "1"}], " ", ";;", " ", 
+               RowBox[{"2", " ", "i"}]}]}], "]"}], "]"}], " ", "=", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Cos", "[", 
+                RowBox[{"k", " ", 
+                 RowBox[{"w", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ",", " ", 
+               RowBox[{"Sin", "[", 
+                RowBox[{"k", " ", 
+                 RowBox[{"w", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], "}"}], ",", " ", 
+             
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"Sin", "[", 
+                 RowBox[{"k", " ", 
+                  RowBox[{"w", "[", 
+                   RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], ",", " ", 
+               RowBox[{"Cos", "[", 
+                RowBox[{"k", " ", 
+                 RowBox[{"w", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], "}"}]}], "}"}]}],
+           ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", " ", 
+            RowBox[{"Length", "[", "w", "]"}]}], "}"}]}], "]"}], ";", " ", 
+        "m"}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart5", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"d", " ", "=", " ", "64"}], ",", " ", 
+         RowBox[{"pe", " ", "=", " ", 
+          RowBox[{"atPE", "[", 
+           RowBox[{"100", ",", " ", "64"}], "]"}]}], ",", " ", "net", ",", 
+         " ", "x", ",", " ", "dots"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"atSection", "[", "\"\<5. Positional encoding\>\"", "]"}], ";",
+         "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<Attention by itself ignores word order, so a position code \
+is added to each embedding (Section 3.5). Each pair of components is a sine \
+and a cosine of the position, with wavelengths from 2\[Pi] to 10000\
+\[CenterDot]2\[Pi].\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atFormula", 
+         "[", "\"\<PE(pos, 2i) = sin(pos / 10000^(2i/dmodel))      PE(pos, \
+2i+1) = cos(pos / 10000^(2i/dmodel))\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"atShow", "[", 
+         RowBox[{"ArrayPlot", "[", 
+          RowBox[{
+           RowBox[{"Transpose", "[", "pe", "]"}], ",", " ", 
+           RowBox[{"ColorFunction", " ", "->", " ", "\"\<RedBlueTones\>\""}], 
+           ",", " ", 
+           RowBox[{"FrameLabel", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"\"\<dimension\>\"", ",", " ", "\"\<position\>\""}], 
+             "}"}]}], ",", " ", 
+           RowBox[{"ImageSize", " ", "->", " ", "420"}], ",", " ", 
+           RowBox[{"AspectRatio", " ", "->", " ", "0.5"}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<for every offset k there is one fixed matrix M\:2096 (a \
+rotation in each pair of components) with PE(pos + k) = M\:2096 PE(pos) for \
+all positions: the reason the paper gives for choosing sinusoids\>\"", ",", 
+          "\n", "    ", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"1", ",", " ", "5", ",", " ", "17"}], "}"}], ",", " ", 
+            RowBox[{"Function", "[", 
+             RowBox[{"k", ",", " ", 
+              RowBox[{"atClose", "[", 
+               RowBox[{
+                RowBox[{"Transpose", "[", 
+                 RowBox[{
+                  RowBox[{"atShiftMatrix", "[", 
+                   RowBox[{"k", ",", " ", "d"}], "]"}], " ", ".", " ", 
+                  RowBox[{"Transpose", "[", 
+                   RowBox[{"pe", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"1", " ", ";;", " ", 
+                    RowBox[{"100", " ", "-", " ", "k"}]}], "]"}], "]"}], 
+                   "]"}]}], "]"}], ",", " ", 
+                RowBox[{"pe", "[", 
+                 RowBox[{"[", 
+                  RowBox[{
+                   RowBox[{"1", " ", "+", " ", "k"}], " ", ";;", " ", "100"}],
+                   "]"}], "]"}], ",", " ", 
+                RowBox[{"10", "^", 
+                 RowBox[{"-", "9"}]}]}], "]"}]}], "]"}]}], "]"}]}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"dots", " ", "=", " ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"pe", "[", 
+             RowBox[{"[", "p", "]"}], "]"}], " ", ".", " ", 
+            RowBox[{"pe", "[", 
+             RowBox[{"[", 
+              RowBox[{"p", " ", "+", " ", "7"}], "]"}], "]"}]}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"p", ",", " ", "1", ",", " ", "90"}], "}"}]}], "]"}]}], ";",
+         "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the dot product PE(pos)\[CenterDot]PE(pos + 7) is the \
+same for every pos: it depends only on the distance\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Max", "[", "dots", "]"}], " ", "-", " ", 
+            RowBox[{"Min", "[", "dots", "]"}]}], " ", "<", " ", 
+           RowBox[{"10", "^", 
+            RowBox[{"-", "9"}]}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"net", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"atPENet", "[", "d", "]"}]}]}], ";", "\n", "   ", 
+        RowBox[{"x", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"12", ",", " ", "d"}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<as a net (SequenceIndicesLayer, a frozen LinearLayer, \
+Sin) it adds exactly these codes, for any length\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"atClose", "[", 
+            RowBox[{
+             RowBox[{"net", "[", "x", "]"}], ",", " ", 
+             RowBox[{"x", " ", "+", " ", 
+              RowBox[{"atPE", "[", 
+               RowBox[{"12", ",", " ", "d"}], "]"}]}]}], "]"}], " ", "&&", 
+           " ", 
+           RowBox[{"atClose", "[", 
+            RowBox[{
+             RowBox[{"net", "[", 
+              RowBox[{"x", "[", 
+               RowBox[{"[", 
+                RowBox[{";;", " ", "3"}], "]"}], "]"}], "]"}], ",", " ", 
+             RowBox[{
+              RowBox[{"x", "[", 
+               RowBox[{"[", 
+                RowBox[{";;", " ", "3"}], "]"}], "]"}], " ", "+", " ", 
+              RowBox[{"atPE", "[", 
+               RowBox[{"3", ",", " ", "d"}], "]"}]}]}], "]"}]}]}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<Frozen means LearningRateMultipliers -> 0: training never \
+changes those weights.\>\"", "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", " ", "6."}]}]}]}]}], " ", "The", " ", "position"}], "-", 
+     RowBox[{"wise", " ", "feed"}], "-", 
+     RowBox[{"forward", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"network", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atFFNNet", "[", 
+      RowBox[{"d_Integer", ",", " ", "dff_Integer"}], "]"}], " ", ":=", " ", 
+     RowBox[{"NetMapOperator", "[", 
+      RowBox[{
+       RowBox[{"NetChain", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"LinearLayer", "[", "dff", "]"}], ",", " ", "Ramp", ",", 
+          " ", 
+          RowBox[{"LinearLayer", "[", "d", "]"}]}], "}"}], "]"}], ",", " ", 
+       RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"atFFN", "[", 
+       RowBox[{"net_", ",", " ", "path_List"}], "]"}], "[", "x_", "]"}], " ", 
+     ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"w1", ",", " ", "b1", ",", " ", "w2", ",", " ", "b2"}], "}"}],
+        ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"w1", ",", " ", "b1", ",", " ", "w2", ",", " ", "b2"}], 
+          "}"}], " ", "=", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Normal", "@", 
+            RowBox[{"NetExtract", "[", 
+             RowBox[{"net", ",", " ", 
+              RowBox[{"Join", "[", 
+               RowBox[{"path", ",", " ", "#"}], "]"}]}], "]"}]}], " ", "&"}], 
+          " ", "/@", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             
+             RowBox[{"\"\<Net\>\"", ",", " ", "1", ",", 
+              " ", "\"\<Weights\>\""}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             
+             RowBox[{"\"\<Net\>\"", ",", " ", "1", ",", 
+              " ", "\"\<Biases\>\""}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             
+             RowBox[{"\"\<Net\>\"", ",", " ", "3", ",", 
+              " ", "\"\<Weights\>\""}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"\"\<Net\>\"", ",", " ", "3", ",", 
+              " ", "\"\<Biases\>\""}], "}"}]}], "}"}]}]}], ";", "\n", "   ", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"w2", " ", ".", " ", 
+             RowBox[{"Ramp", "[", 
+              RowBox[{
+               RowBox[{"w1", " ", ".", " ", "#"}], " ", "+", " ", "b1"}], 
+              "]"}]}], " ", "+", " ", "b2"}], " ", "&"}], ",", " ", "x"}], 
+         "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart6", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"net", ",", " ", "x"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", "[", "\"\<6. The position-wise feed-forward network\>\"",
+          "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<After attention, every position goes through the same \
+two-layer network on its own: dmodel \[RightArrow] dff \[RightArrow] dmodel \
+with a ReLU between (dmodel = 512, dff = 2048 in the base model; Section \
+3.3).\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atFormula", 
+         "[", "\"\<FFN(x) = max(0, x W\:2081 + b\:2081) W\:2082 + b\:2082\>\"",
+          "]"}], ";", "\n", "   ", 
+        RowBox[{"net", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"atFFNNet", "[", 
+           RowBox[{"16", ",", " ", "64"}], "]"}]}]}], ";", "\n", "   ", 
+        RowBox[{"x", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"5", ",", " ", "16"}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<NetMapOperator[NetChain[{LinearLayer[64], Ramp, \
+LinearLayer[16]}]] equals the formula at every position\>\"", ",", "\n", 
+          "    ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{
+            RowBox[{"net", "[", "x", "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"atFFN", "[", 
+              RowBox[{"net", ",", " ", 
+               RowBox[{"{", "}"}]}], "]"}], "[", "x", "]"}]}], "]"}]}], 
+         "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "7."}]}]}]}]}], " ", "Residual", " ", 
+     "connection", " ", "and", " ", "layer", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"normalisation", " ", "--"}], "--"}], "--"}], "--"}], 
+      "--"}]}], " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Every", " ", "sub"}], "-", 
+      RowBox[{"layer", " ", "is", " ", "wrapped", " ", "as", " ", "LayerNorm", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"x", " ", "+", " ", 
+          RowBox[{"Sublayer", 
+           RowBox[{"(", "x", ")"}]}]}], ")"}], ".", " ", "LayerNorm"}], " ", 
+       "normalises", " ", "each", " ", 
+       RowBox[{"position", "'"}], "s", "\n", "   ", "vector", " ", "to", " ", 
+       "mean", " ", "0", " ", "and", " ", "variance", " ", "1"}]}], ",", " ", 
+     
+     RowBox[{
+     "then", " ", "applies", " ", "a", " ", "learned", " ", "scale", " ", 
+      "and", " ", 
+      RowBox[{"shift", "."}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"atLN", "[", 
+       RowBox[{"net_", ",", " ", "path_List"}], "]"}], "[", "x_", "]"}], " ", 
+     ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"g", " ", "=", " ", 
+          RowBox[{"Normal", "@", 
+           RowBox[{"NetExtract", "[", 
+            RowBox[{"net", ",", " ", 
+             RowBox[{"Append", "[", 
+              RowBox[{"path", ",", " ", "\"\<Scaling\>\""}], "]"}]}], 
+            "]"}]}]}], ",", " ", 
+         RowBox[{"b", " ", "=", " ", 
+          RowBox[{"Normal", "@", 
+           RowBox[{"NetExtract", "[", 
+            RowBox[{"net", ",", " ", 
+             RowBox[{"Append", "[", 
+              RowBox[{"path", ",", " ", "\"\<Biases\>\""}], "]"}]}], 
+            "]"}]}]}], ",", " ", 
+         RowBox[{"eps", " ", "=", " ", 
+          RowBox[{"NetExtract", "[", 
+           RowBox[{"net", ",", " ", 
+            RowBox[{"Append", "[", 
+             RowBox[{"path", ",", " ", "\"\<Epsilon\>\""}], "]"}]}], 
+           "]"}]}]}], "}"}], ",", "\n", "   ", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"g", " ", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"#", " ", "-", " ", 
+               RowBox[{"Mean", "[", "#", "]"}]}], ")"}], "/", 
+             RowBox[{"Sqrt", "[", 
+              RowBox[{
+               RowBox[{"Mean", "[", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{"#", " ", "-", " ", 
+                   RowBox[{"Mean", "[", "#", "]"}]}], ")"}], "^", "2"}], 
+                "]"}], " ", "+", " ", "eps"}], "]"}]}]}], " ", "+", " ", 
+           "b"}], " ", "&"}], ",", " ", "x"}], "]"}]}], "]"}]}], ";"}], "\n", 
+   "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart7", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"ln", ",", " ", "x"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", 
+         "[", "\"\<7. Residual connection and layer normalisation\>\"", "]"}],
+         ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<Each sub-layer (attention or feed-forward) is wrapped in a \
+residual connection and followed by layer normalisation (Section 3.1). The \
+residual lets the signal and its gradient pass straight through; the \
+normalisation keeps every position's vector at mean 0 and variance 1 before a \
+learned scale and shift.\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atFormula", 
+         "[", "\"\<output = LayerNorm(x + Sublayer(x))\nLayerNorm(v) = \
+\[Gamma] (v \[Minus] mean v)/\[Sqrt](var v + \[Epsilon]) + \[Beta]\>\"", 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{"ln", " ", "=", " ", 
+         RowBox[{"NetInitialize", "[", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2", ",", " ", 
+            RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{"5", ",", " ", "8"}], "}"}]}]}], "]"}], "]"}]}], ";", 
+        "\n", "   ", 
+        RowBox[{"ln", " ", "=", " ", 
+         RowBox[{"NetReplacePart", "[", 
+          RowBox[{"ln", ",", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"\"\<Scaling\>\"", " ", "->", " ", 
+              RowBox[{"RandomReal", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"0.5", ",", " ", "1.5"}], "}"}], ",", " ", "8"}], 
+               "]"}]}], ",", " ", 
+             RowBox[{"\"\<Biases\>\"", " ", "->", " ", 
+              RowBox[{"RandomReal", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"-", "0.2"}], ",", " ", "0.2"}], "}"}], ",", " ", 
+                "8"}], "]"}]}]}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"x", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "2"}], ",", " ", "2"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"5", ",", " ", "8"}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        
+        RowBox[{"atCheck", "[", 
+         RowBox[{
+          
+          RowBox[{"\"\<NormalizationLayer[2, 2] is LayerNorm over each \
+position's features, with \[Epsilon] = \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"NetExtract", "[", 
+             RowBox[{"ln", ",", " ", "\"\<Epsilon\>\""}], "]"}], "]"}]}], ",",
+           "\n", "    ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{
+            RowBox[{"ln", "[", "x", "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"atLN", "[", 
+              RowBox[{"ln", ",", " ", 
+               RowBox[{"{", "}"}]}], "]"}], "[", "x", "]"}], ",", " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "4"}]}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<The paper places the normalisation after the residual sum \
+(post-norm). Many later transformers place it before the sub-layer \
+(pre-norm), which is easier to train when there are many layers; the lessons \
+follow the paper.\>\"", "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "8."}]}]}]}]}], " ", "Encoder", " ", "and", " ", 
+     "decoder", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"layers", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], " ",
+     "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atEncoderLayerNet", "[", 
+      RowBox[{"d_Integer", ",", " ", "h_Integer", ",", " ", "dff_Integer"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"NetGraph", "[", 
+      RowBox[{
+       RowBox[{"<|", "\n", "    ", 
+        RowBox[{
+         RowBox[{"\"\<att\>\"", " ", "->", " ", 
+          RowBox[{"atMHANet", "[", 
+           RowBox[{"d", ",", " ", "h"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<add1\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln1\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<ffn\>\"", " ", "->", " ", 
+          RowBox[{"atFFNNet", "[", 
+           RowBox[{"d", ",", " ", "dff"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<add2\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln2\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}]}], "|>"}], ",", "\n", "   ", 
+       
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<att\>\"", ",", " ", "\"\<Query\>\""}], "]"}]}], ",", 
+         " ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<att\>\"", ",", " ", "\"\<Memory\>\""}], "]"}]}], ",", 
+         "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], ",", 
+            " ", "\"\<att\>\""}], "}"}], " ", "->", " ", 
+          RowBox[{"\"\<add1\>\"", " ", "->", " ", 
+           RowBox[{"\"\<ln1\>\"", " ", "->", " ", "\"\<ffn\>\""}]}]}], ",", 
+         " ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\"\<ln1\>\"", ",", " ", "\"\<ffn\>\""}], "}"}], " ", "->",
+           " ", 
+          RowBox[{"\"\<add2\>\"", " ", "->", " ", "\"\<ln2\>\""}]}]}], "}"}], 
+       ",", "\n", "   ", 
+       RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atDecoderLayerNet", "[", 
+      RowBox[{"d_Integer", ",", " ", "h_Integer", ",", " ", "dff_Integer"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"NetGraph", "[", 
+      RowBox[{
+       RowBox[{"<|", "\n", "    ", 
+        RowBox[{
+         RowBox[{"\"\<self\>\"", " ", "->", " ", 
+          RowBox[{"atMHANet", "[", 
+           RowBox[{"d", ",", " ", "h", ",", " ", "True"}], "]"}]}], ",", " ", 
+         
+         RowBox[{"\"\<add1\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln1\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<cross\>\"", " ", "->", " ", 
+          RowBox[{"atMHANet", "[", 
+           RowBox[{"d", ",", " ", "h"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<add2\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln2\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}], ",", "\n", "    ", 
+         RowBox[{"\"\<ffn\>\"", " ", "->", " ", 
+          RowBox[{"atFFNNet", "[", 
+           RowBox[{"d", ",", " ", "dff"}], "]"}]}], ",", " ", 
+         RowBox[{"\"\<add3\>\"", " ", "->", " ", 
+          RowBox[{"TotalLayer", "[", "]"}]}], ",", " ", 
+         RowBox[{"\"\<ln3\>\"", " ", "->", " ", 
+          RowBox[{"NormalizationLayer", "[", 
+           RowBox[{"2", ",", " ", "2"}], "]"}]}]}], "|>"}], ",", "\n", "   ", 
+       
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<self\>\"", ",", " ", "\"\<Query\>\""}], "]"}]}], ",", 
+         " ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<self\>\"", ",", " ", "\"\<Memory\>\""}], "]"}]}], ",",
+          "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"NetPort", "[", "\"\<Input\>\"", "]"}], ",", 
+            " ", "\"\<self\>\""}], "}"}], " ", "->", " ", 
+          RowBox[{"\"\<add1\>\"", " ", "->", " ", "\"\<ln1\>\""}]}], ",", 
+         "\n", "    ", 
+         RowBox[{"\"\<ln1\>\"", " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<cross\>\"", ",", " ", "\"\<Query\>\""}], "]"}]}], ",",
+          " ", 
+         RowBox[{
+          RowBox[{"NetPort", "[", "\"\<Memory\>\"", "]"}], " ", "->", " ", 
+          RowBox[{"NetPort", "[", 
+           RowBox[{"\"\<cross\>\"", ",", " ", "\"\<Memory\>\""}], "]"}]}], ",",
+          "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\"\<ln1\>\"", ",", " ", "\"\<cross\>\""}], "}"}], " ", "->",
+           " ", 
+          RowBox[{"\"\<add2\>\"", " ", "->", " ", 
+           RowBox[{"\"\<ln2\>\"", " ", "->", " ", "\"\<ffn\>\""}]}]}], ",", 
+         " ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\"\<ln2\>\"", ",", " ", "\"\<ffn\>\""}], "}"}], " ", "->",
+           " ", 
+          RowBox[{"\"\<add3\>\"", " ", "->", " ", "\"\<ln3\>\""}]}]}], "}"}], 
+       ",", "\n", "   ", 
+       RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}], ",", " ", 
+       RowBox[{"\"\<Memory\>\"", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Varying\>\"", ",", " ", "d"}], "}"}]}]}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"the", " ", "same", " ", "layers", " ", "from", " ", "arrays"}], 
+    " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"atEncoderLayer", "[", 
+       RowBox[{"net_", ",", " ", "h_"}], "]"}], "[", "x_", "]"}], " ", ":=", 
+     " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", "x1", "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"x1", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"atLN", "[", 
+           RowBox[{"net", ",", " ", 
+            RowBox[{"{", "\"\<ln1\>\"", "}"}]}], "]"}], "[", 
+          RowBox[{"x", " ", "+", " ", 
+           RowBox[{
+            RowBox[{"atMHA", "[", 
+             RowBox[{"net", ",", " ", 
+              RowBox[{"{", "\"\<att\>\"", "}"}], ",", " ", "h"}], "]"}], "[", 
+            
+            RowBox[{"x", ",", " ", "x"}], "]"}]}], "]"}]}], ";", "\n", "   ", 
+        
+        RowBox[{
+         RowBox[{"atLN", "[", 
+          RowBox[{"net", ",", " ", 
+           RowBox[{"{", "\"\<ln2\>\"", "}"}]}], "]"}], "[", 
+         RowBox[{"x1", " ", "+", " ", 
+          RowBox[{
+           RowBox[{"atFFN", "[", 
+            RowBox[{"net", ",", " ", 
+             RowBox[{"{", "\"\<ffn\>\"", "}"}]}], "]"}], "[", "x1", "]"}]}], 
+         "]"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"atDecoderLayer", "[", 
+       RowBox[{"net_", ",", " ", "h_"}], "]"}], "[", 
+      RowBox[{"y_", ",", " ", "mem_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"y1", ",", " ", "y2"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{"y1", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"atLN", "[", 
+           RowBox[{"net", ",", " ", 
+            RowBox[{"{", "\"\<ln1\>\"", "}"}]}], "]"}], "[", 
+          RowBox[{"y", " ", "+", " ", 
+           RowBox[{
+            RowBox[{"atMHA", "[", 
+             RowBox[{"net", ",", " ", 
+              RowBox[{"{", "\"\<self\>\"", "}"}], ",", " ", "h", ",", " ", 
+              "True"}], "]"}], "[", 
+            RowBox[{"y", ",", " ", "y"}], "]"}]}], "]"}]}], ";", "\n", "   ", 
+        
+        RowBox[{"y2", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"atLN", "[", 
+           RowBox[{"net", ",", " ", 
+            RowBox[{"{", "\"\<ln2\>\"", "}"}]}], "]"}], "[", 
+          RowBox[{"y1", " ", "+", " ", 
+           RowBox[{
+            RowBox[{"atMHA", "[", 
+             RowBox[{"net", ",", " ", 
+              RowBox[{"{", "\"\<cross\>\"", "}"}], ",", " ", "h"}], "]"}], "[", 
+            RowBox[{"y1", ",", " ", "mem"}], "]"}]}], "]"}]}], ";", "\n", 
+        "   ", 
+        RowBox[{
+         RowBox[{"atLN", "[", 
+          RowBox[{"net", ",", " ", 
+           RowBox[{"{", "\"\<ln3\>\"", "}"}]}], "]"}], "[", 
+         RowBox[{"y2", " ", "+", " ", 
+          RowBox[{
+           RowBox[{"atFFN", "[", 
+            RowBox[{"net", ",", " ", 
+             RowBox[{"{", "\"\<ffn\>\"", "}"}]}], "]"}], "[", "y2", "]"}]}], 
+         "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart8", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"d", " ", "=", " ", "16"}], ",", " ", 
+         RowBox[{"h", " ", "=", " ", "4"}], ",", " ", 
+         RowBox[{"dff", " ", "=", " ", "32"}], ",", " ", "enc", ",", " ", 
+         "dec", ",", " ", "x", ",", " ", "y", ",", " ", "mem"}], "}"}], ",", 
+       "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", "[", "\"\<8. One encoder layer and one decoder layer\>\"",
+          "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<An encoder layer is self-attention, then the feed-forward \
+network, each wrapped as LayerNorm(x + Sublayer(x)). A decoder layer has \
+three sub-layers: causal self-attention over the output so far, attention \
+over the encoder's output (queries from the decoder, keys and values from the \
+encoder), and the feed-forward network. The base model stacks 6 of each \
+(Section 3.1).\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"enc", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"atEncoderLayerNet", "[", 
+           RowBox[{"d", ",", " ", "h", ",", " ", "dff"}], "]"}]}]}], ";", 
+        "\n", "   ", 
+        RowBox[{"dec", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"atDecoderLayerNet", "[", 
+           RowBox[{"d", ",", " ", "h", ",", " ", "dff"}], "]"}]}]}], ";", 
+        "\n", "   ", 
+        RowBox[{"atShow", "[", 
+         RowBox[{"Information", "[", 
+          RowBox[{"dec", ",", " ", "\"\<SummaryGraphic\>\""}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"x", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"6", ",", " ", "d"}], "}"}]}], "]"}]}], ";", " ", 
+        RowBox[{"y", " ", "=", " ", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"4", ",", " ", "d"}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        
+        RowBox[{"mem", " ", "=", " ", 
+         RowBox[{"enc", "[", "x", "]"}]}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the encoder layer net equals the encoder layer coded \
+from arrays\>\"", ",", " ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{"mem", ",", " ", 
+            RowBox[{
+             RowBox[{"atEncoderLayer", "[", 
+              RowBox[{"enc", ",", " ", "h"}], "]"}], "[", "x", "]"}], ",", 
+            " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "4"}]}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the decoder layer net equals the decoder layer coded \
+from arrays\>\"", ",", " ", 
+          RowBox[{"atClose", "[", 
+           RowBox[{
+            RowBox[{"dec", "[", 
+             RowBox[{"<|", 
+              RowBox[{
+               RowBox[{"\"\<Input\>\"", " ", "->", " ", "y"}], ",", " ", 
+               RowBox[{"\"\<Memory\>\"", " ", "->", " ", "mem"}]}], "|>"}], 
+             "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"atDecoderLayer", "[", 
+              RowBox[{"dec", ",", " ", "h"}], "]"}], "[", 
+             RowBox[{"y", ",", " ", "mem"}], "]"}], ",", " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "4"}]}]}], "]"}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the decoder is causal: output i does not change when \
+later output positions change\>\"", ",", "\n", "    ", 
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"y2", " ", "=", " ", 
+              RowBox[{"ReplacePart", "[", 
+               RowBox[{"y", ",", " ", 
+                RowBox[{"4", " ", "->", " ", 
+                 RowBox[{"RandomReal", "[", 
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"-", "1"}], ",", " ", "1"}], "}"}], ",", " ", 
+                   "d"}], "]"}]}]}], "]"}]}], "}"}], ",", " ", 
+            RowBox[{"atClose", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"dec", "[", 
+                RowBox[{"<|", 
+                 RowBox[{
+                  RowBox[{"\"\<Input\>\"", " ", "->", " ", "y"}], ",", " ", 
+                  RowBox[{"\"\<Memory\>\"", " ", "->", " ", "mem"}]}], "|>"}],
+                 "]"}], "[", 
+               RowBox[{"[", 
+                RowBox[{";;", " ", "3"}], "]"}], "]"}], ",", " ", 
+              RowBox[{
+               RowBox[{"dec", "[", 
+                RowBox[{"<|", 
+                 RowBox[{
+                  RowBox[{"\"\<Input\>\"", " ", "->", " ", "y2"}], ",", " ", 
+                  RowBox[{"\"\<Memory\>\"", " ", "->", " ", "mem"}]}], "|>"}],
+                 "]"}], "[", 
+               RowBox[{"[", 
+                RowBox[{";;", " ", "3"}], "]"}], "]"}], ",", " ", 
+              RowBox[{"10", "^", 
+               RowBox[{"-", "5"}]}]}], "]"}]}], "]"}]}], "]"}]}]}], "]"}]}], 
+    ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "9."}]}]}]}]}], " ", "Shared", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"embeddings", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart9", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"d", " ", "=", " ", "8"}], ",", " ", 
+         RowBox[{"V", " ", "=", " ", "20"}], ",", " ", "net"}], "}"}], ",", 
+       "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", 
+         "[", "\"\<9. Shared embeddings, multiplied by \[Sqrt]dmodel\>\"", 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<The paper uses one weight matrix for the input embedding, \
+the output embedding and the projection before the softmax, and multiplies \
+the embeddings by \[Sqrt]dmodel (Section 3.4). In Wolfram the sharing is \
+NetSharedArray: EmbeddingLayer stores a V\[Times]d matrix, and LinearLayer[V] \
+on d-dimensional inputs stores a V\[Times]d matrix as well, so one array \
+serves both.\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atFormula", 
+         "[", "\"\<EmbeddingLayer[d, V, \\\"Weights\\\" -> \
+NetSharedArray[\\\"W\\\"]]   \[Ellipsis]   LinearLayer[V, \\\"Weights\\\" -> \
+NetSharedArray[\\\"W\\\"]]\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"net", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"NetGraph", "[", 
+           RowBox[{
+            RowBox[{"<|", 
+             RowBox[{
+              RowBox[{"\"\<emb\>\"", " ", "->", " ", 
+               RowBox[{"EmbeddingLayer", "[", 
+                RowBox[{"d", ",", " ", "V", ",", " ", 
+                 RowBox[{"\"\<Weights\>\"", " ", "->", " ", 
+                  RowBox[{"NetSharedArray", "[", "\"\<W\>\"", "]"}]}]}], 
+                "]"}]}], ",", " ", 
+              RowBox[{"\"\<scale\>\"", " ", "->", " ", 
+               RowBox[{"ElementwiseLayer", "[", 
+                RowBox[{
+                 RowBox[{"#", " ", 
+                  RowBox[{"Sqrt", "[", 
+                   RowBox[{"N", "@", "d"}], "]"}]}], " ", "&"}], "]"}]}], ",",
+               "\n", "       ", 
+              RowBox[{"\"\<out\>\"", " ", "->", " ", 
+               RowBox[{"NetMapOperator", "[", 
+                RowBox[{"LinearLayer", "[", 
+                 RowBox[{"V", ",", " ", 
+                  RowBox[{"\"\<Weights\>\"", " ", "->", " ", 
+                   RowBox[{"NetSharedArray", "[", "\"\<W\>\"", "]"}]}]}], 
+                 "]"}], "]"}]}]}], "|>"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"\"\<emb\>\"", " ", "->", " ", 
+              RowBox[{"\"\<scale\>\"", " ", "->", " ", "\"\<out\>\""}]}], 
+             "}"}], ",", "\n", "      ", 
+            RowBox[{"\"\<Input\>\"", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<Varying\>\"", ",", " ", 
+               RowBox[{"Restricted", "[", 
+                RowBox[{"\"\<Integer\>\"", ",", " ", "V"}], "]"}]}], 
+              "}"}]}]}], "]"}]}]}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the embedding and the output projection are one and the \
+same array\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"Normal", "@", 
+            RowBox[{"NetExtract", "[", 
+             RowBox[{"net", ",", " ", 
+              RowBox[{"{", 
+               RowBox[{"\"\<emb\>\"", ",", " ", "\"\<Weights\>\""}], "}"}]}], 
+             "]"}]}], " ", "==", " ", 
+           RowBox[{"Normal", "@", 
+            RowBox[{"NetExtract", "[", 
+             RowBox[{"net", ",", " ", 
+              RowBox[{"{", 
+               
+               RowBox[{"\"\<out\>\"", ",", " ", "\"\<Net\>\"", ",", 
+                " ", "\"\<Weights\>\""}], "}"}]}], "]"}]}]}]}], "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{
+          
+          RowBox[{"\"\<the net stores that array once: \>\"", " ", "<>", " ", 
+           
+           RowBox[{"ToString", "[", 
+            RowBox[{"V", " ", "d"}], "]"}], " ", "<>", 
+           " ", "\"\< shared weights and \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", "V", "]"}], " ", "<>", 
+           " ", "\"\< output biases\>\""}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"Information", "[", 
+            RowBox[{"net", ",", " ", "\"\<ArraysTotalElementCount\>\""}], 
+            "]"}], " ", "==", " ", 
+           RowBox[{
+            RowBox[{"V", " ", "d"}], " ", "+", " ", "V"}]}]}], "]"}]}]}], 
+      "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "10."}]}]}]}]}], " ", "Label", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"smoothing", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"With", " ", "epsilon"}], " ", "=", " ", 
+      RowBox[{"0.1", " ", "and", " ", "K", " ", "classes"}]}], ",", " ", 
+     RowBox[{
+      RowBox[{"the", " ", "target", " ", "is", " ", 
+       RowBox[{"(", 
+        RowBox[{"1", " ", "-", " ", "epsilon"}], ")"}], " ", "on", " ", "the",
+        " ", "right", " ", "class", " ", "plus", " ", 
+       RowBox[{"epsilon", "/", "K"}], "\n", "   ", "spread", " ", "over", " ",
+        "all", " ", 
+       RowBox[{"classes", ".", " ", "The"}], " ", "cross"}], "-", 
+      RowBox[{
+      "entropy", " ", "against", " ", "it", " ", "is", " ", "smallest", " ", 
+       "when", " ", "the", " ", "model", " ", "predicts", "\n", "   ", 
+       "exactly", " ", "that", " ", "smoothed", " ", "target"}]}], ",", " ", 
+     RowBox[{
+      RowBox[{"not", " ", "a", " ", "one"}], "-", 
+      RowBox[{"hot", "."}]}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atSmooth", "[", 
+      RowBox[{"k_Integer", ",", " ", "K_Integer", ",", " ", 
+       RowBox[{"eps_", " ", ":", " ", "0.1"}]}], "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"ConstantArray", "[", 
+       RowBox[{
+        RowBox[{"eps", "/", "K"}], ",", " ", "K"}], "]"}], " ", "+", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", " ", "-", " ", "eps"}], ")"}], " ", 
+       RowBox[{"UnitVector", "[", 
+        RowBox[{"K", ",", " ", "k"}], "]"}]}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atCrossEntropy", "[", 
+      RowBox[{"target_", ",", " ", "p_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"-", 
+      RowBox[{"target", " ", ".", " ", 
+       RowBox[{"Log", "[", "p", "]"}]}]}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart10", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"K", " ", "=", " ", "10"}], ",", " ", "t", ",", " ", 
+         "confident", ",", " ", "smoothed", ",", " ", "sure"}], "}"}], ",", 
+       "\n", "   ", 
+       RowBox[{
+        RowBox[{"atSection", "[", "\"\<10. Label smoothing\>\"", "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<The training target is not one-hot: with \[Epsilon] = 0.1 \
+and K classes it puts (1\[Minus]\[Epsilon]) + \[Epsilon]/K on the right class \
+and \[Epsilon]/K on each of the others. The model learns to be less sure; the \
+paper reports that this hurts perplexity but improves accuracy and BLEU \
+(Section 5.4).\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atFormula", 
+         "[", "\"\<q = (1\[Minus]\[Epsilon]) onehot(y) + \[Epsilon]/K ,     \
+loss = \[Minus]\[CapitalSigma] q log p\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"t", " ", "=", " ", 
+         RowBox[{"atSmooth", "[", 
+          RowBox[{"3", ",", " ", "K"}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"smoothed", " ", "=", " ", "t"}], ";", " ", 
+        RowBox[{"confident", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"0.999", " ", 
+           RowBox[{"UnitVector", "[", 
+            RowBox[{"K", ",", " ", "3"}], "]"}]}], " ", "+", " ", 
+          RowBox[{"0.001", "/", "K"}]}]}], ";", "\n", "   ", 
+        RowBox[{"sure", " ", "=", " ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"atCrossEntropy", "[", 
+            RowBox[{"t", ",", " ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"1", " ", "-", " ", "s"}], ")"}], " ", 
+               RowBox[{"UnitVector", "[", 
+                RowBox[{"K", ",", " ", "3"}], "]"}]}], " ", "+", " ", 
+              RowBox[{"s", "/", "K"}]}]}], "]"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"s", ",", " ", 
+             RowBox[{"{", 
+              RowBox[{
+              "0.001", ",", " ", "0.05", ",", " ", "0.1", ",", " ", "0.2", ",",
+                " ", "0.5"}], "}"}]}], "}"}]}], "]"}]}], ";", "\n", "   ", 
+        RowBox[{"atShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"\"\<probability on the right class\>\"", ",", " ", 
+               RowBox[{"Sequence", " ", "@@", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"NumberForm", "[", 
+                    RowBox[{
+                    RowBox[{"1", " ", "-", " ", "#", " ", "+", " ", 
+                    RowBox[{"#", "/", "K"}]}], ",", " ", "3"}], "]"}], " ", 
+                   "&"}], " ", "/@", " ", 
+                  RowBox[{"{", 
+                   RowBox[{
+                   "0.001", ",", " ", "0.05", ",", " ", "0.1", ",", " ", 
+                    "0.2", ",", " ", "0.5"}], "}"}]}], ")"}]}]}], "}"}], ",", 
+             "\n", "      ", 
+             RowBox[{"Prepend", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"NumberForm", "[", 
+                  RowBox[{"#", ",", " ", "3"}], "]"}], " ", "&"}], " ", "/@", 
+                " ", "sure"}], ",", " ", "\"\<smoothed loss\>\""}], "]"}]}], 
+            "}"}], ",", " ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", "LightGray", "}"}], ",", " ", "None"}], "}"}]}]}], 
+          "]"}], "]"}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the smoothed target sums to 1 and gives 0.91 to the \
+right class\>\"", ",", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Abs", "[", 
+             RowBox[{
+              RowBox[{"Total", "[", "t", "]"}], " ", "-", " ", "1"}], "]"}], 
+            " ", "<", " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "12"}]}]}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"Abs", "[", 
+             RowBox[{
+              RowBox[{"t", "[", 
+               RowBox[{"[", "3", "]"}], "]"}], " ", "-", " ", "0.91"}], "]"}],
+             " ", "<", " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "12"}]}]}]}]}], "]"}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the smoothed loss is lowest when the model predicts the \
+smoothed target, not when it is 99.9% sure\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"atCrossEntropy", "[", 
+             RowBox[{"t", ",", " ", "smoothed"}], "]"}], " ", "<", " ", 
+            RowBox[{"atCrossEntropy", "[", 
+             RowBox[{"t", ",", " ", "confident"}], "]"}]}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"Ordering", "[", 
+             RowBox[{"sure", ",", " ", "1"}], "]"}], " ", "==", " ", 
+            RowBox[{"{", "3", "}"}]}]}]}], "]"}]}]}], "]"}]}], ";"}], "\n", 
+   "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", " ", "11."}]}]}]}]}], " ", "The", " ", "learning"}], "-", 
+     RowBox[{"rate", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"schedule", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}]}],
+     " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atRate", "[", 
+      RowBox[{
+       RowBox[{"step_", "?", "NumericQ"}], ",", " ", 
+       RowBox[{"d_", " ", ":", " ", "512"}], ",", " ", 
+       RowBox[{"warmup_", " ", ":", " ", "4000"}]}], "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"d", "^", 
+       RowBox[{"-", "0.5"}]}], " ", 
+      RowBox[{"Min", "[", 
+       RowBox[{
+        RowBox[{"step", "^", 
+         RowBox[{"-", "0.5"}]}], ",", " ", 
+        RowBox[{"step", " ", 
+         RowBox[{"warmup", "^", 
+          RowBox[{"-", "1.5"}]}]}]}], "]"}]}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart11", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", "[", "\"\<11. The warm-up learning-rate schedule\>\"", 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<Adam with \[Beta]\:2081 = 0.9, \[Beta]\:2082 = 0.98, \
+\[Epsilon] = 10\:207b\:2079. The rate rises linearly for the first 4000 \
+steps, then falls as 1/\[Sqrt]step (Section 5.3). The warm-up protects the \
+young network from large, badly-aimed steps.\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atFormula", 
+         "[", "\"\<lrate = dmodel^(\[Minus]0.5) \[CenterDot] min(step^(\
+\[Minus]0.5), step \[CenterDot] warmup^(\[Minus]1.5)),     warmup = 4000\>\"",
+          "]"}], ";", "\n", "   ", 
+        RowBox[{"atShow", "[", 
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{"atRate", "[", "s", "]"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"s", ",", " ", "1", ",", " ", "40000"}], "}"}], ",", " ", 
+           
+           RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+           RowBox[{"FrameLabel", " ", "->", " ", 
+            RowBox[{"{", 
+             
+             RowBox[{"\"\<training step\>\"", ",", 
+              " ", "\"\<learning rate\>\""}], "}"}]}], ",", " ", 
+           RowBox[{"ImageSize", " ", "->", " ", "420"}], ",", " ", 
+           RowBox[{"PlotRange", " ", "->", " ", "All"}]}], "]"}], "]"}], ";", 
+        "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the peak is at step 4000, at 1/\[Sqrt](512 \[Times] \
+4000) \[TildeTilde] 7.0\[Times]10\:207b\:2074\>\"", ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Abs", "[", 
+             RowBox[{
+              RowBox[{"atRate", "[", "4000", "]"}], " ", "-", " ", 
+              RowBox[{"1", "/", 
+               RowBox[{"Sqrt", "[", 
+                RowBox[{"512.", " ", "4000"}], "]"}]}]}], "]"}], " ", "<", 
+            " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "12"}]}]}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"atRate", "[", "3999", "]"}], " ", "<", " ", 
+            RowBox[{"atRate", "[", "4000", "]"}]}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{"atRate", "[", "4001", "]"}], " ", "<", " ", 
+            RowBox[{"atRate", "[", "4000", "]"}]}]}]}], "]"}], ";", "\n", 
+        "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<In Wolfram: NetTrain[\[Ellipsis], Method -> {\\\"ADAM\\\", \
+\\\"Beta1\\\" -> 0.9, \\\"Beta2\\\" -> 0.98, \\\"LearningRate\\\" -> peak, \\\
+\"LearningRateSchedule\\\" -> (atRate[#] / peak &)}]. The schedule is a \
+factor of the learning rate, so the learning rate is set to the peak. (The \
+ADAM \[Epsilon] of 10\:207b\:2079 made training collapse in the demo nets, so \
+they keep Wolfram's default.)\>\"", "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "12."}]}]}]}]}], " ", "Beam", " ", "search", " ", 
+     "with", " ", "a", " ", "length", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"penalty", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"Log", "-", 
+      RowBox[{
+      "probabilities", " ", "only", " ", "fall", " ", "as", " ", "a", " ", 
+       "hypothesis", " ", "grows"}]}], ",", " ", 
+     RowBox[{
+      RowBox[{
+      "so", " ", "plain", " ", "beam", " ", "search", " ", "prefers", " ", 
+       "short", " ", 
+       RowBox[{"outputs", ".", "\n", "   ", "The"}], " ", "paper", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"following", " ", "Wu", " ", "et", " ", 
+          RowBox[{"al", "."}]}], ",", " ", "2016"}], ")"}], " ", "divides", " ",
+        "by", " ", "lp", 
+       RowBox[{"(", "Y", ")"}]}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"5", " ", "+"}], " ", "|", "Y", "|"}], ")"}], "/", "6"}], 
+        ")"}], "^", "alpha"}]}], ",", " ", 
+     RowBox[{"alpha", " ", "=", " ", "0.6"}], ",", " ", 
+     RowBox[{"beam", " ", "4."}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atLP", "[", 
+      RowBox[{"len_", ",", " ", 
+       RowBox[{"alpha_", " ", ":", " ", "0.6"}]}], "]"}], " ", ":=", " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"5", " ", "+", " ", "len"}], ")"}], "/", "6."}], ")"}], "^", 
+      "alpha"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atRank", "[", 
+      RowBox[{"hyps_List", ",", " ", "alpha_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"SortBy", "[", 
+      RowBox[{"hyps", ",", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"#", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], "/", 
+         RowBox[{"atLP", "[", 
+          RowBox[{
+           RowBox[{"#", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], ",", " ", "alpha"}], "]"}]}], " ",
+         "&"}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart12", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"hyps", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"\"\<short\>\"", ",", " ", 
+             RowBox[{"-", "2.0"}], ",", " ", "2"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<long\>\"", ",", " ", 
+             RowBox[{"-", "2.6"}], ",", " ", "8"}], "}"}]}], "}"}]}], "}"}], ",",
+        "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", "[", "\"\<12. Beam search with a length penalty\>\"", 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<The log-probability of a hypothesis only falls as it \
+grows, so plain beam search prefers short outputs. The paper uses beam size 4 \
+and divides each finished hypothesis's log-probability by a length penalty \
+with \[Alpha] = 0.6 (Section 6.1, from Wu et al. 2016). The beam itself is \
+the one from Lesson 1.\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atFormula", 
+         "[", "\"\<score(Y) = log P(Y | X) / lp(Y),     lp(Y) = ((5 + |Y|) / \
+6)^\[Alpha]\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"atShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"#", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+                 RowBox[{"#", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+                 RowBox[{"#", "[", 
+                  RowBox[{"[", "3", "]"}], "]"}], ",", " ", 
+                 RowBox[{"NumberForm", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "/", 
+                    RowBox[{"atLP", "[", 
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], ",", " ", "0"}], "]"}]}], 
+                   ",", " ", "3"}], "]"}], ",", " ", 
+                 RowBox[{"NumberForm", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "/", 
+                    RowBox[{"atLP", "[", 
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], ",", " ", "0.6"}], 
+                    "]"}]}], ",", " ", "3"}], "]"}]}], "}"}], " ", "&"}], " ",
+               "/@", " ", "hyps"}], ",", "\n", "      ", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<hypothesis\>\"", ",", " ", "\"\<log P\>\"", ",", 
+               " ", "\"\<length\>\"", ",", " ", "\"\<score, \[Alpha] = 0\>\"",
+                ",", " ", "\"\<score, \[Alpha] = 0.6\>\""}], "}"}]}], "]"}], ",",
+            " ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Background", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"None", ",", " ", 
+              RowBox[{"{", "LightGray", "}"}]}], "}"}]}]}], "]"}], "]"}], ";",
+         "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<without the penalty the short hypothesis wins; with \
+\[Alpha] = 0.6 the long, slightly less likely one does\>\"", ",", "\n", 
+          "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"atRank", "[", 
+              RowBox[{"hyps", ",", " ", "0"}], "]"}], "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", " ", "1"}], "]"}], "]"}], " ", "==", 
+            " ", "\"\<short\>\""}], " ", "&&", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"atRank", "[", 
+              RowBox[{"hyps", ",", " ", "0.6"}], "]"}], "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", " ", "1"}], "]"}], "]"}], " ", "==", 
+            " ", "\"\<long\>\""}]}]}], "]"}]}]}], "]"}]}], ";"}], "\n", "\n", 
+   
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "13."}]}]}]}]}], " ", "The", " ", "parameter", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"count", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], " ", 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atLayerParams", "[", 
+      RowBox[{"d_", ",", " ", "dff_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<MHA\>\"", " ", "->", " ", 
+        RowBox[{"atMHAParams", "[", "d", "]"}]}], ",", " ", 
+       RowBox[{"\"\<FFN\>\"", " ", "->", " ", 
+        RowBox[{
+         RowBox[{"d", " ", "dff"}], " ", "+", " ", "dff", " ", "+", " ", 
+         RowBox[{"dff", " ", "d"}], " ", "+", " ", "d"}]}], ",", " ", 
+       RowBox[{"\"\<LN\>\"", " ", "->", " ", 
+        RowBox[{"2", " ", "d"}]}]}], "|>"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atBaseParams", "[", 
+      RowBox[{
+       RowBox[{"V_", " ", ":", " ", "37000"}], ",", " ", 
+       RowBox[{"d_", " ", ":", " ", "512"}], ",", " ", 
+       RowBox[{"dff_", " ", ":", " ", "2048"}], ",", " ", 
+       RowBox[{"n_", " ", ":", " ", "6"}]}], "]"}], " ", ":=", " ", 
+     RowBox[{"With", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"p", " ", "=", " ", 
+         RowBox[{"atLayerParams", "[", 
+          RowBox[{"d", ",", " ", "dff"}], "]"}]}], "}"}], ",", " ", 
+       RowBox[{"<|", "\n", "    ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"\"\<shared embedding / pre-softmax \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", "V", "]"}], " ", "<>", 
+           " ", "\"\< \[Times] \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", "d", "]"}]}], " ", "->", " ", 
+          RowBox[{"V", " ", "d"}]}], ",", "\n", "    ", 
+         RowBox[{
+          RowBox[{"\"\<encoder: \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", "n", "]"}], " ", "<>", 
+           " ", "\"\< \[Times] (attention + FFN + 2 LayerNorm)\>\""}], " ", "->",
+           " ", 
+          RowBox[{"n", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"p", "[", "\"\<MHA\>\"", "]"}], " ", "+", " ", 
+             RowBox[{"p", "[", "\"\<FFN\>\"", "]"}], " ", "+", " ", 
+             RowBox[{"2", " ", 
+              RowBox[{"p", "[", "\"\<LN\>\"", "]"}]}]}], ")"}]}]}], ",", "\n",
+          "    ", 
+         RowBox[{
+          RowBox[{"\"\<decoder: \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", "n", "]"}], " ", "<>", 
+           " ", "\"\< \[Times] (2 attentions + FFN + 3 LayerNorm)\>\""}], " ",
+           "->", " ", 
+          RowBox[{"n", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", 
+              RowBox[{"p", "[", "\"\<MHA\>\"", "]"}]}], " ", "+", " ", 
+             RowBox[{"p", "[", "\"\<FFN\>\"", "]"}], " ", "+", " ", 
+             RowBox[{"3", " ", 
+              RowBox[{"p", "[", "\"\<LN\>\"", "]"}]}]}], ")"}]}]}], ",", "\n",
+          "    ", 
+         RowBox[{"\"\<softmax biases\>\"", " ", "->", " ", "V"}]}], "|>"}]}], 
+      "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atPart13", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"p", " ", "=", " ", 
+          RowBox[{"atBaseParams", "[", "]"}]}], ",", " ", "enc", ",", " ", 
+         "dec"}], "}"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+        "atSection", "[", "\"\<13. The parameter count of the base model\>\"",
+          "]"}], ";", "\n", "   ", 
+        RowBox[{
+        "atText", 
+         "[", "\"\<Counted from the parts above, for dmodel = 512, dff = \
+2048, h = 8, 6 encoder and 6 decoder layers, and the shared vocabulary of \
+about 37,000 tokens (Section 5.1):\>\"", "]"}], ";", "\n", "   ", 
+        RowBox[{"atShow", "[", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Append", "[", 
+            RowBox[{
+             RowBox[{"KeyValueMap", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"#1", ",", " ", 
+                  RowBox[{"NumberForm", "[", 
+                   RowBox[{"#2", ",", " ", 
+                    RowBox[{"DigitBlock", " ", "->", " ", "3"}]}], "]"}]}], 
+                 "}"}], " ", "&"}], ",", " ", "p"}], "]"}], ",", "\n", 
+             "      ", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{"\"\<total\>\"", ",", " ", "Bold"}], "]"}], ",", " ", 
+               
+               RowBox[{"Style", "[", 
+                RowBox[{
+                 RowBox[{"NumberForm", "[", 
+                  RowBox[{
+                   RowBox[{"Total", "[", "p", "]"}], ",", " ", 
+                   RowBox[{"DigitBlock", " ", "->", " ", "3"}]}], "]"}], ",", 
+                 " ", "Bold"}], "]"}]}], "}"}]}], "]"}], ",", " ", 
+           RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+           RowBox[{"Alignment", " ", "->", " ", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{"Left", ",", " ", "Right"}], "}"}], "}"}]}]}], "]"}], 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{"enc", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"atEncoderLayerNet", "[", 
+           RowBox[{"16", ",", " ", "4", ",", " ", "32"}], "]"}]}]}], ";", " ", 
+        RowBox[{"dec", " ", "=", " ", 
+         RowBox[{"NetInitialize", "@", 
+          RowBox[{"atDecoderLayerNet", "[", 
+           RowBox[{"16", ",", " ", "4", ",", " ", "32"}], "]"}]}]}], ";", 
+        "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{"\"\<the per-layer formulas agree with Wolfram's counts for \
+small encoder and decoder layers\>\"", ",", "\n", "    ", 
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"q", " ", "=", " ", 
+              RowBox[{"atLayerParams", "[", 
+               RowBox[{"16", ",", " ", "32"}], "]"}]}], "}"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Information", "[", 
+               RowBox[{"enc", ",", " ", "\"\<ArraysTotalElementCount\>\""}], 
+               "]"}], " ", "==", " ", 
+              RowBox[{
+               RowBox[{"q", "[", "\"\<MHA\>\"", "]"}], " ", "+", " ", 
+               RowBox[{"q", "[", "\"\<FFN\>\"", "]"}], " ", "+", " ", 
+               RowBox[{"2", " ", 
+                RowBox[{"q", "[", "\"\<LN\>\"", "]"}]}]}]}], " ", "&&", "\n", 
+             "      ", 
+             RowBox[{
+              RowBox[{"Information", "[", 
+               RowBox[{"dec", ",", " ", "\"\<ArraysTotalElementCount\>\""}], 
+               "]"}], " ", "==", " ", 
+              RowBox[{
+               RowBox[{"2", " ", 
+                RowBox[{"q", "[", "\"\<MHA\>\"", "]"}]}], " ", "+", " ", 
+               RowBox[{"q", "[", "\"\<FFN\>\"", "]"}], " ", "+", " ", 
+               RowBox[{"3", " ", 
+                RowBox[{"q", "[", "\"\<LN\>\"", "]"}]}]}]}]}]}], "]"}]}], 
+         "]"}], ";", "\n", "   ", 
+        RowBox[{"atCheck", "[", 
+         RowBox[{
+          RowBox[{"\"\<the total, \>\"", " ", "<>", " ", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"NumberForm", "[", 
+             RowBox[{
+              RowBox[{"Total", "[", "p", "]"}], ",", " ", 
+              RowBox[{"DigitBlock", " ", "->", " ", "3"}]}], "]"}], "]"}], 
+           " ", "<>", 
+           " ", "\"\<, is within 5% of the 65M given in the paper's Table 3; \
+the exact figure depends on the vocabulary and on what is counted\>\""}], ",",
+           "\n", "    ", 
+          RowBox[{
+           RowBox[{"Abs", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Total", "[", "p", "]"}], "/", "65*^6"}], " ", "-", " ",
+              "1"}], "]"}], " ", "<", " ", "0.05"}]}], "]"}]}]}], "]"}]}], 
+    ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", " ", "Running"}]}]}]}]}], " ", "the", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"lesson", " ", "--"}], "--"}], "--"}], "--"}], "--"}]}], " ",
+     "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"atRun", "[", "]"}], " ", ":=", " ", 
+     RowBox[{"Quiet", "[", "\n", "   ", 
+      RowBox[{
+       RowBox[{"SeedRandom", "[", "2017", "]"}], ";", " ", 
+       RowBox[{"atReset", "[", "]"}], ";", "\n", "   ", 
+       RowBox[{
+       "atText", 
+        "[", "\"\<Paper: A. Vaswani et al., Attention Is All You Need, \
+NeurIPS 2017, arXiv:1706.03762. Every part is coded from plain arrays and as \
+a Wolfram net built from primitive layers, and the two are checked against \
+each other. The trained demo net for this paper is in \
+ref3_transformer_vaswani2017.nb; Lesson 4 assembles these parts into a \
+tensor-algebra transformer.\>\"", "]"}], ";", "\n", "   ", 
+       RowBox[{"atPart1", "[", "]"}], ";", " ", 
+       RowBox[{"atPart2", "[", "]"}], ";", " ", 
+       RowBox[{"atPart3", "[", "]"}], ";", " ", 
+       RowBox[{"atPart4", "[", "]"}], ";", " ", 
+       RowBox[{"atPart5", "[", "]"}], ";", " ", 
+       RowBox[{"atPart6", "[", "]"}], ";", " ", 
+       RowBox[{"atPart7", "[", "]"}], ";", " ", 
+       RowBox[{"atPart8", "[", "]"}], ";", " ", 
+       RowBox[{"atPart9", "[", "]"}], ";", " ", 
+       RowBox[{"atPart10", "[", "]"}], ";", " ", 
+       RowBox[{"atPart11", "[", "]"}], ";", " ", 
+       RowBox[{"atPart12", "[", "]"}], ";", " ", 
+       RowBox[{"atPart13", "[", "]"}], ";", "\n", "   ", 
+       RowBox[{
+       "atSection", "[", "\"\<Where this is used in TensorNets\>\"", "]"}], ";",
+        "\n", "   ", 
+       RowBox[{
+       "atText", 
+        "[", "\"\<tnParserNet, tnPolicyNet and tnValueNet are all built from \
+these parts: tnParserNet is a full encoder\[Dash]decoder, tnPolicyNet and \
+tnValueNet are encoders with small heads on top.\>\"", "]"}], ";", "\n", 
+       "   ", 
+       RowBox[{"atSaveLog", "[", "]"}], ";", "\n", "   ", 
+       RowBox[{"atAllPassQ", " ", "=", " ", 
+        RowBox[{"AllTrue", "[", 
+         RowBox[{
+          RowBox[{"Values", "[", "atResults", "]"}], ",", " ", "TrueQ"}], 
+         "]"}]}], ";"}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"!", " ", 
+       RowBox[{"TrueQ", "[", "atSkipRun", "]"}]}], ",", " ", 
+      RowBox[{"atRun", "[", "]"}]}], "]"}], ";"}], "\n"}]}]], "Input",Expressi\
+onUUID->"33307ac9-2311-47e5-ac5e-3e20cae87e28"]
+},
+FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d8ad2c43-a349-44aa-84be-26d53fdc61ab"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[1460, 33, 124660, 3061, 70, "Input",ExpressionUUID->"33307ac9-2311-47e5-ac5e-3e20cae87e28"]
+}
+]
+*)
+
+(* End of internal cache information *)
