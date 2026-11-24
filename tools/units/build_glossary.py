@@ -9,9 +9,9 @@ dt{font-weight:bold;margin-top:10px} dd{margin:2px 0 6px 18px} dd .ex{color:#555
 .unit{border:1px solid #c9d0db;border-radius:6px;padding:10px 14px;margin:10px 0} .unit h3{margin:0 0 4px}'''
 U = {1: '01-seq2seq', 2: '02-symbolic-data', 3: '03-transformer', 4: '04-build-your-own'}
 REPO = 'https://github.com/lossofgenerality/tensor-algebra-nets'
-# The Net Diagrams editor lives in ccn-agent-free-form-language; this site shows the live copy, so a change there appears here at once
-EDITOR = 'https://lossofgenerality.github.io/ccn-agent-free-form-language/editor/net-diagram-editor.html?example=tnparser'   # opens on tnParserNet
-EDITOR_README = 'https://github.com/lossofgenerality/ccn-agent-free-form-language/blob/main/editor/README.md'
+# The Net Diagrams editor lives in the CCN Net Lab and is published in ccn-nets; this site shows that live copy, so a change there appears here at once
+EDITOR = 'https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html?example=tnparser'   # opens on tnParserNet
+EDITOR_README = 'https://lossofgenerality.github.io/ccn-nets/editor/guide.html'
 
 # term: (definition, example or formula, unit, section)
 TERMS = {
@@ -106,7 +106,7 @@ root_cards = cards.replace('href="0', 'href="docs/units/0')
     '<title>TensorNets</title>\n<meta http-equiv="refresh" content="0; url=docs/units/index.html">\n</head><body style="font:16px system-ui;margin:40px">\n'
     '<p><a href="docs/units/index.html">TensorNets · Units of learning</a> · <a href="docs/design.html">design</a> · <a href="docs/glossary.html">glossary</a> · <a href="docs/net-diagrams.html">net diagrams</a> · <a href="search.html">search</a></p>\n'
     '<p>© 2026 Computational Classnotes · CC BY-NC-SA 4.0</p>\n</body></html>\n', encoding='utf-8')
-# ---------- The Net Diagrams editor, shown live from ccn-agent-free-form-language ----------
+# ---------- The Net Diagrams editor, shown live from ccn-nets ----------
 nav3 = '<nav class="wtop"><a href="units/index.html">All units</a><a href="glossary.html">Glossary</a><a href="design.html">Design</a><a href="../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
 editor_body = ('<h1>Net diagrams</h1>'
     '<p>Draw a small neural net and let the editor write the code that builds and trains it: a Wolfram notebook (our own code, and <code>NetTrain</code>) '

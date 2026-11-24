@@ -29,7 +29,7 @@ Four **units of learning** explain how such nets are made, following one paper e
 | `DESIGN-tensornets.md`, `.pdf` | The design |
 | `docs/units/` | The unit write-ups (`.md`, `.html`, `.pdf`), their figures (`img/`) and the units index |
 | `docs/glossary.html`, `docs/design.html` | Glossary of 55 terms; the design as a site page |
-| `docs/net-diagrams.html` | The CCN Net Diagrams editor, shown live from `ccn-agent-free-form-language` (`editor/net-diagram-editor.html` on its GitHub Pages site); built by `build_glossary.py`. Nothing is copied: a change to the editor there appears here at once |
+| `docs/net-diagrams.html` | The CCN Net Diagrams editor, shown live from `ccn-nets` (`editor/net-diagram-editor.html`, published from the CCN Net Lab); built by `build_glossary.py`. Nothing is copied: a change to the editor there appears here at once |
 | `index.html`, `search.html`, `search-index.json` | The site: landing (redirects to the units), search page and its index |
 | `brand/` | CCN design tokens and fonts used by the search page |
 | `tools/units/` | Builders: `unitbuild.py` + `unit1.py`…`unit4.py` (notebooks), `build_docs.py` (HTML, PDF), `build_glossary.py` (glossary, units index, landing), `build_search.py` (search index) |
@@ -41,7 +41,7 @@ The reference papers themselves stay out of git; they are kept only in the local
 
 GitHub Pages from `main`, root folder: https://lossofgenerality.github.io/tensor-algebra-nets/. Rebuild order after a change: `build_docs.py` → `build_glossary.py` → `build_search.py`.
 
-The Net diagrams page depends on the editor's address, https://lossofgenerality.github.io/ccn-agent-free-form-language/editor/net-diagram-editor.html, opened with `?example=tnparser` so that it starts on tnParserNet; it is set in `build_glossary.py` (`EDITOR`). If the editor ever moves, change it there and rebuild.
+The Net diagrams page depends on the editor's address, https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html, opened with `?example=tnparser` so that it starts on tnParserNet; it is set in `build_glossary.py` (`EDITOR`). If the editor ever moves, change it there and rebuild.
 
 ## 3. Unit structure
 
