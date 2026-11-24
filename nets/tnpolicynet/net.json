@@ -1,0 +1,113 @@
+{
+ "nodes": [
+  {
+   "id": "t",
+   "kind": "tokens",
+   "name": "Input",
+   "vocab": 22,
+   "sample": "E P S x1 x2",
+   "x": 90,
+   "y": 200
+  },
+  {
+   "id": "e",
+   "kind": "embed",
+   "d": 128,
+   "pos": "learnt",
+   "maxLen": 96,
+   "scale": false,
+   "shared": "",
+   "x": 260,
+   "y": 200
+  },
+  {
+   "id": "en",
+   "kind": "encoder",
+   "layers": 3,
+   "heads": 4,
+   "dff": 512,
+   "act": "GELU",
+   "x": 440,
+   "y": 200
+  },
+  {
+   "id": "pk",
+   "kind": "pick",
+   "position": 1,
+   "x": 600,
+   "y": 110
+  },
+  {
+   "id": "ru",
+   "kind": "softmax",
+   "name": "Rule",
+   "classes": "ZeroSum, ZeroProd, UnitProd, PowerExpand, DistLeft, DistRight, AssocSum, AssocProd, FactorLeft, FactorRight, PowerFold",
+   "x": 740,
+   "y": 110
+  },
+  {
+   "id": "no",
+   "kind": "possoftmax",
+   "name": "Node",
+   "x": 640,
+   "y": 330
+  }
+ ],
+ "wires": [
+  {
+   "id": "w0",
+   "from": {
+    "node": "t",
+    "port": 0
+   },
+   "to": {
+    "node": "e",
+    "port": 0
+   }
+  },
+  {
+   "id": "w1",
+   "from": {
+    "node": "e",
+    "port": 0
+   },
+   "to": {
+    "node": "en",
+    "port": 0
+   }
+  },
+  {
+   "id": "w2",
+   "from": {
+    "node": "en",
+    "port": 0
+   },
+   "to": {
+    "node": "pk",
+    "port": 0
+   }
+  },
+  {
+   "id": "w3",
+   "from": {
+    "node": "pk",
+    "port": 0
+   },
+   "to": {
+    "node": "ru",
+    "port": 0
+   }
+  },
+  {
+   "id": "w4",
+   "from": {
+    "node": "en",
+    "port": 0
+   },
+   "to": {
+    "node": "no",
+    "port": 0
+   }
+  }
+ ]
+}

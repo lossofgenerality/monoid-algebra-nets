@@ -1,0 +1,171 @@
+{
+ "nodes": [
+  {
+   "id": "t",
+   "kind": "tokens",
+   "name": "Input",
+   "vocab": 20,
+   "sample": "P S x1 x2 x3",
+   "x": 90,
+   "y": 110
+  },
+  {
+   "id": "nu",
+   "kind": "numbers",
+   "name": "Dims",
+   "size": 1,
+   "x": 90,
+   "y": 290
+  },
+  {
+   "id": "e",
+   "kind": "embed",
+   "d": 128,
+   "pos": "learnt",
+   "maxLen": 96,
+   "scale": false,
+   "shared": "",
+   "x": 260,
+   "y": 110
+  },
+  {
+   "id": "pr",
+   "kind": "project",
+   "units": 128,
+   "act": "None",
+   "x": 260,
+   "y": 290
+  },
+  {
+   "id": "ad",
+   "kind": "add",
+   "nIn": 2,
+   "x": 380,
+   "y": 200
+  },
+  {
+   "id": "en",
+   "kind": "encoder",
+   "layers": 3,
+   "heads": 4,
+   "dff": 512,
+   "act": "GELU",
+   "x": 500,
+   "y": 200
+  },
+  {
+   "id": "po",
+   "kind": "pool",
+   "op": "Mean",
+   "x": 650,
+   "y": 200
+  },
+  {
+   "id": "de",
+   "kind": "dense",
+   "units": 128,
+   "act": "GELU",
+   "x": 760,
+   "y": 200
+  },
+  {
+   "id": "re",
+   "kind": "regression",
+   "name": "Estimate",
+   "target": "Target",
+   "outputs": 3,
+   "x": 880,
+   "y": 200
+  }
+ ],
+ "wires": [
+  {
+   "id": "w0",
+   "from": {
+    "node": "t",
+    "port": 0
+   },
+   "to": {
+    "node": "e",
+    "port": 0
+   }
+  },
+  {
+   "id": "w1",
+   "from": {
+    "node": "nu",
+    "port": 0
+   },
+   "to": {
+    "node": "pr",
+    "port": 0
+   }
+  },
+  {
+   "id": "w2",
+   "from": {
+    "node": "e",
+    "port": 0
+   },
+   "to": {
+    "node": "ad",
+    "port": 0
+   }
+  },
+  {
+   "id": "w3",
+   "from": {
+    "node": "pr",
+    "port": 0
+   },
+   "to": {
+    "node": "ad",
+    "port": 1
+   }
+  },
+  {
+   "id": "w4",
+   "from": {
+    "node": "ad",
+    "port": 0
+   },
+   "to": {
+    "node": "en",
+    "port": 0
+   }
+  },
+  {
+   "id": "w5",
+   "from": {
+    "node": "en",
+    "port": 0
+   },
+   "to": {
+    "node": "po",
+    "port": 0
+   }
+  },
+  {
+   "id": "w6",
+   "from": {
+    "node": "po",
+    "port": 0
+   },
+   "to": {
+    "node": "de",
+    "port": 0
+   }
+  },
+  {
+   "id": "w7",
+   "from": {
+    "node": "de",
+    "port": 0
+   },
+   "to": {
+    "node": "re",
+    "port": 0
+   }
+  }
+ ]
+}

@@ -1,0 +1,142 @@
+{
+ "nodes": [
+  {
+   "id": "tS",
+   "kind": "tokens",
+   "name": "Input",
+   "vocab": 10,
+   "sample": "( a ⨁ b )",
+   "x": 90,
+   "y": 320
+  },
+  {
+   "id": "tT",
+   "kind": "tokens",
+   "name": "Target",
+   "vocab": 10,
+   "sample": "s ⨁ ⨂ a c",
+   "x": 90,
+   "y": 100
+  },
+  {
+   "id": "eS",
+   "kind": "embed",
+   "d": 32,
+   "pos": "sinusoidal",
+   "maxLen": 96,
+   "scale": true,
+   "shared": "W",
+   "x": 250,
+   "y": 320
+  },
+  {
+   "id": "eT",
+   "kind": "embed",
+   "d": 32,
+   "pos": "sinusoidal",
+   "maxLen": 96,
+   "scale": true,
+   "shared": "W",
+   "x": 250,
+   "y": 100
+  },
+  {
+   "id": "en",
+   "kind": "encoder",
+   "layers": 2,
+   "heads": 4,
+   "dff": 128,
+   "act": "ReLU",
+   "x": 420,
+   "y": 320
+  },
+  {
+   "id": "de",
+   "kind": "decoder",
+   "layers": 2,
+   "heads": 4,
+   "dff": 128,
+   "act": "ReLU",
+   "x": 620,
+   "y": 200
+  },
+  {
+   "id": "so",
+   "kind": "seqsoftmax",
+   "name": "Probabilities",
+   "vocab": 10,
+   "tie": "W",
+   "smoothing": 0.1,
+   "x": 820,
+   "y": 290
+  }
+ ],
+ "wires": [
+  {
+   "id": "w0",
+   "from": {
+    "node": "tS",
+    "port": 0
+   },
+   "to": {
+    "node": "eS",
+    "port": 0
+   }
+  },
+  {
+   "id": "w1",
+   "from": {
+    "node": "tT",
+    "port": 0
+   },
+   "to": {
+    "node": "eT",
+    "port": 0
+   }
+  },
+  {
+   "id": "w2",
+   "from": {
+    "node": "eS",
+    "port": 0
+   },
+   "to": {
+    "node": "en",
+    "port": 0
+   }
+  },
+  {
+   "id": "w3",
+   "from": {
+    "node": "eT",
+    "port": 0
+   },
+   "to": {
+    "node": "de",
+    "port": 0
+   }
+  },
+  {
+   "id": "w4",
+   "from": {
+    "node": "en",
+    "port": 0
+   },
+   "to": {
+    "node": "de",
+    "port": 1
+   }
+  },
+  {
+   "id": "w5",
+   "from": {
+    "node": "de",
+    "port": 0
+   },
+   "to": {
+    "node": "so",
+    "port": 0
+   }
+  }
+ ]
+}

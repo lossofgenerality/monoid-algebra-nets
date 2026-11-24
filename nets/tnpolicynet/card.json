@@ -1,0 +1,20 @@
+{
+ "name": "tnPolicyNet",
+ "slug": "tnpolicynet",
+ "project": "tensor-algebras",
+ "status": "drawn",
+ "purpose": "Simplifies: given an expression, chooses which rewrite rule to apply and at which node, so that the exact engine can carry it out soundly.",
+ "structure": "Input (22 tokens); embedding 128; encoder 3 × (4 heads, FF 512 GELU); position 1; softmax over 11 classes (Rule); softmax over positions (Node)",
+ "numbers": 611468,
+ "editor_example": "tnpolicy",
+ "viewer": "",
+ "latest_run": "",
+ "files": {
+  "diagram": "nets/tnpolicynet/net.json",
+  "writeup": "nets/tnpolicynet/writeup.md",
+  "downloads": [
+   "nets/tnpolicynet/train/tnPolicyNetFromDiagram.nb"
+  ]
+ },
+ "headline": []
+}

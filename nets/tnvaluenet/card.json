@@ -1,0 +1,20 @@
+{
+ "name": "tnValueNet",
+ "slug": "tnvaluenet",
+ "project": "tensor-algebras",
+ "status": "drawn",
+ "purpose": "Evaluates: estimates three numbers about an expression (such as its dimension and its number of terms), checked against exact values from the symbolic engine.",
+ "structure": "Input (20 tokens); embedding 128; Dims (1 per token); per-token layer 128; add; encoder 3 × (4 heads, FF 512 GELU); Mean pool; 128 GELU; regression, 3 outputs (Estimate)",
+ "numbers": 626819,
+ "editor_example": "tnvalue",
+ "viewer": "",
+ "latest_run": "",
+ "files": {
+  "diagram": "nets/tnvaluenet/net.json",
+  "writeup": "nets/tnvaluenet/writeup.md",
+  "downloads": [
+   "nets/tnvaluenet/train/tnValueNetFromDiagram.nb"
+  ]
+ },
+ "headline": []
+}

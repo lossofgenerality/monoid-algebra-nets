@@ -1,0 +1,20 @@
+{
+ "name": "tnParserNet",
+ "slug": "tnparsernet",
+ "project": "tensor-algebras",
+ "status": "drawn",
+ "purpose": "Parses a tensor-algebra expression: reads its tokens and writes its tree in prefix order, for the exact engine to check and use.",
+ "structure": "Target (22 tokens); embedding 128; Input (32 tokens); embedding 128; encoder 3 × (4 heads, FF 512 GELU); decoder 3 × (4 heads, FF 512 GELU); softmax per token over 22 (Probabilities)",
+ "numbers": 1422870,
+ "editor_example": "tnparser",
+ "viewer": "",
+ "latest_run": "",
+ "files": {
+  "diagram": "nets/tnparsernet/net.json",
+  "writeup": "nets/tnparsernet/writeup.md",
+  "downloads": [
+   "nets/tnparsernet/train/tnParserNetFromDiagram.nb"
+  ]
+ },
+ "headline": []
+}
