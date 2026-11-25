@@ -8,7 +8,7 @@ nav.wtop{font-size:10pt;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap}
 dt{font-weight:bold;margin-top:10px} dd{margin:2px 0 6px 18px} dd .ex{color:#555} dd a{font-size:9pt}
 .unit{border:1px solid #c9d0db;border-radius:6px;padding:10px 14px;margin:10px 0} .unit h3{margin:0 0 4px}'''
 U = {1: '01-seq2seq', 2: '02-symbolic-data', 3: '03-transformer', 4: '04-build-your-own'}
-REPO = 'https://github.com/lossofgenerality/tensor-algebra-nets'
+REPO = 'https://github.com/lossofgenerality/monoid-algebra-nets'
 # The Net Diagrams editor lives in the CCN Net Lab and is published in ccn-nets; this site shows that live copy, so a change there appears here at once
 EDITOR = 'https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html?example=tnparser'   # opens on tnParserNet
 # each unit's net in the editor (Unit 2 makes data, not a net)
@@ -115,7 +115,7 @@ def top(root):
 def page(title, css, body, root, extra=''):
     return ('<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s · Computational Classnotes</title>\n<link rel="stylesheet" href="%sbrand/ccn-tokens.css">\n<style>%s%s</style></head><body>\n%s\n<main>%s</main>\n'
-            '<footer>Part of <a href="%s">lossofgenerality/tensor-algebra-nets</a>.%s<br>© Computational Classnotes · CC BY-NC-SA 4.0</footer>\n</body></html>\n'
+            '<footer>Part of <a href="%s">lossofgenerality/monoid-algebra-nets</a>.%s<br>© Computational Classnotes · CC BY-NC-SA 4.0</footer>\n</body></html>\n'
             % (html.escape(title), root, TOKENS_CSS, css, top(root), body, REPO, extra))
 
 # section anchors of each unit write-up, read from the built HTML: "§n" -> id

@@ -39,7 +39,7 @@ The reference papers themselves stay out of git; they are kept only in the local
 
 ### Site
 
-GitHub Pages from `main`, root folder: https://lossofgenerality.github.io/tensor-algebra-nets/. Rebuild order after a change: `build_docs.py` → `build_glossary.py` → `build_search.py`.
+GitHub Pages from `main`, root folder: https://lossofgenerality.github.io/monoid-algebra-nets/. Rebuild order after a change: `build_docs.py` → `build_glossary.py` → `build_search.py`.
 
 The Net diagrams page depends on the editor's address, https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html, opened with `?example=tnparser` so that it starts on tnParserNet; it is set in `build_glossary.py` (`EDITOR`). If the editor ever moves, change it there and rebuild.
 

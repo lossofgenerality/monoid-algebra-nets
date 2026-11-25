@@ -1,4 +1,4 @@
-# tensor-algebra-nets
+# monoid-algebra-nets
 
 *Updated 24 November 2026 · Computational Classnotes*
 
@@ -102,7 +102,7 @@ First@First@owBeam[owNet, {"(", "a", "⨁", "b", ")", "⨂", "c"}, 4, True]   (*
 ## Related
 
 - `python/tensor_parser.py` and `python/CONTEXT.md`: a pure-Python parser for the same notation.
-- **Net diagrams** ([`docs/net-diagrams.html`](https://lossofgenerality.github.io/tensor-algebra-nets/docs/net-diagrams.html)): the CCN Net Diagrams editor, for drawing a small neural net and generating a Wolfram notebook or a Python script that trains it. The editor lives in the CCN Net Lab and is published in `lossofgenerality/ccn-nets` (https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html). This site shows the live copy, so a change there appears here at once, with no copy to keep in step. Under Examples it opens owNet (Unit 4) and the three TensorNets nets, drawn from their definitions; it counts their weights as Wolfram does (owNet 59,950, tnParserNet 1,422,870, tnPolicyNet 611,468, tnValueNet 626,819) and writes each as a Wolfram `NetGraph`. The page is made by `tools/units/build_glossary.py`.
+- **Net diagrams** ([`docs/net-diagrams.html`](https://lossofgenerality.github.io/monoid-algebra-nets/docs/net-diagrams.html)): the CCN Net Diagrams editor, for drawing a small neural net and generating a Wolfram notebook or a Python script that trains it. The editor lives in the CCN Net Lab and is published in `lossofgenerality/ccn-nets` (https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html). This site shows the live copy, so a change there appears here at once, with no copy to keep in step. Under Examples it opens owNet (Unit 4) and the three TensorNets nets, drawn from their definitions; it counts their weights as Wolfram does (owNet 59,950, tnParserNet 1,422,870, tnPolicyNet 611,468, tnValueNet 626,819) and writes each as a Wolfram `NetGraph`. The page is made by `tools/units/build_glossary.py`.
 
 ## Use
 

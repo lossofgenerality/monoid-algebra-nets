@@ -10,7 +10,7 @@ Two recurrent networks can translate. One reads the whole sentence into a fixed-
 - **Words.** A sentence is a list of word vectors (embeddings). The decoder writes one word per step and stops at the end-of-sentence word, written `<EOS>` (or `<e>` in toy examples).
 - **Numbering.** Sections 2–11 here match notebook Sections 2–11; notebook Section 1 is the toolkit, one Input cell with every function. Every number below was returned by the Wolfram kernel (Wolfram 15.0).
 - **Paper.** I. Sutskever, O. Vinyals, Q. V. Le, *Sequence to Sequence Learning with Neural Networks*, NeurIPS 2014, [arXiv:1409.3215](https://arxiv.org/abs/1409.3215). Section numbers “Section n” refer to the paper; “§n” refers to this unit.
-- **Repository.** https://github.com/lossofgenerality/tensor-algebra-nets · notebook `unit1_seq2seq.nb` · glossary `docs/glossary.html`.
+- **Repository.** https://github.com/lossofgenerality/monoid-algebra-nets · notebook `unit1_seq2seq.nb` · glossary `docs/glossary.html`.
 
 ## At a glance
 

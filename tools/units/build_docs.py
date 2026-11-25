@@ -11,7 +11,7 @@ nav.wtop{font-size:10pt;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap}
 nav.wtop a{color:rgb(212,86,28)}
 @media print{nav.wtop{display:none} footer{display:none}}
 '''
-REPO = 'https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/'
+REPO = 'https://github.com/lossofgenerality/monoid-algebra-nets/blob/main/'
 EDITOR = 'https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html?example='
 DIAGRAM = {'01-seq2seq': 'seq2seq', '03-transformer': 'transformer', '04-build-your-own': 'ownet'}   # Unit 2 makes data, not a net
 NB = {'01-seq2seq': 'unit1_seq2seq.nb', '02-symbolic-data': 'unit2_symbolic_data.nb',

@@ -7,7 +7,7 @@ Run after any write-up, glossary or design rebuild.
 import re, json, html, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SITE = 'https://lossofgenerality.github.io/tensor-algebra-nets/'
+SITE = 'https://lossofgenerality.github.io/monoid-algebra-nets/'
 
 
 def text(h):
