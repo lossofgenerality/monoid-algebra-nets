@@ -12,6 +12,8 @@ nav.wtop a{color:rgb(212,86,28)}
 @media print{nav.wtop{display:none} footer{display:none}}
 '''
 REPO = 'https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/'
+EDITOR = 'https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html?example='
+DIAGRAM = {'01-seq2seq': 'seq2seq', '03-transformer': 'transformer', '04-build-your-own': 'ownet'}   # Unit 2 makes data, not a net
 NB = {'01-seq2seq': 'unit1_seq2seq.nb', '02-symbolic-data': 'unit2_symbolic_data.nb',
       '03-transformer': 'unit3_transformer.nb', '04-build-your-own': 'unit4_build_your_own.nb'}
 for md in sys.argv[1:]:
@@ -22,7 +24,7 @@ for md in sys.argv[1:]:
     nav = ('<nav class="wtop"><a href="index.html">All units</a><a href="%s">PDF</a><a href="%s">Markdown</a>%s'
            '<a href="../glossary.html">Glossary</a><a href="../net-diagrams.html">Net diagrams</a><a href="../../search.html">Search</a><a href="%s">Repository</a></nav>'
            % (p.with_suffix('.pdf').name, REPO + str(p.relative_to(ROOT)),
-              ('<a href="../../%s" download>Notebook</a>' % nb) if nb else '', REPO.replace('/blob/main/', '')))
+              (('<a href="../../%s" download>Notebook</a>' % nb) if nb else '') + (('<a href="%s%s">Diagram</a>' % (EDITOR, DIAGRAM[p.stem])) if p.stem in DIAGRAM else ''), REPO.replace('/blob/main/', '')))
     html = ('<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
             '<title>%s — Computational Classnotes</title><style>%s%s</style></head><body>%s%s'
             '<footer style="margin-top:30px;font-size:9pt;color:#666">© 2026 Computational Classnotes · CC BY-NC-SA 4.0</footer></body></html>\n'

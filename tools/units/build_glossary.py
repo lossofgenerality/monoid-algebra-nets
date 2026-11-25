@@ -11,6 +11,9 @@ U = {1: '01-seq2seq', 2: '02-symbolic-data', 3: '03-transformer', 4: '04-build-y
 REPO = 'https://github.com/lossofgenerality/tensor-algebra-nets'
 # The Net Diagrams editor lives in the CCN Net Lab and is published in ccn-nets; this site shows that live copy, so a change there appears here at once
 EDITOR = 'https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html?example=tnparser'   # opens on tnParserNet
+# each unit's net in the editor (Unit 2 makes data, not a net)
+DIAGRAM = {1: 'seq2seq', 3: 'transformer', 4: 'ownet'}
+diagramURL = lambda k: EDITOR.split('?')[0] + '?example=' + k
 EDITOR_README = 'https://lossofgenerality.github.io/ccn-nets/editor/guide.html'
 
 # term: (definition, example or formula, unit, section)
@@ -96,8 +99,8 @@ li{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:baselin
 li.on{border-left:3px solid var(--ccn-orange)}
 .n{font:600 13px var(--ccn-f-mono);color:var(--ccn-soft)} li.on .n{color:var(--ccn-orange-ink)}
 .t small{display:block;color:var(--ccn-soft);font-size:13.5px;margin-top:2px}
-.l a{color:var(--ccn-orange-ink);margin-left:12px;font-size:14px}
-@media (max-width:640px){li{grid-template-columns:28px 1fr} .l{grid-column:2} .l a:first-child{margin-left:0}}
+li .l{min-width:246px} .l a{color:var(--ccn-orange-ink);margin-left:12px;font-size:14px} li .l a:first-child{margin-left:0}
+@media (max-width:640px){li{grid-template-columns:28px 1fr} li .l{grid-column:2;min-width:0} .l a:first-child{margin-left:0}}
 """
 
 def slug(t):
@@ -145,8 +148,9 @@ UNITS = [
  (4, '04-build-your-own', 'unit4_build_your_own.nb', 'Building our own net', 'A transformer that expands ⨂/⨁ expressions, assembled from Units 1–3'),
 ]
 rows = ''.join('<li class="on"><span class="n">%02d</span><span class="t">%s<small>%s</small></span><span class="l"><a href="%s.html">Write-up</a> '
-               '<a href="%s.pdf">PDF</a> <a href="../../%s" download>Notebook</a></span></li>'
-               % (n, html.escape(t), html.escape(d), s, s, nb) for n, s, nb, t, d in UNITS)
+               '<a href="%s.pdf">PDF</a> <a href="../../%s" download>Notebook</a>%s</span></li>'
+               % (n, html.escape(t), html.escape(d), s, s, nb, (' <a href="%s">Diagram</a>' % diagramURL(DIAGRAM[n])) if n in DIAGRAM else '')
+               for n, s, nb, t, d in UNITS)
 body = ('<h1>TensorNets — units of learning</h1><p class="lede">One worked write-up and notebook per unit: the idea, the formulas, examples worked by hand, '
         'the computation on a Wolfram kernel, exercises and the references. Units 1–3 follow one paper each; Unit 4 builds our own net from them. '
         'Each comes as HTML, PDF and a Wolfram notebook, saved with its outputs.</p><ol>%s</ol>' % rows)
