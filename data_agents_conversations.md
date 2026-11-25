@@ -324,6 +324,10 @@
 
 4. Until then, the "Ask the TA" panels load but cannot answer.
 
+**Owner** (23:38): you have access to /Volumes/Seagate Portable Drive/noor
+
+**Hikari Noor Hoshino:** Asked for the folder, which was granted, and copied `ff_netlabkernel.nb`, `ta_exam.nb` and their README to `/Volumes/Seagate Portable Drive/noor/ccn-net-lab/kernel/`. Open `ff_netlabkernel.nb` there to deploy NetLabKernel.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
