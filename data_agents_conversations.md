@@ -308,6 +308,22 @@
 
 9. Everything is pushed: GitHub ccn-net-lab, ccn-nets, monoid-algebra-nets, ccn-agent-free-form-language and ccn-hoshino-and-colleagues.
 
+**Owner** (23:37): I am lost. where is NetLabKernel
+
+**Hikari Noor Hoshino:**
+
+1. NetLabKernel does not exist in the Wolfram Cloud yet. So far it is only a notebook: `kernel/ff_netlabkernel.nb` in GitHub ccn-net-lab, https://github.com/lossofgenerality/ccn-net-lab/blob/main/kernel/ff_netlabkernel.nb. It is not on your Mac or in the Cloud, because I write nothing to the Cloud and my access to the Seagate drive was refused.
+
+2. What it is. It is the TA's back end, built like LaplacianLabKernel: one deployed APIFunction that relays the TA's conversation to the chat service, with the key kept privately in the Cloud, and runs the TA's Wolfram code in a sandbox.
+
+3. How it comes into being. You open that notebook in a signed-in Wolfram session and do three things:
+   a. CloudPut the chat key privately, once;
+   b. put your pass key in its one cell;
+   c. evaluate the cell.
+   It then lives at https://www.wolframcloud.com/obj/ccn2/NetLabKernel, the address the pages already call.
+
+4. Until then, the "Ask the TA" panels load but cannot answer.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
