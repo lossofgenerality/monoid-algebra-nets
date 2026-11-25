@@ -5,7 +5,7 @@
 These are neural nets that **parse, evaluate and simplify** tensor-algebra expressions written with ⨂ (tensor product) and ⨁ (direct sum), for example `(a⨁b)⨂c`. Everything is in Wolfram Language, as notebooks with one Input cell each. The move to Python comes later.
 
 By Dara O Shayda and Hikari Noor Hoshino (星野ヌール)  
-AI System Programming Group
+AI System Programming Laboratory
 
 ## The design
 

@@ -337,7 +337,7 @@ tnParserNet  32 input tokens → 128 → 3 encoder + 3 decoder (4 heads, FF 512 
 ## 14. Credits, copyright and licence
 
 By Dara O Shayda and Hikari Noor Hoshino (星野ヌール)
-AI System Programming Group
+AI System Programming Laboratory
 
 Follows Sutskever, Vinyals and Le (2014), Lample and Charton (2019), Vaswani et al. (2017) and Silver et al. (2016) for the policy and value nets, as cited in `DESIGN-tensornets.md`.
 

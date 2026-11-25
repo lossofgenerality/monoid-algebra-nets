@@ -3,7 +3,7 @@
 *Updated 24 November 2026 · What this repository is, where everything lives, and what is still open.*
 
 By Dara O Shayda and Hikari Noor Hoshino (星野ヌール)  
-AI System Programming Group
+AI System Programming Laboratory
 
 ---
 

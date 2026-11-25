@@ -322,7 +322,7 @@ NET  10 tokens; d 32, 4 heads, FF 128 ReLU; 2 + 2 layers; shared embedding
 ## 14. Credits, copyright and licence
 
 By Dara O Shayda and Hikari Noor Hoshino (星野ヌール)
-AI System Programming Group
+AI System Programming Laboratory
 
 Follows Sutskever, Vinyals and Le (2014), Lample and Charton (2019) and Vaswani et al. (2017), through Units 1–3.
 
