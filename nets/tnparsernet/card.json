@@ -17,5 +17,10 @@
   ],
   "guide": "nets/tnparsernet/docs/guide.md"
  },
- "headline": []
+ "headline": [],
+ "ta": {
+  "extra": [
+   "DESIGN-tensornets.md"
+  ]
+ }
 }

@@ -273,6 +273,53 @@
 8. https://github.com/lossofgenerality/ccn-hoshino-and-colleagues
 9. https://lossofgenerality.github.io/ccn-nets/tensor-algebras/tnvaluenet/guide.html
 
+### Wednesday 25 November 2026 (continued)
+
+**Owner** (22:54): ok first task here is the TA assitant
+
+**Hikari Noor Hoshino:** Explained that the TA, a conversational-construct, cannot have its weights changed by us, and so would be taught in three ways we control: a knowledge pack, house rules and a graded examination. Proposed that it read the whole guide of the net in view, run Wolfram code through a new CCN Cloud kernel, and live beside each guide in GitHub ccn-nets. Asked three questions; the owner chose: for our team; on the ccn-nets pages; yes, running Wolfram.
+
+**Hikari Noor Hoshino:**
+
+1. The TA is built and published. It answers as soon as you deploy its kernel, NetLabKernel; until then the pages say that the kernel cannot be reached.
+
+2. Where it is. "Ask the TA" opens a panel beside every user guide, and the lab-wide TA is at https://lossofgenerality.github.io/ccn-nets/ta/, where you choose what it reads: every net (about 151,000 characters), or one.
+
+3. How it is taught.
+   a. Its knowledge pack: each net's guide, write-up and card, with the SubjectNet report and Python README, Unit 4 for owNet, and the design for the three TensorNets nets.
+   b. Its house rules (`ta/rules.md`): formal British English; numbers only from the pack or from code it has just run, and it says which; plain statements of what is untrained or not yet in Python; no invented functions; nothing written, deleted or saved.
+   c. Its examination: 50 questions across the five nets and the lab, covering facts, computations, honesty about status, refusals and traps. Every expected fact was checked to be in the pack of the net it is asked about.
+
+4. What it can do. It runs Wolfram code in a sandbox, after loading TensorNets (about 1 second) or SubjectNet (about 17 seconds, since it trains both versions), and shows the code, the result and any graphics in the answer.
+
+5. Safety. The sandbox refuses, before evaluation, anything that could write, delete, read files or cloud objects, reach the network, start processes, change the kernel for later calls or turn a string into code. I tested it on 24 cases; ordinary mathematics passes. The pass key remains the real guard, and I wrote nothing to the Cloud.
+
+6. Three faults were found and fixed along the way.
+   a. JSON with ⨁ or Δ was double-encoded, which would have garbled every Unicode answer; it now travels as ExportByteArray.
+   b. A plain-string notebook cell lost a `{` on import, so both notebooks are in boxes, made by the front end on your Mac, and checked to read back as the same code.
+   c. My first sandbox wrongly refused DeleteCases, StartOfString, Distribute and GenerateConditions.
+
+7. What you need to do.
+   a. CloudPut the chat key privately, once (or point the kernel at an existing private key object).
+   b. Set the pass key in `kernel/ff_netlabkernel.nb` and evaluate its one cell.
+   c. Run `res = taExam["<pass key>"]` in `kernel/ta_exam.nb`; its score becomes the TA's published score.
+
+8. Access to `/Volumes/Seagate Portable Drive/noor` was refused in this session, so the two notebooks are in GitHub ccn-net-lab `kernel/` only; I can copy them to the drive once access is granted.
+
+9. Everything is pushed: GitHub ccn-net-lab, ccn-nets, monoid-algebra-nets, ccn-agent-free-form-language and ccn-hoshino-and-colleagues.
+
+### Diagrams, images and files placed into the session (continued)
+
+1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
+2. The TA panel on every guide page, the lab-wide TA page and the knowledge packs: GitHub ccn-nets.
+3. Screenshots of the TA panel taken in headless Chrome against a stand-in kernel (not kept).
+
+### URLs that appeared in the session (continued)
+
+1. https://lossofgenerality.github.io/ccn-nets/ta/
+2. https://lossofgenerality.github.io/ccn-nets/ta/exam.json
+3. https://discuss.compclassnotes.com/t/laplacian-lab-user-tutorial/515
+
 ---
 
 © Computational Classnotes · CC BY-NC-SA 4.0

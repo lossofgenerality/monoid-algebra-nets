@@ -18,5 +18,10 @@
   ],
   "guide": "nets/ownet/docs/guide.md"
  },
- "headline": []
+ "headline": [],
+ "ta": {
+  "extra": [
+   "docs/units/04-build-your-own.md"
+  ]
+ }
 }

@@ -17,5 +17,10 @@
   ],
   "guide": "nets/tnvaluenet/docs/guide.md"
  },
- "headline": []
+ "headline": [],
+ "ta": {
+  "extra": [
+   "DESIGN-tensornets.md"
+  ]
+ }
 }
