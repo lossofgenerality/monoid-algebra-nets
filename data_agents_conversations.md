@@ -328,6 +328,15 @@
 
 **Hikari Noor Hoshino:** Asked for the folder, which was granted, and copied `ff_netlabkernel.nb`, `ta_exam.nb` and their README to `/Volumes/Seagate Portable Drive/noor/ccn-net-lab/kernel/`. Open `ff_netlabkernel.nb` there to deploy NetLabKernel.
 
+**Owner** (23:44): thank you, what does ff_netlabkernel.nb do in a brief statement
+
+**Hikari Noor Hoshino:** When you evaluate it, `ff_netlabkernel.nb` deploys NetLabKernel to your Wolfram Cloud. NetLabKernel is the TA's back end. It does two things:
+
+1. it passes the TA's questions to the chat service, with your chat key kept privately in the Cloud;
+2. it runs the TA's Wolfram code in a sandbox that refuses anything that could write, delete, read files or reach the network.
+
+Every call needs your pass key.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
