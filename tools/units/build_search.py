@@ -44,7 +44,7 @@ writeup(ROOT / 'docs/design.html', SITE + 'docs/design.html', 'Design')
 
 # glossary: one entry per term
 g = (ROOT / 'docs/glossary.html').read_text(encoding='utf-8')
-for m in re.finditer(r'<dt id="([^"]+)">(.*?)</dt><dd>(.*?)</dd>', g, re.S):
+for m in re.finditer(r'<section class="g" id="([^"]+)"><h2>(.*?)</h2><p>(.*?)</p>', g, re.S):
     add('Glossary', 'Glossary', text(m.group(2)), SITE + 'docs/glossary.html#' + m.group(1), text(m.group(3)))
 
 (ROOT / 'search-index.json').write_text(json.dumps(entries, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')

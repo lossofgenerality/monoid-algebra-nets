@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TensorNets · Units of learning — Computational Classnotes</title><style>@page { size: A4; margin: 20mm 18mm 22mm 18mm;
-  @bottom-center { content: "© 2026 Computational Classnotes · CC BY-NC-SA 4.0"; } }
-body { font-family: "DejaVu Sans", sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d2430; }
-h1 { font-size: 20pt; margin: 0 0 4pt; color: #11161f; }
-h2 { font-size: 13.5pt; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid rgb(250,143,43); break-after: avoid; }
-p, li { orphans: 3; widows: 3; }
-code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; }
-table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 8pt 0; break-inside: auto; }
-th, td { border: 1px solid #c9d0db; padding: 3pt 5pt; vertical-align: top; text-align: left; }
-th { background: #eef1f6; }
-tr { break-inside: avoid; }
-img { max-width: 100%; max-height: 105mm; display: block; margin: 4pt auto; }
-figure { margin: 6pt 0; }
-figcaption { display: none; }
-math { font-family: "Latin Modern Math", "STIX Two Math", serif; }
-math[display="block"] { display: block; margin: 8pt 0; font-size: 11pt; }
-a { color: #1f5fbf; text-decoration: none; }
-hr { border: 0; border-top: 1px solid #c9d0db; margin: 16pt 0 8pt; }
-table { break-inside: avoid; }
-body{max-width:860px;margin:0 auto;padding:28px 22px 60px;background:#fff}
-nav.wtop{font-size:10pt;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap} nav.wtop a{color:rgb(212,86,28)}
-dt{font-weight:bold;margin-top:10px} dd{margin:2px 0 6px 18px} dd .ex{color:#555} dd a{font-size:9pt}
-.unit{border:1px solid #c9d0db;border-radius:6px;padding:10px 14px;margin:10px 0} .unit h3{margin:0 0 4px}</style></head><body><nav class="wtop"><a href="../glossary.html">Glossary</a><a href="../design.html">Design</a><a href="../net-diagrams.html">Net diagrams</a><a href="../../search.html">Search</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets">Repository</a></nav><h1>TensorNets · Units of learning</h1><p>Four units on how the TensorNets nets are made. Each unit has a write-up (HTML, PDF, Markdown) and a Wolfram notebook with the same section numbers: a toolkit cell, then one section per idea, each with a worked example by hand and a check that the kernel returns. Units 1–3 follow one paper each; Unit 4 builds our own net from them.</p><p>Open a notebook in Wolfram, choose Evaluation ▸ Quit Kernel ▸ Local, and evaluate it from top to bottom. The notebooks are saved with their outputs, so they can also be read without running.</p><div class="unit"><h3>Unit 1 · Reading a Sequence, Writing a Sequence</h3><p>Deep LSTMs as encoder and decoder (Sutskever, Vinyals and Le, 2014): the LSTM cell by hand, the thought vector, reversing the source, the training recipe, beam search, the 384M parameter count.</p><p><a href="01-seq2seq.html">Read</a> · <a href="01-seq2seq.pdf">PDF</a> · <a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/docs/units/01-seq2seq.md">Markdown</a> · <a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/unit1_seq2seq.nb">Notebook unit1_seq2seq.nb</a></p></div><div class="unit"><h3>Unit 2 · Mathematics as Data</h3><p>Lample and Charton (2019): prefix notation, counting and uniform sampling of trees, FWD/BWD/IBP integration data, verified answers, and a correction to their Equation 2.</p><p><a href="02-symbolic-data.html">Read</a> · <a href="02-symbolic-data.pdf">PDF</a> · <a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/docs/units/02-symbolic-data.md">Markdown</a> · <a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/unit2_symbolic_data.nb">Notebook unit2_symbolic_data.nb</a></p></div><div class="unit"><h3>Unit 3 · Attention, Part by Part</h3><p>Vaswani et al. (2017): every part of the transformer from plain arrays and from primitive Wolfram layers, checked against each other.</p><p><a href="03-transformer.html">Read</a> · <a href="03-transformer.pdf">PDF</a> · <a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/docs/units/03-transformer.md">Markdown</a> · <a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/unit3_transformer.nb">Notebook unit3_transformer.nb</a></p></div><div class="unit"><h3>Unit 4 · Building Our Own Net</h3><p>A transformer assembled from Units 1–3 that expands ⨂/⨁ expressions, decoded with beam search and the prefix grammar, every answer checked by an exact oracle.</p><p><a href="04-build-your-own.html">Read</a> · <a href="04-build-your-own.pdf">PDF</a> · <a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/docs/units/04-build-your-own.md">Markdown</a> · <a href="https://github.com/lossofgenerality/tensor-algebra-nets/blob/main/unit4_build_your_own.nb">Notebook unit4_build_your_own.nb</a></p></div><footer style="margin-top:30px;font-size:9pt;color:#666">© 2026 Computational Classnotes · CC BY-NC-SA 4.0</footer></body></html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TensorNets — units of learning · Computational Classnotes</title>
+<link rel="stylesheet" href="../../brand/ccn-tokens.css">
+<style>
+*{box-sizing:border-box} body{margin:0;background:var(--ccn-page);color:var(--ccn-ink);font:16px/1.55 var(--ccn-f-body)}
+.top{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;max-width:920px;margin:0 auto;padding:16px 20px;border-bottom:1px solid var(--ccn-line)}
+.wm{font:700 20px/1.1 var(--ccn-f-display);letter-spacing:-.01em;white-space:nowrap;color:inherit;text-decoration:none} .wm b{color:var(--ccn-orange-ink)}
+.top a.l{color:var(--ccn-soft);font-size:14px} .top a.l:first-of-type{margin-left:auto}
+main{max-width:920px;margin:0 auto;padding:22px 20px 40px}
+h1{font:700 clamp(24px,2.4vw,28px)/1.15 var(--ccn-f-display);margin:0 0 6px} .lede{color:var(--ccn-soft);font-size:15px;margin:0 0 16px;max-width:72ch}
+footer{max-width:920px;margin:0 auto;padding:16px 20px 40px;color:var(--ccn-soft);font-size:13.5px;border-top:1px solid var(--ccn-line)} footer a{color:inherit}
+
+ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:baseline;padding:10px 14px;background:var(--ccn-panel);border:1px solid var(--ccn-line);border-radius:10px}
+li.on{border-left:3px solid var(--ccn-orange)}
+.n{font:600 13px var(--ccn-f-mono);color:var(--ccn-soft)} li.on .n{color:var(--ccn-orange-ink)}
+.t small{display:block;color:var(--ccn-soft);font-size:13.5px;margin-top:2px}
+.l a{color:var(--ccn-orange-ink);margin-left:12px;font-size:14px}
+@media (max-width:640px){li{grid-template-columns:28px 1fr} .l{grid-column:2} .l a:first-child{margin-left:0}}
+</style></head><body>
+<div class="top"><a class="wm" href="../../docs/units/index.html">Tensor<b>Nets</b></a><a class="l" href="../../docs/units/index.html">Units</a><a class="l" href="../../search.html">Search</a><a class="l" href="../../docs/glossary.html">Glossary</a><a class="l" href="../../docs/net-diagrams.html">Net diagrams</a><a class="l" href="../../docs/design.html">Design</a></div>
+<main><h1>TensorNets — units of learning</h1><p class="lede">One worked write-up and notebook per unit: the idea, the formulas, examples worked by hand, the computation on a Wolfram kernel, exercises and the references. Units 1–3 follow one paper each; Unit 4 builds our own net from them. Each comes as HTML, PDF and a Wolfram notebook, saved with its outputs.</p><ol><li class="on"><span class="n">01</span><span class="t">Reading a sequence, writing a sequence<small>Deep LSTMs as encoder and decoder (Sutskever, Vinyals and Le, 2014)</small></span><span class="l"><a href="01-seq2seq.html">Write-up</a> <a href="01-seq2seq.pdf">PDF</a> <a href="../../unit1_seq2seq.nb" download>Notebook</a></span></li><li class="on"><span class="n">02</span><span class="t">Mathematics as data<small>Prefix notation, fair sampling of trees, checked answers (Lample and Charton, 2019)</small></span><span class="l"><a href="02-symbolic-data.html">Write-up</a> <a href="02-symbolic-data.pdf">PDF</a> <a href="../../unit2_symbolic_data.nb" download>Notebook</a></span></li><li class="on"><span class="n">03</span><span class="t">Attention, part by part<small>The transformer from plain arrays and primitive layers (Vaswani et al., 2017)</small></span><span class="l"><a href="03-transformer.html">Write-up</a> <a href="03-transformer.pdf">PDF</a> <a href="../../unit3_transformer.nb" download>Notebook</a></span></li><li class="on"><span class="n">04</span><span class="t">Building our own net<small>A transformer that expands ⨂/⨁ expressions, assembled from Units 1–3</small></span><span class="l"><a href="04-build-your-own.html">Write-up</a> <a href="04-build-your-own.pdf">PDF</a> <a href="../../unit4_build_your_own.nb" download>Notebook</a></span></li></ol></main>
+<footer>Part of <a href="https://github.com/lossofgenerality/tensor-algebra-nets">lossofgenerality/tensor-algebra-nets</a>. Design: <a href="../design.html">DESIGN-tensornets</a>.<br>© Computational Classnotes · CC BY-NC-SA 4.0</footer>
+</body></html>

@@ -1,24 +1,17 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Net diagrams · TensorNets — Computational Classnotes</title><style>@page { size: A4; margin: 20mm 18mm 22mm 18mm;
-  @bottom-center { content: "© 2026 Computational Classnotes · CC BY-NC-SA 4.0"; } }
-body { font-family: "DejaVu Sans", sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d2430; }
-h1 { font-size: 20pt; margin: 0 0 4pt; color: #11161f; }
-h2 { font-size: 13.5pt; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid rgb(250,143,43); break-after: avoid; }
-p, li { orphans: 3; widows: 3; }
-code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; }
-table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 8pt 0; break-inside: auto; }
-th, td { border: 1px solid #c9d0db; padding: 3pt 5pt; vertical-align: top; text-align: left; }
-th { background: #eef1f6; }
-tr { break-inside: avoid; }
-img { max-width: 100%; max-height: 105mm; display: block; margin: 4pt auto; }
-figure { margin: 6pt 0; }
-figcaption { display: none; }
-math { font-family: "Latin Modern Math", "STIX Two Math", serif; }
-math[display="block"] { display: block; margin: 8pt 0; font-size: 11pt; }
-a { color: #1f5fbf; text-decoration: none; }
-hr { border: 0; border-top: 1px solid #c9d0db; margin: 16pt 0 8pt; }
-table { break-inside: avoid; }
-body{max-width:1280px;margin:0 auto;padding:28px 22px 60px;background:#fff}
-nav.wtop{font-size:10pt;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap} nav.wtop a{color:rgb(212,86,28)}
-dt{font-weight:bold;margin-top:10px} dd{margin:2px 0 6px 18px} dd .ex{color:#555} dd a{font-size:9pt}
-.unit{border:1px solid #c9d0db;border-radius:6px;padding:10px 14px;margin:10px 0} .unit h3{margin:0 0 4px}</style></head><body><nav class="wtop"><a href="units/index.html">All units</a><a href="glossary.html">Glossary</a><a href="design.html">Design</a><a href="../search.html">Search</a><a href="https://github.com/lossofgenerality/tensor-algebra-nets">Repository</a></nav><h1>Net diagrams</h1><p>Draw a small neural net and let the editor write the code that builds and trains it: a Wolfram notebook (our own code, and <code>NetTrain</code>) or a Python script (our own code, NumPy only). Its elements are feature groups, a hash, an input vector of slots, layers, dropout, joins and a softmax; it reads left to right, and wires are drawn from port to port.</p><p>The editor belongs to the CCN agent free-form language. This page shows the live copy, so every change made there appears here at once. Besides small feed-forward nets such as SubjectNet, it draws transformers: tokens, embeddings, encoders, decoders and their outputs. Here it opens on tnParserNet, and keeps your changes on this page apart from the editor’s other pages. Under <i>Examples</i> are owNet (Unit 4) and the other TensorNets nets, tnPolicyNet and tnValueNet, all drawn from their definitions; for each, the editor counts the weights as Wolfram does and writes the net as a Wolfram <code>NetGraph</code>.</p><p><a href="https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html?example=tnparser">Open the editor in its own tab</a> · <a href="https://lossofgenerality.github.io/ccn-nets/editor/guide.html">How it works</a></p><iframe src="https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html?example=tnparser" title="CCN Net Diagrams editor" style="width:100%;height:820px;border:1px solid #c9d0db;border-radius:6px" loading="lazy"></iframe><footer style="margin-top:30px;font-size:9pt;color:#666">© 2026 Computational Classnotes · CC BY-NC-SA 4.0</footer></body></html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Net diagrams — TensorNets · Computational Classnotes</title>
+<link rel="stylesheet" href="../brand/ccn-tokens.css">
+<style>
+*{box-sizing:border-box} body{margin:0;background:var(--ccn-page);color:var(--ccn-ink);font:16px/1.55 var(--ccn-f-body)}
+.top{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;max-width:920px;margin:0 auto;padding:16px 20px;border-bottom:1px solid var(--ccn-line)}
+.wm{font:700 20px/1.1 var(--ccn-f-display);letter-spacing:-.01em;white-space:nowrap;color:inherit;text-decoration:none} .wm b{color:var(--ccn-orange-ink)}
+.top a.l{color:var(--ccn-soft);font-size:14px} .top a.l:first-of-type{margin-left:auto}
+main{max-width:920px;margin:0 auto;padding:22px 20px 40px}
+h1{font:700 clamp(24px,2.4vw,28px)/1.15 var(--ccn-f-display);margin:0 0 6px} .lede{color:var(--ccn-soft);font-size:15px;margin:0 0 16px;max-width:72ch}
+footer{max-width:920px;margin:0 auto;padding:16px 20px 40px;color:var(--ccn-soft);font-size:13.5px;border-top:1px solid var(--ccn-line)} footer a{color:inherit}
+main{max-width:1280px} .top,footer{max-width:1280px} main p a{color:var(--ccn-orange-ink)}</style></head><body>
+<div class="top"><a class="wm" href="../docs/units/index.html">Tensor<b>Nets</b></a><a class="l" href="../docs/units/index.html">Units</a><a class="l" href="../search.html">Search</a><a class="l" href="../docs/glossary.html">Glossary</a><a class="l" href="../docs/net-diagrams.html">Net diagrams</a><a class="l" href="../docs/design.html">Design</a></div>
+<main><h1>Net diagrams</h1><p>Draw a small neural net and let the editor write the code that builds and trains it: a Wolfram notebook (our own code, and <code>NetTrain</code>) or a Python script (our own code, NumPy only). Its elements are feature groups, a hash, an input vector of slots, layers, dropout, joins and a softmax; it reads left to right, and wires are drawn from port to port.</p><p>The editor belongs to the CCN agent free-form language. This page shows the live copy, so every change made there appears here at once. Besides small feed-forward nets such as SubjectNet, it draws transformers: tokens, embeddings, encoders, decoders and their outputs. Here it opens on tnParserNet, and keeps your changes on this page apart from the editor’s other pages. Under <i>Examples</i> are owNet (Unit 4) and the other TensorNets nets, tnPolicyNet and tnValueNet, all drawn from their definitions; for each, the editor counts the weights as Wolfram does and writes the net as a Wolfram <code>NetGraph</code>.</p><p><a href="https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html?example=tnparser">Open the editor in its own tab</a> · <a href="https://lossofgenerality.github.io/ccn-nets/editor/guide.html">How it works</a></p><iframe src="https://lossofgenerality.github.io/ccn-nets/editor/net-diagram-editor.html?example=tnparser" title="CCN Net Diagrams editor" style="width:100%;height:820px;border:1px solid var(--ccn-line);border-radius:10px;background:#fff" loading="lazy"></iframe></main>
+<footer>Part of <a href="https://github.com/lossofgenerality/tensor-algebra-nets">lossofgenerality/tensor-algebra-nets</a>.<br>© Computational Classnotes · CC BY-NC-SA 4.0</footer>
+</body></html>

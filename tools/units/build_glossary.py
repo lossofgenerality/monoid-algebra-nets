@@ -1,6 +1,6 @@
 """python3 tools/units/build_glossary.py -> docs/glossary.html, docs/units/index.html, docs/net-diagrams.html and index.html
 Every technical term of the units, defined where it is worked out. © Computational Classnotes · CC BY-NC-SA 4.0"""
-import pathlib, html
+import pathlib, html, re
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 CSS = (ROOT / 'tools/units/pdf-style.css').read_text(encoding='utf-8')
 SCREEN = '''body{max-width:860px;margin:0 auto;padding:28px 22px 60px;background:#fff}
@@ -72,42 +72,92 @@ TERMS = {
  'word (in ⨂/⨁ algebra)': ('An ordered ⨂-product of atoms; an expanded expression is a ⨁ of words.', 'a⨂b⨂d.', 4, 4),
 }
 
-def page(title, body, nav):
-    return ('<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
-            '<title>%s — Computational Classnotes</title><style>%s%s</style></head><body>%s%s'
-            '<footer style="margin-top:30px;font-size:9pt;color:#666">© 2026 Computational Classnotes · CC BY-NC-SA 4.0</footer></body></html>\n'
-            % (html.escape(title), CSS, SCREEN, nav, body))
 
-items = []
-for term in sorted(TERMS, key=lambda t: t.lower().lstrip('⨂⨁ ')):
-    d, ex, u, s = TERMS[term]
-    link = 'units/%s.html#%s' % (U[u], {1: '', 2: ''}.get(0, ''))
-    items.append('<dt id="%s">%s</dt><dd>%s%s <a href="units/%s.html">Unit %d §%d</a></dd>' % (
-        html.escape(term.split(' (')[0].replace(' ', '-').lower()), html.escape(term), html.escape(d),
-        (' <span class="ex">' + html.escape(ex) + '</span>') if ex else '', U[u], u, s))
-nav = '<nav class="wtop"><a href="units/index.html">All units</a><a href="design.html">Design</a><a href="net-diagrams.html">Net diagrams</a><a href="../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
-(ROOT / 'docs/glossary.html').write_text(page('Glossary · TensorNets units', '<h1>Glossary</h1><p>Every technical term of the four TensorNets units, defined in a sentence, with a small example where it helps, and a link to the section where it is worked out.</p><dl>%s</dl>' % ''.join(items), nav), encoding='utf-8')
+TOKENS_CSS = """
+*{box-sizing:border-box} body{margin:0;background:var(--ccn-page);color:var(--ccn-ink);font:16px/1.55 var(--ccn-f-body)}
+.top{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;max-width:920px;margin:0 auto;padding:16px 20px;border-bottom:1px solid var(--ccn-line)}
+.wm{font:700 20px/1.1 var(--ccn-f-display);letter-spacing:-.01em;white-space:nowrap;color:inherit;text-decoration:none} .wm b{color:var(--ccn-orange-ink)}
+.top a.l{color:var(--ccn-soft);font-size:14px} .top a.l:first-of-type{margin-left:auto}
+main{max-width:920px;margin:0 auto;padding:22px 20px 40px}
+h1{font:700 clamp(24px,2.4vw,28px)/1.15 var(--ccn-f-display);margin:0 0 6px} .lede{color:var(--ccn-soft);font-size:15px;margin:0 0 16px;max-width:72ch}
+footer{max-width:920px;margin:0 auto;padding:16px 20px 40px;color:var(--ccn-soft);font-size:13.5px;border-top:1px solid var(--ccn-line)} footer a{color:inherit}
+"""
+GLOSS_CSS = """
+.toc{font-size:14px;line-height:1.9;background:var(--ccn-panel);border:1px solid var(--ccn-line);border-radius:10px;padding:10px 14px;margin-bottom:18px}
+.toc a{color:var(--ccn-orange-ink)}
+.g{background:var(--ccn-panel);border:1px solid var(--ccn-line);border-radius:10px;padding:12px 16px;margin-bottom:10px;scroll-margin-top:12px}
+.g:target{border-color:var(--ccn-orange);box-shadow:0 0 0 3px var(--ccn-orange-tint)}
+.g h2{font:700 18px/1.3 var(--ccn-f-display);margin:0 0 4px} .g .al{font:400 13.5px var(--ccn-f-body);color:var(--ccn-soft)}
+.g p{margin:0 0 8px;max-width:78ch} .lk{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px} .lk a{color:var(--ccn-orange-ink)}
+"""
+LIST_CSS = """
+ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:baseline;padding:10px 14px;background:var(--ccn-panel);border:1px solid var(--ccn-line);border-radius:10px}
+li.on{border-left:3px solid var(--ccn-orange)}
+.n{font:600 13px var(--ccn-f-mono);color:var(--ccn-soft)} li.on .n{color:var(--ccn-orange-ink)}
+.t small{display:block;color:var(--ccn-soft);font-size:13.5px;margin-top:2px}
+.l a{color:var(--ccn-orange-ink);margin-left:12px;font-size:14px}
+@media (max-width:640px){li{grid-template-columns:28px 1fr} .l{grid-column:2} .l a:first-child{margin-left:0}}
+"""
+
+def slug(t):
+    return re.sub(r'-+', '-', re.sub(r'[^a-z0-9]+', '-', t.lower())).strip('-')
+
+def top(root):
+    return ('<div class="top"><a class="wm" href="%sdocs/units/index.html">Tensor<b>Nets</b></a>'
+            '<a class="l" href="%sdocs/units/index.html">Units</a><a class="l" href="%ssearch.html">Search</a>'
+            '<a class="l" href="%sdocs/glossary.html">Glossary</a><a class="l" href="%sdocs/net-diagrams.html">Net diagrams</a>'
+            '<a class="l" href="%sdocs/design.html">Design</a></div>' % ((root,) * 6))
+
+def page(title, css, body, root, extra=''):
+    return ('<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n'
+            '<title>%s · Computational Classnotes</title>\n<link rel="stylesheet" href="%sbrand/ccn-tokens.css">\n<style>%s%s</style></head><body>\n%s\n<main>%s</main>\n'
+            '<footer>Part of <a href="%s">lossofgenerality/tensor-algebra-nets</a>.%s<br>© Computational Classnotes · CC BY-NC-SA 4.0</footer>\n</body></html>\n'
+            % (html.escape(title), root, TOKENS_CSS, css, top(root), body, REPO, extra))
+
+# section anchors of each unit write-up, read from the built HTML: "§n" -> id
+ANCH = {}
+for n, stem in U.items():
+    f = ROOT / 'docs/units' / (stem + '.html')
+    if f.exists():
+        for m in re.finditer(r'<h2 id="([^"]+)">(\d+)\.', f.read_text(encoding='utf-8')):
+            ANCH[(n, int(m.group(2)))] = m.group(1)
+
+terms = sorted(TERMS, key=lambda t: t.lower().lstrip('⨂⨁ '))
+toc = ' · '.join('<a href="#%s">%s</a>' % (slug(t), html.escape(t)) for t in terms)
+secs = []
+for t in terms:
+    d, ex, u, s = TERMS[t]
+    name, al = (t.split(' (', 1) + [''])[:2]
+    anchor = ANCH.get((u, s), '')
+    secs.append('<section class="g" id="%s"><h2>%s%s</h2><p>%s%s</p><div class="lk"><a href="units/%s.html%s">Unit %d §%d</a></div></section>'
+                % (slug(t), html.escape(name), (' <span class="al">' + html.escape(al.rstrip(')')) + '</span>') if al else '', html.escape(d),
+                   (' ' + html.escape(ex)) if ex else '', U[u], ('#' + anchor) if anchor else '', u, s))
+body = ('<h1>Glossary</h1><p class="lede">Every technical term used across the four units: a short definition, a small example where it helps, '
+        'and a link to the section where it is worked out. Link to a term with <code>glossary.html#term-name</code>.</p>'
+        '<div class="toc">%s</div>%s' % (toc, ''.join(secs)))
+(ROOT / 'docs/glossary.html').write_text(page('Glossary — TensorNets', GLOSS_CSS, body, '../'), encoding='utf-8')
 
 UNITS = [
- (1, '01-seq2seq', 'unit1_seq2seq.nb', 'Reading a Sequence, Writing a Sequence', 'Deep LSTMs as encoder and decoder (Sutskever, Vinyals and Le, 2014): the LSTM cell by hand, the thought vector, reversing the source, the training recipe, beam search, the 384M parameter count.'),
- (2, '02-symbolic-data', 'unit2_symbolic_data.nb', 'Mathematics as Data', 'Lample and Charton (2019): prefix notation, counting and uniform sampling of trees, FWD/BWD/IBP integration data, verified answers, and a correction to their Equation 2.'),
- (3, '03-transformer', 'unit3_transformer.nb', 'Attention, Part by Part', 'Vaswani et al. (2017): every part of the transformer from plain arrays and from primitive Wolfram layers, checked against each other.'),
- (4, '04-build-your-own', 'unit4_build_your_own.nb', 'Building Our Own Net', 'A transformer assembled from Units 1–3 that expands ⨂/⨁ expressions, decoded with beam search and the prefix grammar, every answer checked by an exact oracle.'),
+ (1, '01-seq2seq', 'unit1_seq2seq.nb', 'Reading a sequence, writing a sequence', 'Deep LSTMs as encoder and decoder (Sutskever, Vinyals and Le, 2014)'),
+ (2, '02-symbolic-data', 'unit2_symbolic_data.nb', 'Mathematics as data', 'Prefix notation, fair sampling of trees, checked answers (Lample and Charton, 2019)'),
+ (3, '03-transformer', 'unit3_transformer.nb', 'Attention, part by part', 'The transformer from plain arrays and primitive layers (Vaswani et al., 2017)'),
+ (4, '04-build-your-own', 'unit4_build_your_own.nb', 'Building our own net', 'A transformer that expands ⨂/⨁ expressions, assembled from Units 1–3'),
 ]
-cards = ''.join('<div class="unit"><h3>Unit %d · %s</h3><p>%s</p><p><a href="%s.html">Read</a> · <a href="%s.pdf">PDF</a> · <a href="%s/blob/main/docs/units/%s.md">Markdown</a> · <a href="%s/blob/main/%s">Notebook %s</a></p></div>'
-                % (n, html.escape(t), html.escape(d), s, s, REPO, s, REPO, nb, nb) for n, s, nb, t, d in UNITS)
-nav2 = '<nav class="wtop"><a href="../glossary.html">Glossary</a><a href="../design.html">Design</a><a href="../net-diagrams.html">Net diagrams</a><a href="../../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
-intro = ('<h1>TensorNets · Units of learning</h1><p>Four units on how the TensorNets nets are made. Each unit has a write-up (HTML, PDF, Markdown) and a Wolfram notebook with the same section numbers: '
-         'a toolkit cell, then one section per idea, each with a worked example by hand and a check that the kernel returns. Units 1–3 follow one paper each; Unit 4 builds our own net from them.</p>'
-         '<p>Open a notebook in Wolfram, choose Evaluation ▸ Quit Kernel ▸ Local, and evaluate it from top to bottom. The notebooks are saved with their outputs, so they can also be read without running.</p>')
-(ROOT / 'docs/units/index.html').write_text(page('TensorNets · Units of learning', intro + cards, nav2), encoding='utf-8')
-root_cards = cards.replace('href="0', 'href="docs/units/0')
+rows = ''.join('<li class="on"><span class="n">%02d</span><span class="t">%s<small>%s</small></span><span class="l"><a href="%s.html">Write-up</a> '
+               '<a href="%s.pdf">PDF</a> <a href="../../%s" download>Notebook</a></span></li>'
+               % (n, html.escape(t), html.escape(d), s, s, nb) for n, s, nb, t, d in UNITS)
+body = ('<h1>TensorNets — units of learning</h1><p class="lede">One worked write-up and notebook per unit: the idea, the formulas, examples worked by hand, '
+        'the computation on a Wolfram kernel, exercises and the references. Units 1–3 follow one paper each; Unit 4 builds our own net from them. '
+        'Each comes as HTML, PDF and a Wolfram notebook, saved with its outputs.</p><ol>%s</ol>' % rows)
+(ROOT / 'docs/units/index.html').write_text(page('TensorNets — units of learning', LIST_CSS, body, '../../',
+     ' Design: <a href="../design.html">DESIGN-tensornets</a>.'), encoding='utf-8')
+
 (ROOT / 'index.html').write_text('<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n'
     '<title>TensorNets</title>\n<meta http-equiv="refresh" content="0; url=docs/units/index.html">\n</head><body style="font:16px system-ui;margin:40px">\n'
     '<p><a href="docs/units/index.html">TensorNets · Units of learning</a> · <a href="docs/design.html">design</a> · <a href="docs/glossary.html">glossary</a> · <a href="docs/net-diagrams.html">net diagrams</a> · <a href="search.html">search</a></p>\n'
     '<p>© 2026 Computational Classnotes · CC BY-NC-SA 4.0</p>\n</body></html>\n', encoding='utf-8')
 # ---------- The Net Diagrams editor, shown live from ccn-nets ----------
-nav3 = '<nav class="wtop"><a href="units/index.html">All units</a><a href="glossary.html">Glossary</a><a href="design.html">Design</a><a href="../search.html">Search</a><a href="%s">Repository</a></nav>' % REPO
 editor_body = ('<h1>Net diagrams</h1>'
     '<p>Draw a small neural net and let the editor write the code that builds and trains it: a Wolfram notebook (our own code, and <code>NetTrain</code>) '
     'or a Python script (our own code, NumPy only). Its elements are feature groups, a hash, an input vector of slots, layers, dropout, joins and a softmax; '
@@ -117,8 +167,9 @@ editor_body = ('<h1>Net diagrams</h1>'
     'Here it opens on tnParserNet, and keeps your changes on this page apart from the editor\u2019s other pages. Under <i>Examples</i> are owNet (Unit 4) and the other TensorNets nets, tnPolicyNet and tnValueNet, all drawn from their definitions; '
     'for each, the editor counts the weights as Wolfram does and writes the net as a Wolfram <code>NetGraph</code>.</p>'
     '<p><a href="%s">Open the editor in its own tab</a> · <a href="%s">How it works</a></p>'
-    '<iframe src="%s" title="CCN Net Diagrams editor" style="width:100%%;height:820px;border:1px solid #c9d0db;border-radius:6px" loading="lazy"></iframe>'
+    '<iframe src="%s" title="CCN Net Diagrams editor" style="width:100%%;height:820px;border:1px solid var(--ccn-line);border-radius:10px;background:#fff" loading="lazy"></iframe>'
     % (EDITOR, EDITOR_README, EDITOR))
-(ROOT / 'docs/net-diagrams.html').write_text(page('Net diagrams · TensorNets', editor_body, nav3).replace('max-width:860px', 'max-width:1280px', 1), encoding='utf-8')
+WIDE_CSS = 'main{max-width:1280px} .top,footer{max-width:1280px} main p a{color:var(--ccn-orange-ink)}'
+(ROOT / 'docs/net-diagrams.html').write_text(page('Net diagrams — TensorNets', WIDE_CSS, editor_body, '../'), encoding='utf-8')
 
-print(len(TERMS), 'terms')
+print(len(TERMS), 'terms;', len(ANCH), 'section anchors')

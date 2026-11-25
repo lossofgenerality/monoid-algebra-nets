@@ -20,9 +20,9 @@ for md in sys.argv[1:]:
     title = re.search(r'^# (.+)$', p.read_text(encoding='utf-8'), re.M).group(1)
     nb = NB.get(p.stem, '')
     nav = ('<nav class="wtop"><a href="index.html">All units</a><a href="%s">PDF</a><a href="%s">Markdown</a>%s'
-           '<a href="../glossary.html">Glossary</a><a href="../../search.html">Search</a><a href="%s">Repository</a></nav>'
+           '<a href="../glossary.html">Glossary</a><a href="../net-diagrams.html">Net diagrams</a><a href="../../search.html">Search</a><a href="%s">Repository</a></nav>'
            % (p.with_suffix('.pdf').name, REPO + str(p.relative_to(ROOT)),
-              ('<a href="%s">Notebook %s</a>' % (REPO + nb, nb)) if nb else '', REPO.replace('/blob/main/', '')))
+              ('<a href="../../%s" download>Notebook</a>' % nb) if nb else '', REPO.replace('/blob/main/', '')))
     html = ('<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
             '<title>%s — Computational Classnotes</title><style>%s%s</style></head><body>%s%s'
             '<footer style="margin-top:30px;font-size:9pt;color:#666">© 2026 Computational Classnotes · CC BY-NC-SA 4.0</footer></body></html>\n'
