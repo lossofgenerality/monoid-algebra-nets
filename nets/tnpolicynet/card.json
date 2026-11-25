@@ -14,7 +14,8 @@
   "writeup": "nets/tnpolicynet/writeup.md",
   "downloads": [
    "nets/tnpolicynet/train/tnPolicyNetFromDiagram.nb"
-  ]
+  ],
+  "guide": "nets/tnpolicynet/docs/guide.md"
  },
  "headline": []
 }

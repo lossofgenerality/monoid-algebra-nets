@@ -15,7 +15,8 @@
   "downloads": [
    "nets/ownet/train/owNetFromDiagram.nb",
    "unit4_build_your_own_nets.nb"
-  ]
+  ],
+  "guide": "nets/ownet/docs/guide.md"
  },
  "headline": []
 }

@@ -14,7 +14,8 @@
   "writeup": "nets/tnparsernet/writeup.md",
   "downloads": [
    "nets/tnparsernet/train/tnParserNetFromDiagram.nb"
-  ]
+  ],
+  "guide": "nets/tnparsernet/docs/guide.md"
  },
  "headline": []
 }

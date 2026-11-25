@@ -14,7 +14,8 @@
   "writeup": "nets/tnvaluenet/writeup.md",
   "downloads": [
    "nets/tnvaluenet/train/tnValueNetFromDiagram.nb"
-  ]
+  ],
+  "guide": "nets/tnvaluenet/docs/guide.md"
  },
  "headline": []
 }
