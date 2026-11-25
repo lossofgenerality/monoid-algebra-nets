@@ -337,6 +337,16 @@
 
 Every call needs your pass key.
 
+**Owner** (23:45): ta_exam.nb what does this do?
+
+**Hikari Noor Hoshino:** `ta_exam.nb` tests the TA. After NetLabKernel is deployed, it does the following:
+
+1. It puts the TA's 50 examination questions to it, through NetLabKernel, exactly as the "Ask the TA" pages would.
+2. It marks each answer against the correct values taken from our own runs.
+3. It reports a score: how many questions passed, broken down by kind (facts, computations, honesty about status, refusals and trick questions), and whether the TA ran code where it should have.
+
+Nothing is written anywhere; the results appear only in the notebook. Run it with `res = taExam["<pass key>"]`, then `res["Summary"]`.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
