@@ -368,6 +368,15 @@ Nothing is written anywhere; the results appear only in the notebook. Run it wit
 
 **Hikari Noor Hoshino:** Paused. Everything is pushed and recorded. When we resume, the next step is yours: deploy NetLabKernel from `ff_netlabkernel.nb`, on the Seagate drive in `noor/ccn-net-lab/kernel/`, and then run the examination. Friday 27 November at 20:00 is the discussion of Unity, Godot, Blender and three.js.
 
+**Owner** (00:05): go here https://lossofgenerality.github.io/ccn-nets/ and tell me this TA deals with which project
+
+**Hikari Noor Hoshino:** The TA covers two of the three projects on that page:
+
+1. CCN agent free-form language: SubjectNet.
+2. Tensor algebras (TensorNets): owNet, tnParserNet, tnPolicyNet and tnValueNet.
+
+The third project, Fabric anomaly detection (WeaveNet), is not covered, because WeaveNet has no user guide yet; it is paused as work in progress. A pack for it can be added whenever we write its guide.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
