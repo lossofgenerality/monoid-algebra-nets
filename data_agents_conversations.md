@@ -401,6 +401,12 @@ The third project, Fabric anomaly detection (WeaveNet), is not covered, because 
 
 **Hikari Noor Hoshino:** Added an "under construction" sign: a yellow-and-black striped barrier, drawn as an inline SVG in the site's look, whose tooltip and screen-reader label read "Under construction: work in progress". It appears beside WeaveNet's name in the catalogue, in its page title and in its "Work in progress" notice, and automatically for any net whose status says "work in progress". Its legs and outline are mid-grey, so that it reads on the dark title band as well as on white. Pushed.
 
+**Owner** (00:11): push
+
+**Owner** (00:12): nice good job
+
+**Hikari Noor Hoshino:** Thanked the owner; everything is pushed, and the pause stands, with the next step being the deployment of NetLabKernel.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
