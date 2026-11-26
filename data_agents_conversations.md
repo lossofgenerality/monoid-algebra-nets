@@ -389,11 +389,18 @@ The third project, Fabric anomaly detection (WeaveNet), is not covered, because 
 
 4. The alternative is a separate TA for each project, with its own rules and examination. That is worth it only if a project needs a different audience or different house rules.
 
+**Owner** (00:08): make a new document for https://lossofgenerality.github.io/ccn-nets/ call it "Functional Specifications" and copy your last reply into this document in both .pdf and .md
+
+**Owner** (00:09): push
+
+**Hikari Noor Hoshino:** Made "Functional Specifications" with that reply as its first section, "The TA: one assistant for every project on the site". The source is in GitHub ccn-net-lab `docs/`, and the publish tool copies it to the site: https://lossofgenerality.github.io/ccn-nets/docs/functional-specifications.md and https://lossofgenerality.github.io/ccn-nets/docs/functional-specifications.pdf. Pushed.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
 2. The TA panel on every guide page, the lab-wide TA page and the knowledge packs: GitHub ccn-nets.
-3. Screenshots of the TA panel taken in headless Chrome against a stand-in kernel (not kept).
+3. `docs/functional-specifications.md` and `.pdf`: GitHub ccn-net-lab, published in GitHub ccn-nets `docs/`.
+4. Screenshots of the TA panel taken in headless Chrome against a stand-in kernel (not kept).
 
 ### URLs that appeared in the session (continued)
 
