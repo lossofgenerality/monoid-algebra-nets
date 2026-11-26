@@ -362,6 +362,12 @@ Nothing is written anywhere; the results appear only in the notebook. Run it wit
 
 **Hikari Noor Hoshino:** The lab-wide TA: https://lossofgenerality.github.io/ccn-nets/ta/. Each net's guide also has an "Ask the TA" panel, for example https://lossofgenerality.github.io/ccn-nets/tensor-algebras/tnvaluenet/guide.html#ta. It answers once NetLabKernel is deployed.
 
+### Thursday 26 November 2026
+
+**Owner** (00:04): I need to pause here.
+
+**Hikari Noor Hoshino:** Paused. Everything is pushed and recorded. When we resume, the next step is yours: deploy NetLabKernel from `ff_netlabkernel.nb`, on the Seagate drive in `noor/ccn-net-lab/kernel/`, and then run the examination. Friday 27 November at 20:00 is the discussion of Unity, Godot, Blender and three.js.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
