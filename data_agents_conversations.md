@@ -407,6 +407,12 @@ The third project, Fabric anomaly detection (WeaveNet), is not covered, because 
 
 **Hikari Noor Hoshino:** Thanked the owner; everything is pushed, and the pause stands, with the next step being the deployment of NetLabKernel.
 
+**Owner** (00:22): TODO for this project: 1. SubjectNet needs a detailed functional specification document and a lexicon e.g. oracle.  2. Make a new net that takes a free form input e.g. "spin/flip a donut while gliding/diving along a spiral; spiral height = h radius = r rate = v; spin = x rotation pi/4*dt; " and the net trained to read such very specific statements and generate wolfram or js code to animate in Three.js and build the entire app.
+
+**Hikari Noor Hoshino:** Added both items to `TODO.md` in GitHub ccn-hoshino-and-colleagues, under a new section, "Open: CCN agent free-form language":
+1. SubjectNet: a detailed functional specification, and a lexicon of the project's terms, oracle among them.
+2. A new net that reads specific free-form motion statements and generates Wolfram or JavaScript code to animate them in three.js and build the whole app. Its grammar, training data and oracle, and generated code are to be designed first.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
