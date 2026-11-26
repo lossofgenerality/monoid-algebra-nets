@@ -377,6 +377,18 @@ Nothing is written anywhere; the results appear only in the notebook. Run it wit
 
 The third project, Fabric anomaly detection (WeaveNet), is not covered, because WeaveNet has no user guide yet; it is paused as work in progress. A pack for it can be added whenever we write its guide.
 
+**Owner** (00:06): ok good. So you want a single TA to cover all projects in this site?
+
+**Hikari Noor Hoshino:**
+
+1. Yes: one TA, with one kernel, one set of rules and one examination, but it reads only what the question needs. On a net's guide page it reads that net's pack; on the lab page you choose a single net or every net.
+
+2. Why one TA. The nets share their parts (attention, the editor, the publish tool and our own code), so questions often cross projects. One kernel also means one deployment and one pass key, and a new project joins simply by being published with a guide.
+
+3. The limit. "Every net" is about 151,000 characters today and fits comfortably, but it grows with each project. When it grows too large, I would add a choice for each project and later pick sections by relevance, rather than split the TA.
+
+4. The alternative is a separate TA for each project, with its own rules and examination. That is worth it only if a project needs a different audience or different house rules.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
