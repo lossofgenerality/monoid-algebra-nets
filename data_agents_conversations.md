@@ -413,6 +413,12 @@ The third project, Fabric anomaly detection (WeaveNet), is not covered, because 
 1. SubjectNet: a detailed functional specification, and a lexicon of the project's terms, oracle among them.
 2. A new net that reads specific free-form motion statements and generates Wolfram or JavaScript code to animate them in three.js and build the whole app. Its grammar, training data and oracle, and generated code are to be designed first.
 
+**Owner** (00:22): push
+
+**Owner** (00:23): I pause here and return later
+
+**Hikari Noor Hoshino:** Paused; everything is pushed and recorded. Waiting on resumption: the deployment of NetLabKernel and the examination, the two new TODO items, and Friday's discussion at 20:00.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
