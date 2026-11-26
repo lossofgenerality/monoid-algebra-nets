@@ -395,6 +395,12 @@ The third project, Fabric anomaly detection (WeaveNet), is not covered, because 
 
 **Hikari Noor Hoshino:** Made "Functional Specifications" with that reply as its first section, "The TA: one assistant for every project on the site". The source is in GitHub ccn-net-lab `docs/`, and the publish tool copies it to the site: https://lossofgenerality.github.io/ccn-nets/docs/functional-specifications.md and https://lossofgenerality.github.io/ccn-nets/docs/functional-specifications.pdf. Pushed.
 
+**Owner** (00:11): About the Fabric Anomaly detection: add an icon some place in its description that indicates "under construction"
+
+**Owner** (00:11): or "work in progress"
+
+**Hikari Noor Hoshino:** Added an "under construction" sign: a yellow-and-black striped barrier, drawn as an inline SVG in the site's look, whose tooltip and screen-reader label read "Under construction: work in progress". It appears beside WeaveNet's name in the catalogue, in its page title and in its "Work in progress" notice, and automatically for any net whose status says "work in progress". Its legs and outline are mid-grey, so that it reads on the dark title band as well as on white. Pushed.
+
 ### Diagrams, images and files placed into the session (continued)
 
 1. `kernel/ff_netlabkernel.nb`, `kernel/ta_exam.nb`, `kernel/README.md` and `ta/` (rules, tool, starters, examination, page client and style): GitHub ccn-net-lab.
